@@ -12,12 +12,14 @@ class PemesananBahanBakuController extends Controller
     public function index()
     {
         $bb = PemesananBahanBaku::all();
+
         return view('pemesanan-bahan-baku.pemesanan-index', compact('bb'));
     }
 
     public function create()
     {
-        return view('pemesanan-bahan-baku.pemesanan-create');
+        $stok = StokBahanBaku::all();
+        return view('pemesanan-bahan-baku.pemesanan-create',compact('stok'));
     }
 
     public function store(Request $request)

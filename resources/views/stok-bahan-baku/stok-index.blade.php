@@ -16,8 +16,8 @@
     </style>
     <div class="container py-4">
 
-        {{-- <a href="{{ route('pemesanan.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                aria-hidden="true"></i> Tambah Bahan Baku</a> --}}
+        <a href="{{ route('stok.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
+                aria-hidden="true"></i> Tambah Data Stok Bahan Baku</a>
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">
                 <tr>

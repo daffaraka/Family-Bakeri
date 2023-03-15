@@ -19,8 +19,7 @@ class StokBahanBakuSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-
-        for($i = 1; $i <= 30; $i++) {
+        for($i = 1; $i <= 20; $i++) {
             StokBahanBaku::create([
                 'nama_bahan_baku' => $faker->word(),
                 'jumlah' => $faker->numberBetween(1,1000),

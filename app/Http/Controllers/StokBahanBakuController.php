@@ -18,8 +18,10 @@ class StokBahanBakuController extends Controller
         return view('stok-bahan-baku.stok-create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        return view('stok-bahan-baku.stok-create');
+
+        StokBahanBaku::create($request->all());
+        return redirect()->route('stok.index');
     }
 }

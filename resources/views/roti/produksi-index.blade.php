@@ -1,7 +1,6 @@
 @extends('layout')
-@section('title', 'Bahan Baku - Family Bakery')
+@section('title', 'Produksi Roti - Family Bakery')
 @section('content')
-
     <style>
         td {
             font-size: 1rem !important;
@@ -17,20 +16,20 @@
     </style>
     <div class="container py-4">
 
-<div class="card">
-        <div class="card-body">
-            <div class="form-group">
-                <label><strong>Status :</strong></label>
-                <select id='status' class="form-control" style="width: 200px">
-                    <option value="">--Select Status--</option>
-                    <option value="1">Active</option>
-                    <option value="0">Deactive</option>
-                </select>
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label><strong>Status :</strong></label>
+                    <select id='status' class="form-control" style="width: 200px">
+                        <option value="">--Select Status--</option>
+                        <option value="1">Active</option>
+                        <option value="0">Deactive</option>
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
-        <a href="{{ route('pemesanan.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                aria-hidden="true"></i> Tambah Bahan Baku</a>
+        <a href="{{ route('produksi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
+                aria-hidden="true"></i> Tambah Produksi Roti</a>
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">
                 <tr>
@@ -45,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($bb as $data)
+                @forelse ($produksi as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_bahan_baku }}</td>
@@ -70,10 +69,6 @@
             </tbody>
         </table>
     </div>
-
-
-
-
 @endsection
 @include('partials.scripts')
 <script>

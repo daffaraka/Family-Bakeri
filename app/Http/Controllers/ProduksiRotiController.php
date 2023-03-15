@@ -3,81 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProduksiRoti;
+use App\Models\StokBahanBaku;
 use Illuminate\Http\Request;
 
 class ProduksiRotiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $produksi = ProduksiRoti::all();
+        return view('roti.produksi-index',compact('produksi'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+
+        $stok = StokBahanBaku::all();
+        return view('roti.produksi-create',compact('stok'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProduksiRoti  $produksiRoti
-     * @return \Illuminate\Http\Response
-     */
     public function show(ProduksiRoti $produksiRoti)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProduksiRoti  $produksiRoti
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(ProduksiRoti $produksiRoti)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProduksiRoti  $produksiRoti
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, ProduksiRoti $produksiRoti)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ProduksiRoti  $produksiRoti
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(ProduksiRoti $produksiRoti)
     {
         //

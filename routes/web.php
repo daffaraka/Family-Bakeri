@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\PemesananBahanBakuController;
+use App\Http\Controllers\ProduksiRotiController;
+use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\StokBahanBakuController;
 
 /*
@@ -40,12 +42,14 @@ Route::post('/stok-bahan-baku/update/{id}',[StokBahanBakuController::class,'upda
 Route::get('/stok-bahan-baku/delete/{id}',[StokBahanBakuController::class,'delete'])->name('stok.delete');
 
 
-Route::get('/produksi-roti',[StokBahanBakuController::class,'index'])->name('produksi.index');
-Route::get('/produksi-roti/create',[StokBahanBakuController::class,'create'])->name('produksi.create');
-Route::post('/produksi-roti/store',[StokBahanBakuController::class,'store'])->name('produksi.store');
-Route::get('/produksi-roti/edit/{id}',[StokBahanBakuController::class,'edit'])->name('produksi.edit');
-Route::post('/produksi-roti/update/{id}',[StokBahanBakuController::class,'update'])->name('produksi.update');
-Route::get('/produksi-roti/delete/{id}',[StokBahanBakuController::class,'delete'])->name('produksi.delete');
+Route::get('/produksi-roti',[ProduksiRotiController::class,'index'])->name('produksi.index');
+Route::get('/produksi-roti/create',[ProduksiRotiController::class,'create'])->name('produksi.create');
+Route::post('/produksi-roti/store',[ProduksiRotiController::class,'store'])->name('produksi.store');
+Route::get('/produksi-roti/edit/{id}',[ProduksiRotiController::class,'edit'])->name('produksi.edit');
+Route::post('/produksi-roti/update/{id}',[ProduksiRotiController::class,'update'])->name('produksi.update');
+Route::get('/produksi-roti/delete/{id}',[ProduksiRotiController::class,'delete'])->name('produksi.delete');
+
+Route::get('select2-search-stok', [Select2Controller::class, 'searchStokBahanBaku']);
 
 
 Route::middleware('auth')->group(function () {

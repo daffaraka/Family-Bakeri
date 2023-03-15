@@ -15,9 +15,9 @@
             <div class="mb-3">
                 <label for="">Status Pesanan</label>
                 <select name="status_pesanan" id="" class="form-control">
-                    <option value="dipesan" {{$bb->status_pesanan == 'dipesan' ? 'selected' : ''}}>Dipesan</option>
-                    <option value="selesai" {{$bb->status_pesanan == 'selesai' ? 'selected' : ''}}>Selesai</option>
-                    <option value="batal" {{$bb->status_pesanan == 'batal' ? 'selected' : ''}}>Batal</option>
+                    <option value="Sedang Diantar" {{$bb->status_pesanan == 'Sedang Diantar' ? 'selected' : ''}}>Sedang Diantar</option>
+                    <option value="Diterima" {{$bb->status_pesanan == 'Diterima' ? 'selected' : ''}}>Diterima</option>
+                    <option value="Dibayar" {{$bb->status_pesanan == 'Dibayar' ? 'selected' : ''}}>Dibayar</option>
 
                 </select>
             </div>

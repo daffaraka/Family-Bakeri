@@ -1,8 +1,9 @@
 @extends('layout')
-@section('title', 'Tambah Bahan Baku - Family Bakery')
+@section('title', 'Tambah Produksi Roti - Family Bakery')
 @section('content')
     <style>
-       .select2-container .select2-selection--single {
+
+        .select2-container .select2-selection--single {
             height: auto;
             line-height: inherit;
             padding: 0.5rem 1rem;
@@ -12,12 +13,12 @@
             padding-left: unset;
         }
     </style>
-    <div class="container py-3">
+    <div class="container py-3" id="myModal" tabindex="-1">
         <form action="{{ route('pemesanan.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="">Nama Bahan Baku</label>
-                <select class="livesearch form-control" name="nama_bahan_baku">
+                <select class="livesearch form-control" name="nama_bahan_baku[]">
                     @foreach ($stok as $item)
                         <option value="{{ $item->nama_bahan_baku }}">{{ $item->nama_bahan_baku }}</option>
                     @endforeach
