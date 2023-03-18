@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\PemesananBahanBakuController;
 use App\Http\Controllers\ProduksiRotiController;
+use App\Http\Controllers\ResepRotiController;
 use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\StokBahanBakuController;
 
@@ -49,7 +50,23 @@ Route::get('/produksi-roti/edit/{id}',[ProduksiRotiController::class,'edit'])->n
 Route::post('/produksi-roti/update/{id}',[ProduksiRotiController::class,'update'])->name('produksi.update');
 Route::get('/produksi-roti/delete/{id}',[ProduksiRotiController::class,'delete'])->name('produksi.delete');
 
-Route::get('select2-search-stok', [Select2Controller::class, 'searchStokBahanBaku']);
+
+Route::get('/produksi-roti',[ProduksiRotiController::class,'index'])->name('produksi.index');
+Route::get('/produksi-roti/create',[ProduksiRotiController::class,'create'])->name('produksi.create');
+Route::post('/produksi-roti/store',[ProduksiRotiController::class,'store'])->name('produksi.store');
+Route::get('/produksi-roti/edit/{id}',[ProduksiRotiController::class,'edit'])->name('produksi.edit');
+Route::post('/produksi-roti/update/{id}',[ProduksiRotiController::class,'update'])->name('produksi.update');
+Route::get('/produksi-roti/delete/{id}',[ProduksiRotiController::class,'delete'])->name('produksi.delete');
+
+
+Route::get('/resep-roti',[ResepRotiController::class,'index'])->name('resep.index');
+Route::get('/resep-roti/create',[ResepRotiController::class,'create'])->name('resep.create');
+Route::post('/resep-roti/store',[ResepRotiController::class,'store'])->name('resep.store');
+Route::get('/resep-roti/edit/{id}',[ResepRotiController::class,'edit'])->name('resep.edit');
+Route::post('/resep-roti/update/{id}',[ResepRotiController::class,'update'])->name('resep.update');
+Route::get('/resep-roti/delete/{id}',[ResepRotiController::class,'delete'])->name('resep.delete');
+
+// Route::get('select2-search-stok', [Select2Controller::class, 'searchStokBahanBaku']);
 
 
 Route::middleware('auth')->group(function () {

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProduksiRoti;
-use App\Models\StokBahanBaku;
 use Illuminate\Http\Request;
+use App\Models\StokBahanBaku;
+use Illuminate\Support\Facades\Auth;
 
 class ProduksiRotiController extends Controller
 {
@@ -23,7 +24,14 @@ class ProduksiRotiController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $produksi = new ProduksiRoti();
+
+        $produksi->nama = $request->nama;
+        $produksi->jumlah_produksi = $request->jumlah_produksi;
+        $produksi->diproduksi_oleh = Auth::user()->name ?? 'Test';
+        $produksi->save();
+
+        return redirect()->route('produksi.index');
     }
 
     public function show(ProduksiRoti $produksiRoti)

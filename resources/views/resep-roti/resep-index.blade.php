@@ -1,6 +1,8 @@
 @extends('layout')
-@section('title', 'Produksi Roti - Family Bakery')
+@section('title', 'Resep Roti - Family Bakery')
 @section('content')
+
+
     <style>
         td {
             font-size: 1rem !important;
@@ -28,25 +30,25 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route('produksi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                aria-hidden="true"></i> Tambah Produksi Roti</a>
+        <a href="{{ route('resep.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded">
+             <i class="fa fa-plus" aria-hidden="true"></i> Tambah Resep Roti</a>
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nama Roti</th>
-                    <th scope="col">Jumlah Produksi</th>
-                    <th scope="col">Diproduksi Oleh</th>
+                    <th scope="col">Resep</th>
+                    <th scope="col">Jumlah Bahan Baku</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($produksi as $data)
+                @forelse ($resep as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nama }}</td>
-                        <td>{{ $data->jumlah_produksi }}</td>
-                        <td>{{ $data->diproduksi_oleh }}</td>
+                        <td>{{ $data->nama_roti }}</td>
+                        <td>{{ $data->nama_bahan_baku }}</td>
+                        <td>{{ $data->jumlah_bahan_baku }}</td>
                         <td>
                             <a href="{{ route('pemesanan.edit', $data->id) }}" class="btn btn-warning">Edit</a>
                             <a href="{{ route('pemesanan.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
@@ -61,6 +63,10 @@
             </tbody>
         </table>
     </div>
+
+
+
+
 @endsection
 @include('partials.scripts')
 <script>

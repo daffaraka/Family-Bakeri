@@ -14,32 +14,15 @@
         }
     </style>
     <div class="container py-3" id="myModal" tabindex="-1">
-        <form action="{{ route('pemesanan.store') }}" method="POST">
+        <form action="{{ route('produksi.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="">Nama Bahan Baku</label>
-                <select class="livesearch form-control" name="nama_bahan_baku[]">
-                    @foreach ($stok as $item)
-                        <option value="{{ $item->nama_bahan_baku }}">{{ $item->nama_bahan_baku }}</option>
-                    @endforeach
-                </select>
+                <label for="">Nama Roti </label>
+                <input type="text" name="nama" class="form-control">
             </div>
             <div class="mb-3">
-                <label for="">Jumlah Pesanan</label>
-                <input type="number" class="form-control" name="jumlah_pesanan">
-            </div>
-            <div class="mb-3">
-                <label for="">Status Pesanan</label>
-                <select name="status_pesanan" id="" class="form-control">
-                    <option value="Sedang Diantar">Sedang Diantar</option>
-                    <option value="Diterima">Diterima</option>
-                    <option value="Dibayar">Dibayar</option>
-
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="">Harga Satuan</label>
-                <input type="number" class="form-control" name="harga_satuan">
+                <label for="">Jumlah Produksi</label>
+                <input type="number" class="form-control" name="jumlah_produksi">
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>

@@ -30,6 +30,12 @@
               </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{route('resep.index')}}">
+                  <i class="ni ni-basket text-default"></i>
+                  <span class="nav-link-text">Resep Roti</span>
+                </a>
+              </li>
+            <li class="nav-item">
               <a class="nav-link" href="{{route('produksi.index')}}">
                 <i class="ni ni-single-02 text-yellow"></i>
                 <span class="nav-link-text">Produksi Roti</span>
