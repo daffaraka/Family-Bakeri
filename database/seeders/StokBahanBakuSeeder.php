@@ -23,6 +23,8 @@ class StokBahanBakuSeeder extends Seeder
             StokBahanBaku::create([
                 'nama_bahan_baku' => $faker->word(),
                 'jumlah' => $faker->numberBetween(1,1000),
+                'satuan' => $faker->randomElement(['Kg', 'Ons','Buah','Biji','Sdm','Sdt']),
+                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
             ]);
         }
     }

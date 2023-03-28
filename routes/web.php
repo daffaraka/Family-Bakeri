@@ -24,6 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('tes', function () {
+    return view('tes');
+});
+
 Route::get('dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
@@ -62,6 +67,7 @@ Route::get('/produksi-roti/delete/{id}',[ProduksiRotiController::class,'delete']
 Route::get('/resep-roti',[ResepRotiController::class,'index'])->name('resep.index');
 Route::get('/resep-roti/create',[ResepRotiController::class,'create'])->name('resep.create');
 Route::post('/resep-roti/store',[ResepRotiController::class,'store'])->name('resep.store');
+Route::get('/resep-roti/details/{id}',[ResepRotiController::class,'show'])->name('resep.show');
 Route::get('/resep-roti/edit/{id}',[ResepRotiController::class,'edit'])->name('resep.edit');
 Route::post('/resep-roti/update/{id}',[ResepRotiController::class,'update'])->name('resep.update');
 Route::get('/resep-roti/delete/{id}',[ResepRotiController::class,'delete'])->name('resep.delete');

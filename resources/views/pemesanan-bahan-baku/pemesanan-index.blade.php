@@ -17,22 +17,24 @@
     </style>
     <div class="container py-4">
 
-<div class="card">
-        <div class="card-body">
-            <div class="form-group">
-                <label><strong>Status :</strong></label>
-                <select id='status' class="form-control" style="width: 200px">
-                    <option value="">--Select Status--</option>
-                    <option value="1">Active</option>
-                    <option value="0">Deactive</option>
-                </select>
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label><strong>Status :</strong></label>
+                    <select id="status" class="form-control" style="width: 200px">
+                        <option value="">--Pilih Status--</option>
+                        <option value="Diterima">Diterima</option>
+                        <option value="Dibayar">Dibayar</option>
+                        <option value="Sedang Diantar">Sedang Diantar</option>
+
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
         <a href="{{ route('pemesanan.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
                 aria-hidden="true"></i> Tambah Bahan Baku</a>
         <table class="table table-hover table-light table-striped" id="dataTable">
-            <thead class="table-dark" id="dataTable">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nama Bahan Baku</th>
@@ -45,7 +47,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($bb as $data)
+                {{-- @forelse ($bb as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_bahan_baku }}</td>
@@ -65,7 +67,7 @@
                     </tr>
                 @empty
                     <h3>Belum ada data</h3>
-                @endforelse
+                @endforelse --}}
 
             </tbody>
         </table>
@@ -77,15 +79,67 @@
 @endsection
 @include('partials.scripts')
 <script>
-    $(document).ready(function() {
-        $('#dataTable').DataTable({
+    //
+    $(function() {
+
+        var table = $('#dataTable').DataTable({
             language: {
                 paginate: {
                     previous: '<span class="fa fa-chevron-left"></span>',
                     next: '<span class="fa fa-chevron-right"></span>' // or '→'
 
                 }
-            }
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('pemesanan.index') }}",
+                data: function(d) {
+                    d.status = $('#status').val(),
+                        d.search = $('input[type="search"]').val()
+                }
+            },
+
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'nama_bahan_baku',
+                    name: 'nama_bahan_baku'
+                },
+                {
+                    data: 'harga_satuan',
+                    name: 'harga_satuan'
+                },
+                {
+                    data: 'jumlah_pesanan',
+                    name: 'jumlah_pesanan'
+                },
+                {
+                    data: 'total_harga',
+                    name: 'total_harga'
+                },
+                {
+                    data: 'status_pesanan',
+                    name: 'status_pesanan'
+                },
+                {
+                    data: 'created_at',
+                    type: 'num',
+                    render: {
+                        _: 'display',
+                        sort: 'timestamp'
+                    }
+                },
+                {
+                    data: 'action',
+                }
+            ]
+        });
+
+        $('#status').change(function() {
+            table.draw();
         });
     });
 </script>
