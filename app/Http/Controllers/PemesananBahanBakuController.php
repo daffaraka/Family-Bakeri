@@ -118,6 +118,14 @@ class PemesananBahanBakuController extends Controller
     {
         $bb = PemesananBahanBaku::find($id);
 
+        $req_bahan = $request->nama_bahan_baku;
+        $cekStok = StokBahanBaku::firstWhere('nama_bahan_baku', $req_bahan);
+
+        if ($request->status_pesanan == 'Diterima' && $cekStok) {
+            $cekStok->jumlah = $cekStok->jumlah + $request->jumlah_pesanan;
+            $cekStok->save();
+        }
+
         $jumlah_pesanan = $request->jumlah_pesanan;
         $harga_satuan = $request->harga_satuan;
         $bb->nama_bahan_baku = $request->nama_bahan_baku;

@@ -26,8 +26,7 @@ class ResepRotiController extends Controller
 
     public function store(Request $request)
     {
-
-        // dd($request->all());
+        dd($request->all());
         $nama_bahan = [];
         $nama_bahan = $request->nama_bahan_baku;
         $jumlah_bahan = $request->jumlah_bahan_baku;
@@ -87,8 +86,7 @@ class ResepRotiController extends Controller
         $stok = StokBahanBaku::all();
         $stok_json = json_encode(StokBahanBaku::select(['id', 'nama_bahan_baku'])->get());
         $resep = ResepRoti::find($id);
-        $resep_bahan = $resep->nama_bahan_baku;
-        $resep_select['nama_bahan_baku'] =  $resep->nama_bahan_baku;
+        $resep_select =  $resep;
 
         // $resep_select['nama_bahan_baku'] =  $resep->whereJsonContains('nama_bahan_baku',$resep_bahan)->get();
         // dd($resep_select);
@@ -98,7 +96,7 @@ class ResepRotiController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        dd($id);
     }
 
     public function delete($id)

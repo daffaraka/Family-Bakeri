@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StokBahanBaku;
 use Illuminate\Http\Request;
+use App\Models\StokBahanBaku;
+use Illuminate\Support\Facades\Auth;
 
 class StokBahanBakuController extends Controller
 {
@@ -21,7 +22,16 @@ class StokBahanBakuController extends Controller
     public function store(Request $request)
     {
 
-        StokBahanBaku::create($request->all());
+        StokBahanBaku::create(
+            [
+                'nama_bahan_baku' => $request->nama_bahan_baku,
+                'jumlah' => $request->jumlah,
+                'satuan' => $request->satuan,
+                'terakhir_diedit_by' => Auth::user()->name ??'Test',
+            ]
+            );
+
+
         return redirect()->route('stok.index');
     }
 }

@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('produksi_rotis', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama');
+            $table->string('nama_roti');
             $table->integer('jumlah_produksi');
             $table->string('diproduksi_oleh');
+            $table->foreignId('resep_id')->constrained('resep_rotis');
             $table->timestamps();
+
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('produksi_rotis');
+        Schema::dropIfExists('produksi_roti');
     }
 };

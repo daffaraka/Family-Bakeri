@@ -37,8 +37,10 @@
                                     <option value="{{ $item->nama_bahan_baku }}">{{ $item->nama_bahan_baku }}</option>
                                 @endforeach
                             </select>
-                            <input type="number" name="jumlah_bahan_baku[]" required class="form-control w-25"
+                            <input type="number" name="jumlah_bahan_baku[]" required class="form-control w-25 text-dark"
                                 placeholder="Jumlah Bahan Baku" autocomplete="on">
+                            <input type="text" name="satuan[]" required class="form-control w-25 text-dark" placeholder="Satuan"
+                                autocomplete="on">
                             <div class="input-group-append">
                                 <button id="removeRow" type="button" class="btn btn-danger">Kurangi</button>
                             </div>
@@ -54,6 +56,7 @@
         </form>
     </div>
 
+    @include('partials.scripts')
     <script type="text/javascript">
         // Add new row when #addRow is clicked
         $("#addRow").click(function() {
@@ -64,7 +67,8 @@
             // Create the options HTML using a loop
             var options = '';
             $.each(stokArray, function(key, stok) {
-                options += '<option value="' + stok.nama_bahan_baku + '">' + stok.nama_bahan_baku + '</option>';
+                options += '<option value="' + stok.nama_bahan_baku + '">' + stok.nama_bahan_baku +
+                    '</option>';
             });
 
             // Create the new row HTML
@@ -74,10 +78,13 @@
             html += '<div class="input-group mb-3">';
             html +=
                 '<select class="livesearch form-control" name="nama_bahan_baku[]" ';
+            html += '<option>Pilih Bahan Baku </option> '
             html += options;
             html += '</select>';
             html +=
-                '<input type="number" name="jumlah_bahan_baku[]" class="form-control m-input" placeholder="Jumlah Bahan Baku" required autocomplete="off">';
+                '<input type="number" name="jumlah_bahan_baku[]" class="form-control m-input text-dark" placeholder="Jumlah Bahan Baku" required autocomplete="off">';
+            html +=
+                '  <input type="text" name="satuan[]" required class="form-control w-25 text-dark" placeholder="Satuan" autocomplete="on">'
             html += '<div class="input-group-append">';
             html += '<button id="removeRow" type="button" class="btn btn-danger">Kurangi</button>';
             html += '</div>';

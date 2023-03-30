@@ -30,7 +30,9 @@
                     </div>
 
 
-                    @foreach ($resep_select['nama_bahan_baku'] as $nama_bahan)
+                    @foreach ($resep_select->nama_bahan_baku as $data)
+
+                    {{-- {{dd($data)}} --}}
                         <label for="">Nama Bahan Baku</label>
                         <div id="inputFormRow">
                             <div class="input-group mb-3">
@@ -38,13 +40,13 @@
                                     <option value="">Pilih Bahan Baku</option>
                                     @foreach ($stok as $item)
                                         <option value="{{ $item->nama_bahan_baku }}"
-                                            {{ $item->nama_bahan_baku == $nama_bahan ? 'selected' : '' }}>
+                                            {{ $item->nama_bahan_baku == $data ? 'selected' : '' }}>
                                             {{ $item->nama_bahan_baku }}
                                         </option>
                                     @endforeach
                                 </select>
                                 <input type="number" name="jumlah_bahan_baku[]" required class="form-control w-25"
-                                    placeholder="Jumlah Bahan Baku" autocomplete="on" value="">
+                                    placeholder="Jumlah Bahan Baku" autocomplete="on" value="{{$data}}">
                                 <div class="input-group-append">
                                     <button id="removeRow" type="button" class="btn btn-danger">Kurangi</button>
                                 </div>
@@ -77,10 +79,11 @@
             // Create the new row HTML
 
             var html = '';
+            html += '<label for="">Nama Bahan Baku</label> <br> '
             html += '<div id="inputFormRow">';
             html += '<div class="input-group mb-3">';
-            html +=
-                '<select class="livesearch form-control" name="nama_bahan_baku[]" ';
+
+            html +=  '<select class="livesearch form-control" name="nama_bahan_baku[]" ';
             html += options;
             html += '</select>';
             html +=

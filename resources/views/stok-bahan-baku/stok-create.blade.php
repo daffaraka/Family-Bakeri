@@ -12,6 +12,10 @@
                 <label for="">Jumlah Bahan Baku</label>
                 <input type="number" class="form-control" name="jumlah" >
             </div>
+            <div class="mb-3">
+                <label for="">Satuan</label>
+                <input type="text" class="form-control" name="satuan" >
+            </div>
             <button type="submit"  class="btn btn-primary">Simpan</button>
         </form>
     </div>

@@ -24,6 +24,8 @@
                     <th scope="col">#</th>
                     <th scope="col">Nama Bahan Baku</th>
                     <th scope="col">Jumlah</th>
+                    <th scope="col">Satuan</th>
+                    <th scope="col">Terakhir Diedit oleh</th>
                     <th scope="col">Waktu Diupdate</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -34,6 +36,8 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_bahan_baku }}</td>
                         <td>{{ $data->jumlah }}</td>
+                        <td>{{ $data->satuan }}</td>
+                        <td>{{ $data->terakhir_diedit_by}}</td>
                         <td>{{ $data->updated_at}}</td>
                         <td>
                             <a href="{{ route('pemesanan.edit', $data->id) }}" class="btn btn-warning">Edit</a>

@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('resep_rotis', function (Blueprint $table) {
+        Schema::create('resep_bahan_bakus', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_roti');
-            $table->string('nama_bahan_baku');
+            $table->unsignedBigInteger('resep_roti_id');
+            $table->unsignedBigInteger('stok_bahan_baku_id');
             $table->integer('jumlah_bahan_baku');
-            $table->string('satuan');
-            $table->foreignId('stok_roti_id')->constrained('stok_bahan_bakus');
-
             $table->timestamps();
+
+            $table->foreign('resep_roti_id')->references('id')->on('resep_rotis')->onDelete('cascade');
+            $table->foreign('stok_bahan_baku_id')->references('id')->on('stok_bahan_bakus')->onDelete('cascade');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resep_rotis');
+        Schema::dropIfExists('resep_bahan_bakus');
     }
 };
