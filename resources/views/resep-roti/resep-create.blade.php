@@ -5,6 +5,7 @@
     <style>
         .select2.select2-container {
             width: 50% !important;
+            margin-right: 2vh;
         }
 
         .select2-container .select2-selection--single {
@@ -26,15 +27,15 @@
                 <div class="col-lg-12">
                     <div class="mb-3">
                         <label for="">Nama Roti</label>
-                        <input type="text" name="nama_roti" class="form-control m-input" placeholder="Nama Roti"
-                            autocomplete="on">
+                        <input type="text" name="nama_resep_roti" class="form-control m-input" placeholder="Nama Roti"
+                            autocomplete="on" required>
                     </div>
                     <label for="">Nama Bahan Baku</label>
                     <div id="inputFormRow">
                         <div class="input-group mb-3">
                             <select class="livesearch form-control d-flex" name="nama_bahan_baku[]">
                                 @foreach ($stok as $item)
-                                    <option value="{{ $item->nama_bahan_baku }}">{{ $item->nama_bahan_baku }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->nama_bahan_baku }}</option>
                                 @endforeach
                             </select>
                             <input type="number" name="jumlah_bahan_baku[]" required class="form-control w-25 text-dark"
@@ -67,7 +68,7 @@
             // Create the options HTML using a loop
             var options = '';
             $.each(stokArray, function(key, stok) {
-                options += '<option value="' + stok.nama_bahan_baku + '">' + stok.nama_bahan_baku +
+                options += '<option value="' + stok.id + '">' + stok.nama_bahan_baku +
                     '</option>';
             });
 
@@ -84,7 +85,7 @@
             html +=
                 '<input type="number" name="jumlah_bahan_baku[]" class="form-control m-input text-dark" placeholder="Jumlah Bahan Baku" required autocomplete="off">';
             html +=
-                '  <input type="text" name="satuan[]" required class="form-control w-25 text-dark" placeholder="Satuan" autocomplete="on">'
+                '  <input type="text" name="satuan[]" required class="form-control text-dark" placeholder="Satuan" autocomplete="on">'
             html += '<div class="input-group-append">';
             html += '<button id="removeRow" type="button" class="btn btn-danger">Kurangi</button>';
             html += '</div>';

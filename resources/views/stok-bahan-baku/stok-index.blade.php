@@ -23,6 +23,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nama Bahan Baku</th>
+                    <th scope="col">Status Jumlah Stok</th>
                     <th scope="col">Jumlah</th>
                     <th scope="col">Satuan</th>
                     <th scope="col">Terakhir Diedit oleh</th>
@@ -35,13 +36,22 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_bahan_baku }}</td>
-                        <td>{{ $data->jumlah }}</td>
-                        <td>{{ $data->satuan }}</td>
-                        <td>{{ $data->terakhir_diedit_by}}</td>
-                        <td>{{ $data->updated_at}}</td>
                         <td>
-                            <a href="{{ route('pemesanan.edit', $data->id) }}" class="btn btn-warning">Edit</a>
-                            <a href="{{ route('pemesanan.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                            <button class="btn btn-sm {{ $data->jumlah < 50 ? 'btn-danger' : 'btn-success' }}">
+                                {{ $data->jumlah < 50 ? 'Stok menipis' : 'Stok Aman' }}
+                            </button>
+                        </td>
+                        <td>
+
+                            {{ $data->jumlah }}
+                            <br>
+                        </td>
+                        <td>{{ $data->satuan }}</td>
+                        <td>{{ $data->terakhir_diedit_by }}</td>
+                        <td>{{ $data->updated_at }}</td>
+                        <td>
+                            <a href="{{ route('stok.edit', $data->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('stok.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
 
                         </td>
 
@@ -52,20 +62,25 @@
 
             </tbody>
         </table>
+
+        {{-- <iframe width="560" height="315" src="https://www.youtube.com/embed/gN0YAMKmAnQ" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe> --}}
     </div>
 
-@include('partials.scripts')
-<script>
-    $(document).ready(function() {
-        $('#dataTable').DataTable({
-            language: {
-                paginate: {
-                    previous: '<span class="fa fa-chevron-left"></span>',
-                    next: '<span class="fa fa-chevron-right"></span>' // or '→'
+    @include('partials.scripts')
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                language: {
+                    paginate: {
+                        previous: '<span class="fa fa-chevron-left"></span>',
+                        next: '<span class="fa fa-chevron-right"></span>' // or '→'
 
+                    }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 @endsection

@@ -15,12 +15,7 @@ return new class extends Migration
     {
         Schema::create('resep_rotis', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_roti');
-            $table->string('nama_bahan_baku');
-            $table->integer('jumlah_bahan_baku');
-            $table->string('satuan');
-            $table->foreignId('stok_roti_id')->constrained('stok_bahan_bakus');
-
+            $table->string('nama_resep_roti');
             $table->timestamps();
         });
     }

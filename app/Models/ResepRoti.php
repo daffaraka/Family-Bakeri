@@ -12,14 +12,9 @@ class ResepRoti extends Model
 
     protected $fillable =
     [
-        'nama_roti',
+        'nama_resep_roti',
         'nama_bahan_baku',
         'jumlah_bahan_baku'
-    ];
-
-    protected $casts = [
-        'nama_bahan_baku' => 'array', // Will convarted to (Array)
-        'jumlah_bahan_baku' => 'array'
     ];
 
     protected function data(): Attribute
@@ -33,5 +28,15 @@ class ResepRoti extends Model
     public function getPropertiesAttribute()
     {
         return explode(',', $this->nama_bahan_baku);
+    }
+
+    public function bahanBaku()
+    {
+        return $this->belongsToMany(StokBahanBaku::class, 'resep_bahan_bakus', 'resep_roti_id', 'stok_bahan_baku_id');
+    }
+
+    public function resepBahanBakus()
+    {
+        return $this->hasMany(ResepBahanBaku::class);
     }
 }

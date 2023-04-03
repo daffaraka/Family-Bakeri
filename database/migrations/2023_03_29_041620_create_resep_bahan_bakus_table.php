@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('resep_roti_id');
             $table->unsignedBigInteger('stok_bahan_baku_id');
             $table->integer('jumlah_bahan_baku');
+            $table->string('satuan');
             $table->timestamps();
 
             $table->foreign('resep_roti_id')->references('id')->on('resep_rotis')->onDelete('cascade');

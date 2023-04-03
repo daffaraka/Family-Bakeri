@@ -11,9 +11,10 @@ class ProduksiRoti extends Model
 
     protected $fillable =
     [
-        'nama',
+        'nama_roti',
         'jumlah_produksi',
         'diproduksi_oleh',
+        'resep_id'
     ];
 
 }

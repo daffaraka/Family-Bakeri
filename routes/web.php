@@ -56,14 +56,6 @@ Route::post('/produksi-roti/update/{id}',[ProduksiRotiController::class,'update'
 Route::get('/produksi-roti/delete/{id}',[ProduksiRotiController::class,'delete'])->name('produksi.delete');
 
 
-Route::get('/produksi-roti',[ProduksiRotiController::class,'index'])->name('produksi.index');
-Route::get('/produksi-roti/create',[ProduksiRotiController::class,'create'])->name('produksi.create');
-Route::post('/produksi-roti/store',[ProduksiRotiController::class,'store'])->name('produksi.store');
-Route::get('/produksi-roti/edit/{id}',[ProduksiRotiController::class,'edit'])->name('produksi.edit');
-Route::post('/produksi-roti/update/{id}',[ProduksiRotiController::class,'update'])->name('produksi.update');
-Route::get('/produksi-roti/delete/{id}',[ProduksiRotiController::class,'delete'])->name('produksi.delete');
-
-
 Route::get('/resep-roti',[ResepRotiController::class,'index'])->name('resep.index');
 Route::get('/resep-roti/create',[ResepRotiController::class,'create'])->name('resep.create');
 Route::post('/resep-roti/store',[ResepRotiController::class,'store'])->name('resep.store');

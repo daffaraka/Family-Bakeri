@@ -36,10 +36,12 @@
                 @forelse ($resep as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nama_roti }}</td>
+                        <td>{{ $data->nama_resep_roti }}</td>
                         <td>
-                            <a href="#" class="btn btn-primary" id="button-resep" data-toggle="modal" data-target="#resepModal"
-                                data-id="{{ $data->id }}">Lihat Resep</a>
+                            <a class="btn btn-primary"
+                            href="{{route('resep.show',$data->id)}}"
+                                 id="button-resep" data-toggle="modal" data-target="#resepModal" data-id="{{ $data->id }}"
+                                 >Lihat Resep</a>
                         </td>
 
                         <td>

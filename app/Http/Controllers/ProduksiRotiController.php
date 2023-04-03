@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProduksiRoti;
+use App\Models\ResepRoti;
 use Illuminate\Http\Request;
 use App\Models\StokBahanBaku;
 use Illuminate\Support\Facades\Auth;
@@ -12,24 +13,59 @@ class ProduksiRotiController extends Controller
     public function index()
     {
         $produksi = ProduksiRoti::all();
-        return view('roti.produksi-index',compact('produksi'));
+        return view('roti.produksi-index', compact('produksi'));
     }
 
     public function create()
     {
 
-        $stok = StokBahanBaku::all();
-        return view('roti.produksi-create',compact('stok'));
+        $resep = ResepRoti::all();
+        return view('roti.produksi-create', compact('resep'));
     }
 
     public function store(Request $request)
     {
-        $produksi = new ProduksiRoti();
 
-        $produksi->nama = $request->nama;
-        $produksi->jumlah_produksi = $request->jumlah_produksi;
-        $produksi->diproduksi_oleh = Auth::user()->name ?? 'Test';
-        $produksi->save();
+        // dd($request->all());
+        $resep = ResepRoti::with('bahanBaku')->find($request->nama);
+
+
+        foreach ($resep->resepBahanBakus as $bahanBaku) {
+            // Hitung jumlah bahan baku yang dibutuhkan
+
+
+            $jumlahBahanBaku = $bahanBaku->jumlah_bahan_baku * $request->jumlah_produksi;
+
+
+
+
+
+            // Ambil stok bahan baku dari database
+            $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
+
+            // Periksa apakah stok cukup
+            if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $jumlahBahanBaku) {
+                // Jika stok tidak cukup, kembalikan response error
+                return response()->json(['message' => 'Stok bahan baku tidak cukup'], 400);
+            }
+
+
+            // Kurangi stok bahan baku
+            $stokBahanBaku->jumlah -= $jumlahBahanBaku;
+            $stokBahanBaku->save();
+        }
+
+        // Buat objek ProduksiRoti baru
+        $produksiRoti = new ProduksiRoti([
+            'nama_roti' => $resep->nama_resep_roti,
+            'jumlah_produksi' => $request->jumlah_produksi,
+            'diproduksi_oleh' => Auth::check() ? Auth::user()->name : 'Test',
+            'resep_id' => $request->nama,
+        ]);
+
+        // Simpan objek ke database
+        $produksiRoti->save();
+
 
         return redirect()->route('produksi.index');
     }
@@ -50,8 +86,11 @@ class ProduksiRotiController extends Controller
         //
     }
 
-    public function destroy(ProduksiRoti $produksiRoti)
+    public function delete($id)
     {
-        //
+        $produksiRoti = ProduksiRoti::find($id);
+        $produksiRoti->delete();
+
+        return redirect()->route('produksi.index');
     }
 }

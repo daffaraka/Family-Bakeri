@@ -17,8 +17,12 @@
         <form action="{{ route('produksi.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="">Nama Roti </label>
-                <input type="text" name="nama" class="form-control">
+                <label for="">Nama Roti  <b>(Sesuai Resep) </b>  </label>
+                <select name="nama" id="" class="livesearch form-control">
+                    @foreach ($resep as $data)
+                        <option value="{{$data->id}}">{{$data->nama_resep_roti}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="mb-3">
                 <label for="">Jumlah Produksi</label>

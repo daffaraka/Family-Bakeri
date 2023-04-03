@@ -16,18 +16,6 @@
     </style>
     <div class="container py-4">
 
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    <label><strong>Status :</strong></label>
-                    <select id='status' class="form-control" style="width: 200px">
-                        <option value="">--Select Status--</option>
-                        <option value="1">Active</option>
-                        <option value="0">Deactive</option>
-                    </select>
-                </div>
-            </div>
-        </div>
         <a href="{{ route('produksi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
                 aria-hidden="true"></i> Tambah Produksi Roti</a>
         <table class="table table-hover table-light table-striped" id="dataTable">
@@ -44,12 +32,12 @@
                 @forelse ($produksi as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nama }}</td>
+                        <td>{{ $data->nama_roti }}</td>
                         <td>{{ $data->jumlah_produksi }}</td>
                         <td>{{ $data->diproduksi_oleh }}</td>
                         <td>
-                            <a href="{{ route('pemesanan.edit', $data->id) }}" class="btn btn-warning">Edit</a>
-                            <a href="{{ route('pemesanan.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                            <a href="{{ route('produksi.edit', $data->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('produksi.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
 
                         </td>
 
