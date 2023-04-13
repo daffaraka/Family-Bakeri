@@ -17,6 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nama_bahan_baku');
             $table->bigInteger('jumlah');
+            $table->string('satuan');
+            $table->string('terakhir_diedit_by');
             $table->timestamps();
         });
     }

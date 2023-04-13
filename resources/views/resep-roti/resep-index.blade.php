@@ -28,7 +28,8 @@
                     <th scope="col">#</th>
                     <th scope="col">Nama Roti</th>
                     <th scope="col">Resep</th>
-
+                    <th scope="col">Harga</th>
+                    <th scope="col">PPn</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -37,6 +38,8 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_resep_roti }}</td>
+                        <td>Rp. {{ number_format($data->harga) }}</td>
+                        <td>{{ $data->ppn }} %</td>
                         <td>
                             <a class="btn btn-primary"
                             href="{{route('resep.show',$data->id)}}"

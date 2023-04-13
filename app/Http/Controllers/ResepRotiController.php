@@ -28,11 +28,14 @@ class ResepRotiController extends Controller
     public function store(Request $request)
     {
         $resepRoti = new ResepRoti;
+        $resepRoti->harga = $request->harga;
         $resepRoti->nama_resep_roti = $request->nama_resep_roti;
+        $resepRoti->ppn = $request->ppn;
         $resepRoti->save();
 
 
         for ($i = 0; $i < count($request->nama_bahan_baku); $i++) {
+            // dd($jbb_satuan);
             $resepBahanBaku = new ResepBahanBaku;
             $resepBahanBaku->resep_roti_id = $resepRoti->id;
             $resepBahanBaku->stok_bahan_baku_id = $request->nama_bahan_baku[$i];
@@ -66,7 +69,7 @@ class ResepRotiController extends Controller
                 <tr>
                         <td>" . $bb->bahanBaku->nama_bahan_baku . "</td>
                         <td>" . $bb->jumlah_bahan_baku . "</td>
-                        <td>" . $bb->satuan . " </td>
+                        <td>" . $bb->satuan  . " </td>
                 </tr>";
             $html .= "
                     </td>
@@ -98,6 +101,8 @@ class ResepRotiController extends Controller
         if (empty($resepRoti)) {
             return response()->json(['message' => 'Resep Roti tidak ditemukan'], 404);
         }
+
+
         $resepRoti->nama_resep_roti = $request->input('nama_resep_roti');
         $resepRoti->save();
 
@@ -110,8 +115,8 @@ class ResepRotiController extends Controller
             $resepRoti->bahanBaku()->detach();
 
             // Insert updated pivot records
-            for ($i=0; $i < count($namaBahanBaku); $i++) {
-                $stokBahanBaku = StokBahanBaku::where('id',$namaBahanBaku[$i])->get();
+            for ($i = 0; $i < count($namaBahanBaku); $i++) {
+                $stokBahanBaku = StokBahanBaku::where('id', $namaBahanBaku[$i])->get();
 
                 $satuan = $stokBahanBaku[0]->satuan;
 

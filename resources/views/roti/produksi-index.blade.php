@@ -49,6 +49,7 @@
             </tbody>
         </table>
     </div>
+    @include('vendor.sweetalert.alert')
 @endsection
 @include('partials.scripts')
 <script>

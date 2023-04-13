@@ -18,9 +18,12 @@ return new class extends Migration
             $table->string('nama_roti');
             $table->integer('jumlah_produksi');
             $table->string('diproduksi_oleh');
-            $table->foreignId('resep_id')->constrained('resep_rotis');
-            $table->timestamps();
+            $table->unsignedBigInteger('resep_id');
 
+
+            $table->foreign('resep_id')->references('id')->on('resep_rotis')
+                  ->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

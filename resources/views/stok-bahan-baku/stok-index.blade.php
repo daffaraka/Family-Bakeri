@@ -37,13 +37,14 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_bahan_baku }}</td>
                         <td>
-                            <button class="btn btn-sm {{ $data->jumlah < 50 ? 'btn-danger' : 'btn-success' }}">
+                            <button class="btn btn-sm {{ $data->jumlah < 5000 ? 'btn-danger' : 'btn-success' }}">
                                 {{ $data->jumlah < 50 ? 'Stok menipis' : 'Stok Aman' }}
                             </button>
                         </td>
                         <td>
+                            {{number_format($data->jumlah/1000,2,',','.')}}
 
-                            {{ $data->jumlah }}
+
                             <br>
                         </td>
                         <td>{{ $data->satuan }}</td>

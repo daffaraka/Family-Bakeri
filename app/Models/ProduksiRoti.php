@@ -17,4 +17,8 @@ class ProduksiRoti extends Model
         'resep_id'
     ];
 
+    public function ResepRoti()
+    {
+        return $this->belongsTo(ResepRoti::class, 'resep_id');
+    }
 }

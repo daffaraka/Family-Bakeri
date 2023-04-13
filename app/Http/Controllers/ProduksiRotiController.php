@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProduksiRoti;
 use App\Models\ResepRoti;
+use App\Models\ProduksiRoti;
 use Illuminate\Http\Request;
 use App\Models\StokBahanBaku;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProduksiRotiController extends Controller
 {
@@ -30,15 +31,12 @@ class ProduksiRotiController extends Controller
         $resep = ResepRoti::with('bahanBaku')->find($request->nama);
 
 
+
         foreach ($resep->resepBahanBakus as $bahanBaku) {
             // Hitung jumlah bahan baku yang dibutuhkan
 
 
             $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->jumlah_produksi;
-
-
-
-
 
             // Ambil stok bahan baku dari database
             $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
@@ -46,7 +44,9 @@ class ProduksiRotiController extends Controller
             // Periksa apakah stok cukup
             if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $bahanBakuNeeded) {
                 // Jika stok tidak cukup, kembalikan response error
-                return response()->json(['message' => 'Stok bahan baku tidak cukup'], 400);
+
+                alert()->error('Kesalahan', 'Bahan Baku Tidak Cukup');
+                return redirect()->back();
             }
 
 
@@ -70,20 +70,22 @@ class ProduksiRotiController extends Controller
         return redirect()->route('produksi.index');
     }
 
-    public function show(ProduksiRoti $produksiRoti)
+    public function edit($id)
     {
-        //
+        $roti = ProduksiRoti::find($id);
+        return view('roti.produksi-edit', compact('roti'));
     }
 
-
-    public function edit(ProduksiRoti $produksiRoti)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $roti = ProduksiRoti::find($id);
 
-    public function update(Request $request, ProduksiRoti $produksiRoti)
-    {
-        //
+        $roti->update($request->all());
+
+
+        alert()->success('Sukses', 'Data ' . $roti->nama_roti . ' telah diperbarui');
+
+        return redirect()->route('produksi.index');
     }
 
     public function delete($id)

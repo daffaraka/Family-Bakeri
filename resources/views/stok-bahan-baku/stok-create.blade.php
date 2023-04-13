@@ -1,6 +1,7 @@
 @extends('layout')
 @section('title','Tambah Bahan Baku - Family Bakery')
 @section('content')
+    @include('flash')
     <div class="container py-3">
         <form action="{{route('stok.store')}}" method="POST">
             @csrf
@@ -10,13 +11,21 @@
             </div>
             <div class="mb-3">
                 <label for="">Jumlah Bahan Baku</label>
-                <input type="number" class="form-control" name="jumlah" >
+                <input type="text" class="form-control" name="jumlah" >
             </div>
             <div class="mb-3">
                 <label for="">Satuan</label>
-                <input type="text" class="form-control" name="satuan" >
+                <select name="satuan" class="form-control text-dark" id="">
+                    <option value="Kg">Kg</option>
+                    <option value="Gram">G</option>
+                    <option value="Pcs">Pcs</option>
+                    <option value="Butir">Butir</option>
+                </select>
             </div>
             <button type="submit"  class="btn btn-primary">Simpan</button>
         </form>
     </div>
+    @include('sweetalert::alert')
 @endsection
+
+@include('partials.scripts')

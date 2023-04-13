@@ -14,19 +14,15 @@
         }
     </style>
     <div class="container py-3" id="myModal" tabindex="-1">
-        <form action="{{ route('produksi.store') }}" method="POST">
+        <form action="{{ route('produksi.update',$roti->id) }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="">Nama Roti <b>(Sesuai Resep) </b> </label>
-                <select name="nama" id="" class="livesearch form-control">
-                    @foreach ($resep as $data)
-                        <option value="{{ $data->id }}">{{ $data->nama_resep_roti }}</option>
-                    @endforeach
-                </select>
+                <input type="text" name="nama_roti" readonly value="{{$roti->nama_roti}}" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="">Jumlah Produksi</label>
-                <input type="number" class="form-control" name="jumlah_produksi">
+                <input type="number" class="form-control" value="{{$roti->jumlah_produksi}}" name="jumlah_produksi">
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>

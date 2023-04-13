@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KasirController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\BahanBakuController;
-use App\Http\Controllers\PemesananBahanBakuController;
-use App\Http\Controllers\ProduksiRotiController;
-use App\Http\Controllers\ResepRotiController;
 use App\Http\Controllers\Select2Controller;
+use App\Http\Controllers\BahanBakuController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ResepRotiController;
+use App\Http\Controllers\ProduksiRotiController;
 use App\Http\Controllers\StokBahanBakuController;
+use App\Http\Controllers\PemesananBahanBakuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,7 @@ use App\Http\Controllers\StokBahanBakuController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 
@@ -29,9 +31,9 @@ Route::get('tes', function () {
     return view('tes');
 });
 
-Route::get('dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('tes-data',[KasirController::class,'tes']);
+
+Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
 
 Route::get('/pemesanan-bahan-baku',[PemesananBahanBakuController::class,'index'])->name('pemesanan.index');
 Route::get('/pemesanan-bahan-baku/create',[PemesananBahanBakuController::class,'create'])->name('pemesanan.create');
@@ -63,6 +65,22 @@ Route::get('/resep-roti/details/{id}',[ResepRotiController::class,'show'])->name
 Route::get('/resep-roti/edit/{id}',[ResepRotiController::class,'edit'])->name('resep.edit');
 Route::post('/resep-roti/update/{id}',[ResepRotiController::class,'update'])->name('resep.update');
 Route::get('/resep-roti/delete/{id}',[ResepRotiController::class,'delete'])->name('resep.delete');
+
+
+
+Route::get('/kasir',[KasirController::class,'index'])->name('kasir.index');
+Route::get('/kasir/create',[KasirController::class,'create'])->name('kasir.create');
+Route::post('/kasir/store',[KasirController::class,'store'])->name('kasir.store');
+Route::get('/kasir/details/{id}',[KasirController::class,'show'])->name('kasir.show');
+Route::get('/kasir/edit/{id}',[KasirController::class,'edit'])->name('kasir.edit');
+Route::post('/kasir/update/{id}',[KasirController::class,'update'])->name('kasir.update');
+Route::get('/kasir/delete/{id}',[KasirController::class,'delete'])->name('kasir.delete');
+Route::get('/kasir/update-stok-tersisa',[KasirController::class,'updateStokTersisa'])->name('kasir.updateStokTersisa');
+
+// Dropdown dinamis
+
+Route::post('/get-data-roti/{id}',[KasirController::class,'getDataRoti'])->name('getDataRoti');
+Route::get('/get-data-by-date/}',[KasirController::class,'getDataByDate'])->name('getDataByDate');
 
 // Route::get('select2-search-stok', [Select2Controller::class, 'searchStokBahanBaku']);
 

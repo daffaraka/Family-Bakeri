@@ -30,6 +30,16 @@
                         <input type="text" name="nama_resep_roti" class="form-control m-input" placeholder="Nama Roti"
                             autocomplete="on" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="">Harga Roti</label>
+                        <input type="text" name="harga" class="form-control m-input" placeholder="Nama Roti"
+                            autocomplete="on" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="">PPn</label>
+                        <input type="text" name="ppn" class="form-control m-input" placeholder="Nama Roti"
+                            autocomplete="on" required>
+                    </div>
                     <label for="">Nama Bahan Baku</label>
                     <div id="inputFormRow">
                         <div class="input-group mb-3">
@@ -40,8 +50,12 @@
                             </select>
                             <input type="number" name="jumlah_bahan_baku[]" required class="form-control w-25 text-dark"
                                 placeholder="Jumlah Bahan Baku" autocomplete="on">
-                            <input type="text" name="satuan[]" required class="form-control w-25 text-dark" placeholder="Satuan"
-                                autocomplete="on">
+                            <select name="satuan[]" class="form-control text-dark" id="">
+                                <option value="Gram">Gram</option>
+                                <option value="Kg">Kg</option>
+                                <option value="Pcs">Pcs</option>
+                                <option value="Butir">Butir</option>
+                            </select>
                             <div class="input-group-append">
                                 <button id="removeRow" type="button" class="btn btn-danger">Kurangi</button>
                             </div>
@@ -85,7 +99,12 @@
             html +=
                 '<input type="number" name="jumlah_bahan_baku[]" class="form-control m-input text-dark" placeholder="Jumlah Bahan Baku" required autocomplete="off">';
             html +=
-                '  <input type="text" name="satuan[]" required class="form-control text-dark" placeholder="Satuan" autocomplete="on">'
+                '  <select name="satuan[]" class="form-control text-dark" id="">'
+            html += '<option value="Gram">Gram</option>'
+            html += '<option value="Kg">Kg</option>'
+            html += '<option value="Pcs">Pcs</option>'
+            html += '<option value="Butir">Butir</option>'
+            html += '</select>'
             html += '<div class="input-group-append">';
             html += '<button id="removeRow" type="button" class="btn btn-danger">Kurangi</button>';
             html += '</div>';

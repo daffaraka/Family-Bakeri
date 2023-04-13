@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('resep_rotis', function (Blueprint $table) {
             $table->id();
             $table->string('nama_resep_roti');
+            $table->integer('harga');
+            $table->integer('ppn');
             $table->timestamps();
         });
     }

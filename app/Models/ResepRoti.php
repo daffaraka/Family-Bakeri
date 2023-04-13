@@ -14,6 +14,7 @@ class ResepRoti extends Model
     [
         'nama_resep_roti',
         'nama_bahan_baku',
+        'harga',
         'jumlah_bahan_baku'
     ];
 
@@ -38,5 +39,10 @@ class ResepRoti extends Model
     public function resepBahanBakus()
     {
         return $this->hasMany(ResepBahanBaku::class);
+    }
+
+    public function ProduksiRoti()
+    {
+        return $this->hasMany(ProduksiRoti::class,'resep_id','id');
     }
 }
