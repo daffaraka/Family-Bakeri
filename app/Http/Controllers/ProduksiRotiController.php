@@ -34,7 +34,7 @@ class ProduksiRotiController extends Controller
             // Hitung jumlah bahan baku yang dibutuhkan
 
 
-            $jumlahBahanBaku = $bahanBaku->jumlah_bahan_baku * $request->jumlah_produksi;
+            $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->jumlah_produksi;
 
 
 
@@ -44,14 +44,14 @@ class ProduksiRotiController extends Controller
             $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
 
             // Periksa apakah stok cukup
-            if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $jumlahBahanBaku) {
+            if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $bahanBakuNeeded) {
                 // Jika stok tidak cukup, kembalikan response error
                 return response()->json(['message' => 'Stok bahan baku tidak cukup'], 400);
             }
 
 
             // Kurangi stok bahan baku
-            $stokBahanBaku->jumlah -= $jumlahBahanBaku;
+            $stokBahanBaku->jumlah -= $bahanBakuNeeded;
             $stokBahanBaku->save();
         }
 
