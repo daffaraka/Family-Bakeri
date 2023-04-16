@@ -38,14 +38,13 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_resep_roti }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ route('resep.show', $data->id) }}" id="button-resep"
+                                data-toggle="modal" data-target="#resepModal" data-id="{{ $data->id }}">Lihat Resep</a>
+                        </td>
                         <td>Rp. {{ number_format($data->harga) }}</td>
                         <td>{{ $data->ppn }} %</td>
-                        <td>
-                            <a class="btn btn-primary"
-                            href="{{route('resep.show',$data->id)}}"
-                                 id="button-resep" data-toggle="modal" data-target="#resepModal" data-id="{{ $data->id }}"
-                                 >Lihat Resep</a>
-                        </td>
+
 
                         <td>
                             <a href="{{ route('resep.edit', $data->id) }}" class="btn btn-warning">Edit</a>

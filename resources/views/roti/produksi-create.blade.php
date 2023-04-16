@@ -26,7 +26,7 @@
             </div>
             <div class="mb-3">
                 <label for="">Jumlah Produksi</label>
-                <input type="number" class="form-control" name="jumlah_produksi">
+                <input type="number" class="form-control" name="stok_masuk">
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>

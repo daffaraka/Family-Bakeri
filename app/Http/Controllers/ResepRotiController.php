@@ -30,7 +30,7 @@ class ResepRotiController extends Controller
         $resepRoti = new ResepRoti;
         $resepRoti->harga = $request->harga;
         $resepRoti->nama_resep_roti = $request->nama_resep_roti;
-        $resepRoti->ppn = $request->ppn;
+        $resepRoti->ppn = $request->ppn ?? 0;
         $resepRoti->save();
 
 
@@ -116,9 +116,7 @@ class ResepRotiController extends Controller
 
             // Insert updated pivot records
             for ($i = 0; $i < count($namaBahanBaku); $i++) {
-                $stokBahanBaku = StokBahanBaku::where('id', $namaBahanBaku[$i])->get();
-
-                $satuan = $stokBahanBaku[0]->satuan;
+                $satuan = $request->satuan[$i];
 
                 $resepRoti->bahanBaku()->attach($namaBahanBaku[$i], ['jumlah_bahan_baku' => $jumlahBahanBaku[$i], 'satuan' => $satuan]);
             }

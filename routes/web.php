@@ -53,8 +53,8 @@ Route::get('/stok-bahan-baku/delete/{id}',[StokBahanBakuController::class,'delet
 Route::get('/produksi-roti',[ProduksiRotiController::class,'index'])->name('produksi.index');
 Route::get('/produksi-roti/create',[ProduksiRotiController::class,'create'])->name('produksi.create');
 Route::post('/produksi-roti/store',[ProduksiRotiController::class,'store'])->name('produksi.store');
-Route::get('/produksi-roti/edit/{id}',[ProduksiRotiController::class,'edit'])->name('produksi.edit');
-Route::post('/produksi-roti/update/{id}',[ProduksiRotiController::class,'update'])->name('produksi.update');
+Route::get('/produksi-roti/edit',[ProduksiRotiController::class,'edit'])->name('produksi.edit');
+Route::post('/produksi-roti/update',[ProduksiRotiController::class,'update'])->name('produksi.update');
 Route::get('/produksi-roti/delete/{id}',[ProduksiRotiController::class,'delete'])->name('produksi.delete');
 
 

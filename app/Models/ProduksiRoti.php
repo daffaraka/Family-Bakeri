@@ -12,9 +12,13 @@ class ProduksiRoti extends Model
     protected $fillable =
     [
         'nama_roti',
-        'jumlah_produksi',
+        'stok_masuk',
+        'stok_sekarang',
+        'laku',
         'diproduksi_oleh',
-        'resep_id'
+        'resep_id',
+
+
     ];
 
     public function ResepRoti()

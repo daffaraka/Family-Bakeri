@@ -26,52 +26,50 @@
                     <th rowspan="2">Tanggal Dibuat</th>
                     <th rowspan="2">Harga</th>
                     <th rowspan="2">Stok Masuk</th>
-                    <th rowspan="2">Jumlah</th>
+                    <th rowspan="2">Jumlah <br> Awal</th>
                     <th rowspan="2">Laku</th>
                     <th rowspan="2">Sisa</th>
-                    {{-- <th rowspan="2">Total</th>
-                <th rowspan="2">Roti Off</th> --}}
                     <th scope="col">Pesanan 1</th>
                     <th scope="col">Pesanan 2</th>
                     <th scope="col">Pesanan 3</th>
                     <th rowspan="2">Total Rizky</th>
                     <th rowspan="2">Total Palem</th>
                     <th rowspan="2">Total Moro Jaya</th>
-
-
+                    <th rowspan="1">Total Penjualan Data Ini</th>
                 </tr>
                 <tr>
                     <th scope="col">Rizky </th>
                     <th scope="col">Palem </th>
                     <th scope="col">Moro Jaya</th>
+                    <th scope="col">(Laku * Harga)</th>
                 </tr>
             </thead>
             <tfoot>
 
                 <tr>
-                    <th class="text-right" colspan="3">Total Penjualan Roti</th>
+                    <th class="text-right" colspan="3">Total Penjualan Keseluruhan</th>
                     <th colspan="9"></th>
                     <th id="total_penjualan"></th>
                 </tr>
                 <tr>
-                    <th class="text-right" colspan="3">Total Pemotongan</th>
+                    <th class="text-right" colspan="3">Total Pesanan</th>
                     <th colspan="9"></th>
                     <th id="total_pesanan"></th>
                 </tr>
                 <tr>
-                    <th class="text-right" colspan="3">PPn</th>
+                    <th class="text-right" colspan="3">Total Ppn</th>
                     <th colspan="9"></th>
-                    <th id="pemotongan"></th>
+                    <th id="total_ppn"></th>
                 </tr>
                 <tr>
-                    <th class="text-right" colspan="3">Total </th>
+                    <th class="text-right" colspan="3">Total Toko </th>
                     <th colspan="9"></th>
-                    <th id="sub_total"></th>
+                    <th id="total_toko"></th>
                 </tr>
                 <tr>
-                    <th class="text-right" colspan="3">Total (Tanpa PPn) </th>
+                    <th class="text-right" colspan="3">Total After Ppn </th>
                     <th colspan="9"></th>
-                    <th ></th>
+                    <th id="total_after_ppn"></th>
                 </tr>
 
             </tfoot>
@@ -99,18 +97,18 @@
                 },
                 dataType: 'json',
                 success: function(result) {
-                    $('#harga').val(result.roti.harga);
-                    $('#stok_masuk').val(result.roti.produksi_roti[0].jumlah_produksi);
+                    $('#harga').val(result.roti.harga.toLocaleString());
+                    $('#stok_sekarang').val(result.roti.produksi_roti[0].stok_sekarang);
 
                     $('#laku').on('keyup', function() {
                         var laku = parseInt($(this).val());
-                        var stok_masuk = parseInt($('#stok_masuk').val());
-                        var sisa = stok_masuk - laku;
+                        var stok_sekarang = parseInt($('#stok_sekarang').val());
+                        var sisa = stok_sekarang - laku;
 
                         // Set nilai sisa ke input field dengan id "sisa"
                         $('#sisa').val(sisa);
 
-                        if (laku > stok_masuk) {
+                        if (laku > stok_sekarang) {
                             $('#btn-submit').prop('disabled', true);
                             // Tampilkan pesan error atau lakukan tindakan yang sesuai
                             Swal.fire({
@@ -192,7 +190,7 @@
                 },
                 {
                     data: 'harga',
-                    name: 'harga'
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
                 },
                 {
                     data: 'stok_masuk',
@@ -224,38 +222,55 @@
                 },
                 {
                     data: 'total_rizky',
-                    name: 'total_rizky'
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
                 },
                 {
                     data: 'total_palem',
-                    name: 'total_palem'
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
                 },
                 {
                     data: 'total_moro_jaya',
-                    name: 'total_moro_jaya'
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
+                },
+                {
+                    data: 'total_penjualan_ini',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
                 },
 
 
             ],
-            footerCallback: function(row, data, start, end, display, response) {
+            footerCallback: function(row, data, start, end, display,response) {
+
+
                 var totalPenjualan = 0; // Inisialisasi total penjualan dengan nilai 0
-                var total_pesanan = 0; // Inisialisasi total penjualan dengan nilai 0
-                var pemotongan = 0; // Inisialisasi total penjualan dengan nilai 0
-                var sub_total = 0; // Inisialisasi total penjualan dengan nilai 0
+                var totalPemesanan = 0; // Inisialisasi total penjualan dengan nilai 0
+                var totalToko = 0; // Inisialisasi total penjualan dengan nilai 0
+                var totalPPn = 0; // Inisialisasi total penjualan dengan nilai 0
+                var totalAfterPpn = 0;
+
+                // Menampilkan total_pemesanan dalam footer menggunakan jQuery
+                // $('#total_pesanan').html('Total Pemesanan: ' + total_pemesanan);
+
 
                 data.forEach(function(rowData) {
                     // Mengakses nilai total_penjualan dari setiap data baris (rowData) pada table
-                    totalPenjualan = parseFloat(rowData.total_penjualan);
-                    total_pesanan = parseFloat(rowData.total_pesanan);
-                    pemotongan = parseFloat(rowData.pemotongan);
-                    sub_total = parseFloat(rowData.sub_total);
+                    totalPenjualan += parseFloat(rowData.total_penjualan_ini);
+                    totalPemesanan += parseFloat(rowData.total_rizky + rowData.total_palem + rowData.total_moro_jaya);
+                    totalToko = parseFloat(totalPenjualan - totalPemesanan);
+                    totalPPn += parseFloat(rowData.total_ppn);
+                    totalAfterPpn = parseFloat(totalToko - totalPPn);
+
                 });
 
-                $('#total_penjualan').html('Rp. '+totalPenjualan);
-                $('#total_pesanan').html('Rp. '+total_pesanan);
-                $('#pemotongan').html('Rp. '+pemotongan);
-                $('#sub_total').html('Rp. '+sub_total);
+
+                $('#total_penjualan').html('Rp. ' + totalPenjualan.toLocaleString());
+                $('#total_pesanan').html('Rp. ' + totalPemesanan.toLocaleString());
+                $('#total_toko').html('Rp. ' + totalToko.toLocaleString());
+                $('#total_ppn').html('Rp. ' + totalPPn.toLocaleString());
+                $('#total_after_ppn').html('Rp. ' + totalAfterPpn.toLocaleString());
             }
+
+
         });
     });
 </script>

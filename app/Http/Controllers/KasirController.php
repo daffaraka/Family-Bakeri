@@ -7,6 +7,7 @@ use App\Models\Kasir;
 use App\Models\ResepRoti;
 use App\Models\ProduksiRoti;
 use Illuminate\Http\Request;
+use App\Models\StokBahanBaku;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -30,19 +31,21 @@ class KasirController extends Controller
                     ->where('tanggal_diproduksi', $request->from_date)
                     ->get();
                 // } else if ($request->getAll) {
-                $total_penjualan = Kasir::where('tanggal_diproduksi', $request->from_date)->sum('total_penjualan');
-                $total_pesanan = Kasir::where('tanggal_diproduksi', $request->from_date)->sum('total_pesanan');
-                $pemotongan = Kasir::where('tanggal_diproduksi', $request->from_date)->sum('pemotongan');
-                $sub_total = Kasir::where('tanggal_diproduksi', $request->from_date)->sum('sub_total');
+                $total_penjualan = Kasir::where('tanggal_diproduksi', $request->from_date)->sum('total_penjualan_ini');
+                $total_pemesanan = Kasir::where('tanggal_diproduksi', $now)->sum(DB::raw('total_rizky + total_palem + total_moro_jaya'));
+                $total_ppn = Kasir::where('tanggal_diproduksi', $request->from_date)->sum('total_ppn');
+                $total_toko = Kasir::where('tanggal_diproduksi', $request->from_date)->sum('total_toko');
+                $total_after_ppn = Kasir::where('tanggal_diproduksi', $request->from_date)->sum('total_after_ppn');
             } else {
                 // $total['roti'] = Kasir::where('tanggal_diproduksi', $request->from_date)->sum(DB::raw('total_rizky + total_palem + total_moro_jaya'));
                 $data = DB::table('kasirs')
                     ->where('tanggal_diproduksi', $now)
                     ->get();
-                $total_penjualan = Kasir::where('tanggal_diproduksi', $now)->sum('total_penjualan');
-                $total_pesanan = Kasir::where('tanggal_diproduksi', $now)->sum('total_pesanan');
-                $pemotongan = Kasir::where('tanggal_diproduksi', $now)->sum('pemotongan');
-                $sub_total = Kasir::where('tanggal_diproduksi', $now)->sum('sub_total');
+                $total_penjualan = Kasir::where('tanggal_diproduksi', $now)->sum('total_penjualan_ini') ?? 0;
+                $total_pemesanan = Kasir::where('tanggal_diproduksi', $now)->sum(DB::raw('total_rizky + total_palem + total_moro_jaya'));
+                $total_ppn = Kasir::where('tanggal_diproduksi', $now)->sum('total_ppn') ?? 0;
+                $total_toko = Kasir::where('tanggal_diproduksi', $now)->sum('total_toko') ?? 0;
+                $total_after_ppn = Kasir::where('tanggal_diproduksi', $now)->sum('total_after_ppn') ?? 0;
             }
             return datatables()->of($data)->addColumn('tanggal_diproduksi', function ($row) {
                 // Mengambil nilai tanggal_diproduksi
@@ -54,12 +57,14 @@ class KasirController extends Controller
                 return $formattedDate;
             })->with('total_penjualan', function () use ($total_penjualan) {
                 return $total_penjualan;
-            })->with('total_pesanan', function () use ($total_pesanan) {
-                return $total_pesanan;
-            })->with('pemotongan', function () use ($pemotongan) {
-                return $pemotongan;
-            })->with('sub_total', function () use ($sub_total) {
-                return $sub_total;
+            })->with('total_pemesanan', function () use ($total_pemesanan) {
+                return $total_pemesanan;
+            })->with('total_ppn', function () use ($total_ppn) {
+                return $total_ppn;
+            })->with('total_toko', function () use ($total_toko) {
+                return $total_toko;
+            })->with('total_after_ppn', function () use ($total_after_ppn) {
+                return $total_after_ppn;
             })
                 ->make(true);
         }
@@ -99,78 +104,171 @@ class KasirController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->harga);
 
 
+        $kasir = Kasir::where('nama_roti', $request->nama_roti)->first();
 
 
-        // $pesanan = $request->input('pesanan');
-        $pemesan = $request->input('pemesan');
-        $sisa_total = $request->input('sisa');
+        // Nama Resep
         $nama_resep_roti = $request->input('nama_roti');
 
+        $resep = ResepRoti::with('bahanBaku')->where('nama_resep_roti', $request->nama_roti)->first();
+        $produksiRoti = ProduksiRoti::with('ResepRoti.bahanBaku')->where('nama_roti', $nama_resep_roti)->first();
+        // Inisiasi harga
+        $harga = $request->harga;
 
-        $resep = ResepRoti::where('nama_resep_roti', $request->nama_roti)->first();
-        $produksiRoti = ProduksiRoti::where('nama_roti', $nama_resep_roti)->first();
+        // Inisiasi pemesan
+        $pemesan = $request->input('pemesan');
+        // Inisiasi Sisa
+        $sisa_total = $produksiRoti->stok_sekarang - $request->laku;
 
-
-        //
+        // Inisiasi PPN
+        $ppn = $resep->ppn;
         $tanggal_sekarang = Carbon::now()->format('Y-m-d');
 
-        if ($request->pemesanan == 'Rizky') {
-            $pemesan = 'Rizky';
+        // Inisiasi Total Penjualan Ini
+
+        $tpi = ($request->harga * $request->laku) + (($request->harga * $ppn / 100) * $request->laku );
+
+        $laku = $request->laku;
+
+
+        //  Mulai kondisi ketika terdapat data yang telah ADA
+        //  Mulai kondisi ketika terdapat data yang telah ADA
+        //  Mulai kondisi ketika terdapat data yang telah ADA
+        //  Mulai kondisi ketika terdapat data yang telah ADA
+        if ($kasir) {
+
+            if ($request->has('pemesanan')) {
+
+                foreach ($resep->resepBahanBakus as $bahanBaku) {
+                    // Hitung jumlah bahan baku yang dibutuhkan
+                    $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->laku;
+
+                    // Ambil stok bahan baku dari database
+                    $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
+
+                    // Periksa apakah stok cukup
+                    if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $bahanBakuNeeded) {
+                        // Jika stok tidak cukup, kembalikan response error
+
+                        alert()->error('Kesalahan', 'Bahan Baku Tidak Cukup');
+                        return redirect()->back();
+                    }
+
+                    // Kurangi stok bahan baku
+                    $stokBahanBaku->jumlah -= $bahanBakuNeeded;
+                    $stokBahanBaku->save();
+                }
+                $result = $this->hitungTotalPenjualan($request, $resep, $produksiRoti);
+                $pemesan = $result['pemesan'];
+                $ppn = $result['ppn'];
+                $laku = $result['laku'];
+                $sisa_total = $result['sisa_total'];
+                $tpi = $result['tpi'];
+            }
+
+            if ($produksiRoti->stok_sekarang  == 0 || $produksiRoti->stok_sekarang < $request->laku) {
+                return redirect()->back()->with('warning', 'Stok roti tidak mencukupi pesanan');
+            } else {
+
+                $kasir->nama_roti = $nama_resep_roti;
+                $kasir->stok_masuk = $produksiRoti->stok_masuk;
+                $kasir->jumlah = $produksiRoti->stok_sekarang;
+                $kasir->ppn = $ppn;
+                $kasir->laku = $kasir->laku += $laku;
+                $kasir->roti_off = $request->roti_off;
+                $kasir->sisa_total = $sisa_total;
+                $kasir->rizky = $pemesan == 'Rizky' ?  $kasir->rizky += $request->laku : $kasir->rizky;
+                $kasir->palem =  $pemesan == 'Palem' ?  $kasir->palem += $request->laku : $kasir->palem;
+                $kasir->moro_jaya = $pemesan == 'Moro Jaya' ?  $kasir->moro_jaya += $request->laku : $kasir->moro_jaya;
+                $kasir->total_rizky =  $pemesan == 'Rizky' ? $kasir->total_rizky += $result['harga_pemesan'] * $request->laku : $kasir->total_rizky ;
+                $kasir->total_palem = $pemesan == 'Palem' ? $kasir->total_palem += $result['harga_pemesan'] * $request->laku : $kasir->total_palem;
+                $kasir->total_moro_jaya = $pemesan == 'Moro Jaya' ? $kasir->total_moro_jaya += $result['harga_pemesan'] * $request->laku : $kasir->total_moro_jaya;
+                $kasir->total_penjualan_ini = $kasir->total_penjualan_ini += $tpi;
+                $kasir->total_ppn = ($request->harga * $request->laku) * ($resep->ppn) / 100;
+                $kasir->tanggal_diproduksi  = $tanggal_sekarang;
+                $kasir->save();
+
+                if (!$request->has('pemesanan')) {
+                    $produksiRoti->stok_sekarang -= $request->input('laku');
+                    $produksiRoti->laku += $request->input('laku');
+                    $produksiRoti->save();
+                }
+            }
+
+
+            // Menyimpan data baru ke dalam tabel Kasir
+            return redirect()->back()->with('success', 'Data ' . $kasir->nama_roti . ' kasir berhasil disimpan dan telah diperbarui.');
         }
-        if ($request->pemesanan == 'Palem') {
-            $pemesan = 'Palem';
+        // JIKA TIDAK TERDAPAT DATA YANG ADA , MAKA INSERT DATA BARU
+        else {
+            if ($request->has('pemesanan')) {
+
+                foreach ($resep->resepBahanBakus as $bahanBaku) {
+                    // Hitung jumlah bahan baku yang dibutuhkan
+                    $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->laku;
+
+                    // Ambil stok bahan baku dari database
+                    $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
+
+                    // Periksa apakah stok cukup
+                    if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $bahanBakuNeeded) {
+                        // Jika stok tidak cukup, kembalikan response error
+
+                        alert()->error('Kesalahan', 'Bahan Baku Tidak Cukup');
+                        return redirect()->back();
+                    }
+
+                    // Kurangi stok bahan baku
+                    $stokBahanBaku->jumlah -= $bahanBakuNeeded;
+                    $stokBahanBaku->save();
+                }
+                $result = $this->hitungTotalPenjualan($request, $resep, $produksiRoti);
+                $pemesan = $result['pemesan'];
+                $ppn = $result['ppn'];
+                $laku = $result['laku'];
+                $sisa_total = $result['sisa_total'];
+                $tpi = $result['tpi'];
+            }
+
+
+
+            if ($produksiRoti->stok_sekarang  == 0 || $produksiRoti->stok_sekarang < $request->laku) {
+                return redirect()->back()->with('warning', 'Stok roti tidak mencukupi pesanan');
+            } else {
+
+
+                $newKasir = new Kasir();
+                $newKasir->nama_roti = $nama_resep_roti;
+                $newKasir->harga = $harga;
+                $newKasir->stok_masuk = $produksiRoti->stok_masuk;
+                $newKasir->jumlah = $produksiRoti->stok_sekarang;
+                $newKasir->ppn = $ppn;
+                $newKasir->laku =  $laku;
+                $newKasir->roti_off = $request->roti_off;
+                $newKasir->sisa_total = $sisa_total;
+                $newKasir->rizky = $pemesan == 'Rizky' ?  $request->input('laku') : 0;   // tambahkan kolom untuk Rizky
+                $newKasir->palem = $pemesan == 'Palem' ?  $request->input('laku') : 0; // tambahkan kolom untuk Palem
+                $newKasir->moro_jaya = $pemesan == 'Moro Jaya' ?  $request->input('laku') : 0; // tambahkan kolom untuk Moro Jaya
+                $newKasir->total_rizky = $pemesan == 'Rizky' ? $result['harga_pemesan'] * $request->laku :0;
+                $newKasir->total_palem = $pemesan == 'Palem' ? $result['harga_pemesan'] * $request->laku : 0;
+                $newKasir->total_moro_jaya =  $pemesan == 'Moro Jaya' ?  $result['harga_pemesan'] * $request->laku : 0;
+                $newKasir->total_penjualan_ini = $tpi;
+                $newKasir->total_ppn = ($request->harga * $request->laku) * ($resep->ppn) / 100;
+                $newKasir->tanggal_diproduksi  = $tanggal_sekarang;
+                $newKasir->save();
+
+                if (!$request->has('pemesanan')) {
+                    $produksiRoti->stok_sekarang -= $request->input('laku');
+                    $produksiRoti->laku += $request->input('laku');
+                    $produksiRoti->save();
+                }
+
+                return redirect()->back()->with('success', 'Data kasir baru berhasil disimpan.');
+            }
         }
-        if ($request->pemesanan == 'Moro Joyo') {
-            $pemesan = 'Moro Joyo';
-        }
-
-
-
-        // if ($pesanan == 'Ya') {
-        // Jika pesanan adalah 'Ya', maka kurangi sisa produksi roti dengan nilai dari input #sisa_total
-
-        // Simpan data kasir dengan informasi pesanan
-        $kasir = new Kasir();
-        $kasir->nama_roti = $nama_resep_roti;
-        $kasir->harga = $request->input('harga');
-        $kasir->stok_masuk = $produksiRoti->jumlah_produksi;
-        $kasir->jumlah = $produksiRoti->jumlah_produksi;
-        $kasir->laku = $request->input('laku');
-        $kasir->ppn = $resep->ppn;
-        $kasir->sisa_total = $sisa_total;
-        $kasir->rizky = $pemesan == 'Rizky' ?  $request->input('laku') : 0;   // tambahkan kolom untuk Rizky
-        $kasir->palem = $pemesan == 'Palem' ?  $request->input('laku') : 0; // tambahkan kolom untuk Palem
-        $kasir->moro_jaya = $pemesan == 'Moro Jaya' ?  $request->input('laku') : 0; // tambahkan kolom untuk Moro Jaya
-        $kasir->total_rizky = $kasir->rizky;
-        $kasir->total_palem = $kasir->palem * $request->harga;
-        $kasir->total_moro_jaya =  $kasir->moro_jaya * $request->harga;
-        $kasir->total_penjualan = $request->harga * $request->laku;
-        $kasir->tanggal_diproduksi  = $tanggal_sekarang;
-        $kasir->save();
-
-        $produksiRoti->jumlah_produksi -= $request->input('laku');
-        $produksiRoti->save();
-
-        // } else if ($pesanan == 'Tidak') {
-        //     // Jika pesanan adalah 'Tidak', maka kurangi sisa produksi roti dengan nilai dari input #sisa_total
-        //     $produksiRoti->jumlah_produksi -= $sisa_total;
-        //     $produksiRoti->save();
-
-        //     // Simpan data kasir dengan informasi bukan pesanan
-        //     $kasir = new Kasir();
-        //     $kasir->nama_roti = $nama_resep_roti;
-        //     $kasir->harga = $request->input('harga');
-        //     $kasir->stok_masuk = $request->input('stok_masuk');
-        //     $kasir->laku = $request->input('laku');
-        //     $kasir->sisa_total = $sisa_total;
-        //     $kasir->rizky = 0; // tambahkan kolom untuk Rizky
-        //     $kasir->palem = 0; // tambahkan kolom untuk Palem
-        //     $kasir->moro_jaya = 0; // tambahkan kolom untuk Moro Jaya
-        //     $kasir->save();
-        // }
-        return redirect()->back()->with('success', 'Data kasir berhasil disimpan.');
     }
 
     public function updateStokTersisa()
@@ -178,19 +276,70 @@ class KasirController extends Controller
         // Mendapatkan waktu sekarang dalam bentuk objek Carbon
         $carbon = new Carbon;
 
-        // Update data Kasir
-        $kasir = Kasir::where('sisa_total', '>', 0)->whereDate('tanggal_diproduksi', '=', $carbon->now());
+        // Mendapatkan data Kasir yang memiliki sisa_total lebih besar dari 0 dan tanggal_diproduksi sama dengan tanggal sekarang
+        $kasir = Kasir::where('sisa_total', '>', 0)->whereDate('tanggal_diproduksi', '=', $carbon->now())->get();
 
+        $besok = $carbon->now()->addDay(1)->format('Y-m-d');
 
-        $kasir =  $kasir->update(['tanggal_diproduksi' => $carbon->addDay(1)]);
+        // Looping untuk setiap data Kasir yang ditemukan
+        foreach ($kasir as $item) {
+            // Membuat data baru berdasarkan data yang ada
+            $newKasir = new Kasir();
+            $newKasir->nama_roti = $item->nama_roti;
+            $newKasir->harga = $item->harga;
+            $newKasir->stok_masuk = $item->stok_masuk;
+            $newKasir->jumlah = $item->jumlah;
+            $newKasir->ppn = $item->ppn;
+            $newKasir->laku = $item->laku;
+            $newKasir->sisa_total = $item->sisa_total;
+            $newKasir->rizky = $item->rizky;
+            $newKasir->palem = $item->palem;
+            $newKasir->moro_jaya = $item->moro_jaya;
+            $newKasir->total_rizky = $item->total_rizky;
+            $newKasir->total_palem = $item->total_palem;
+            $newKasir->total_moro_jaya = $item->total_moro_jaya;
+            $newKasir->total_penjualan_ini = $item->total_penjualan_ini;
+            $newKasir->total_ppn = $item->total_ppn;
+            $newKasir->total_after_ppn = $item->total_after_ppn;
+            $newKasir->tanggal_diproduksi = $besok; // Menambahkan 1 hari dari waktu sekarang untuk tanggal_diproduksi pada data baru
+            // Menyimpan data baru ke dalam tabel Kasir
+            $newKasir->save();
 
-        if ($kasir) {
-            Alert::success('Success', 'Data telah diperbarui');
-        } else {
+            // Update tanggal_diproduksi pada data Kasir yang ditemukan menjadi tanggal sekarang + 1 hari
 
-            Alert::error('Kesalahan', 'Data tidak dapat diperbarui');
         }
 
+        Alert::success('Success', 'Data telah diperbarui');
         return redirect()->back();
+    }
+
+    public function hitungTotalPenjualan($request, $resep, $produksiRoti)
+    {
+        $pemesan = '';
+        $ppn = 0;
+        $laku = 0;
+        $sisa_total = 0;
+        $tpi = 0;
+
+        if ($request->pemesanan == 'Rizky' || $request->pemesanan == 'Palem' || $request->pemesanan == 'Moro Jaya') {
+            $pemesan = $request->pemesanan;
+            $harga_pemesan =  $request->harga + ($request->harga * $resep->ppn / 100);
+            $ppn = 0;
+            $laku = $request->laku;
+            $sisa_total = $produksiRoti->stok_sekarang;
+            $tpi = $harga_pemesan * $request->laku;
+        }
+
+        // Menyusun hasil perhitungan ke dalam array atau object, sesuai kebutuhan
+        $result = [
+            'pemesan' => $pemesan,
+            'harga_pemesan' => $harga_pemesan,
+            'ppn' => $ppn,
+            'laku' => $laku,
+            'sisa_total' => $sisa_total,
+            'tpi' => $tpi
+        ];
+
+        return $result;
     }
 }

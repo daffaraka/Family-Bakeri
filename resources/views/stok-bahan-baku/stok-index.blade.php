@@ -49,7 +49,7 @@
                         </td>
                         <td>{{ $data->satuan }}</td>
                         <td>{{ $data->terakhir_diedit_by }}</td>
-                        <td>{{ $data->updated_at }}</td>
+                        <td>{{ \Carbon\Carbon::parse($data->updated_at)->locale('id')->translatedFormat('d F Y') }}</td>
                         <td>
                             <a href="{{ route('stok.edit', $data->id) }}" class="btn btn-warning">Edit</a>
                             <a href="{{ route('stok.delete', $data->id) }}" class="btn btn-danger">Hapus</a>

@@ -48,6 +48,11 @@
 </head>
 
 <body>
+    <style>
+        input {
+            color: black !important;
+        }
+    </style>
     <!-- Sidenav -->
     @include('partials.sidebar')
     <!-- Main content -->

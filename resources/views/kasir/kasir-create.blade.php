@@ -67,18 +67,21 @@
             <input type="number" name="harga" id="harga" readonly class="form-control">
         </div>
         <div class="form-group">
-            <label for="">Stok Masuk</label>
-            <input type="number" name="stok_masuk" readonly id="stok_masuk" class="form-control">
+            <label for="">Stok Tersedia</label>
+            <input type="number" name="stok_sekarang" readonly id="stok_sekarang" class="form-control">
         </div>
         <div class="form-group">
-            <label for="">Laku</label>
+            <label for="">Jumlah Laku</label>
             <input type="number" name="laku" id="laku" class="form-control" required>
         </div>
         <div class="form-group">
             <label for="">Sisa </label>
             <input type="number" name="sisa" id="sisa" readonly class="form-control" id="target-sisa" required>
         </div>
-
+        <div class="form-group">
+            <label for="">Roti Off </label>
+            <input type="number" name="roti_off" id="roti_off"  class="form-control"  value="0">
+        </div>
         <div class="form-group d-flex justify-content-left">
             <div>
                 <label for="">Apakah ini Pesanan? </label>
@@ -100,9 +103,9 @@
 
         </div>
         <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-info" id="btn-submit">Tambah Data Baru</button>
+            <button type="submit" class="btn btn-warning" id="btn-submit"> <i class="fa fa-plus" aria-hidden="true"></i> Tambah Data Baru</button>
 
-            <a href="{{ route('kasir.updateStokTersisa') }}" class="btn btn-primary">Simpan Data Hari Ini </a>
+            <a href="{{ route('kasir.updateStokTersisa') }}" class="btn btn-primary"> <i class="fa fa-save" aria-hidden="true"></i> Simpan Data Hari Ini </a>
         </div>
 
     </form>

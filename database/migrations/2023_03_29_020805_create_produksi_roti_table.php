@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('produksi_rotis', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama_roti');
-            $table->integer('jumlah_produksi');
+            $table->integer('stok_masuk');
+            $table->integer('stok_sekarang');
+            $table->integer('laku');
             $table->string('diproduksi_oleh');
             $table->unsignedBigInteger('resep_id');
 

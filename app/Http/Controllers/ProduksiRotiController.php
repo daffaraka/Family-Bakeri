@@ -27,16 +27,13 @@ class ProduksiRotiController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request->all());
         $resep = ResepRoti::with('bahanBaku')->find($request->nama);
-
-
 
         foreach ($resep->resepBahanBakus as $bahanBaku) {
             // Hitung jumlah bahan baku yang dibutuhkan
 
 
-            $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->jumlah_produksi;
+            $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->stok_masuk;
 
             // Ambil stok bahan baku dari database
             $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
@@ -49,7 +46,6 @@ class ProduksiRotiController extends Controller
                 return redirect()->back();
             }
 
-
             // Kurangi stok bahan baku
             $stokBahanBaku->jumlah -= $bahanBakuNeeded;
             $stokBahanBaku->save();
@@ -58,7 +54,9 @@ class ProduksiRotiController extends Controller
         // Buat objek ProduksiRoti baru
         $produksiRoti = new ProduksiRoti([
             'nama_roti' => $resep->nama_resep_roti,
-            'jumlah_produksi' => $request->jumlah_produksi,
+            'stok_masuk' => $request->stok_masuk,
+            'stok_sekarang' => $request->stok_masuk,
+            'laku' => 0,
             'diproduksi_oleh' => Auth::check() ? Auth::user()->name : 'Test',
             'resep_id' => $request->nama,
         ]);
@@ -70,17 +68,20 @@ class ProduksiRotiController extends Controller
         return redirect()->route('produksi.index');
     }
 
-    public function edit($id)
+    public function edit()
     {
-        $roti = ProduksiRoti::find($id);
+        $roti = ProduksiRoti::all();
         return view('roti.produksi-edit', compact('roti'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $roti = ProduksiRoti::find($id);
 
-        $roti->update($request->all());
+        $roti = ProduksiRoti::firstWhere('nama_roti', $request->nama_roti);
+
+        $roti->stok_masuk += $request->stok_masuk;
+        $roti->stok_sekarang += $request->stok_masuk;
+        $roti->save();
 
 
         alert()->success('Sukses', 'Data ' . $roti->nama_roti . ' telah diperbarui');

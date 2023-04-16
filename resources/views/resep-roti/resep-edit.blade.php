@@ -20,14 +20,14 @@
         }
     </style>
     <div class="container py-3">
-        <form action="{{route('resep.update',$resep->id)}}" method="POST">
+        <form action="{{ route('resep.update', $resep->id) }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-lg-12">
                     <div class="mb-3">
                         <label for="">Nama Roti</label>
-                        <input type="text" name="nama_resep_roti" class="form-control m-input text-dark" placeholder="Nama Roti"
-                            autocomplete="on" value="{{ $resep->nama_resep_roti }}">
+                        <input type="text" name="nama_resep_roti" class="form-control m-input text-dark"
+                            placeholder="Nama Roti" autocomplete="on" value="{{ $resep->nama_resep_roti }}">
                     </div>
 
 
@@ -47,6 +47,12 @@
                                 <input type="number" name="jumlah_bahan_baku[]" required
                                     class="form-control w-25 text-dark" placeholder="Jumlah Bahan Baku" autocomplete="on"
                                     value="{{ $data->jumlah_bahan_baku }}">
+                                <select name="satuan[]" class="form-control text-dark" id="">
+                                    <option value="Gram" {{$data->satuan == "Gram" ? 'selected' : ''}}>Gram</option>
+                                    <option value="Kg" {{$data->satuan == "Kg" ? 'selected' : ''}}>Kg</option>
+                                    <option value="Pcs" {{$data->satuan == "Pcs" ? 'selected' : ''}}>Pcs</option>
+                                    <option value="Butir" {{$data->satuan == "Butir" ? 'selected' : ''}}>Butir</option>
+                                </select>
                                 <div class="input-group-append">
                                     <button id="removeRow" type="button" class="btn btn-danger">Kurangi</button>
                                 </div>
@@ -90,6 +96,12 @@
             html += '</select>';
             html +=
                 '<input type="number" name="jumlah_bahan_baku[]" class="form-control text-dark m-input" placeholder="Jumlah Bahan Baku" required autocomplete="off">';
+            html += '<select name="satuan[]" class="form-control text-dark" id="">';
+            html += '<option value="Gram">Gram</option>';
+            html += '<option value="Kg">Kg</option>';
+            html += '<option value="Pcs">Pcs</option>';
+            html += '<option value="Butir">Butir</option>';
+            html += '</select>';
             html += '<div class="input-group-append">';
             html += '<button id="removeRow" type="button" class="btn btn-danger">Kurangi</button>';
             html += '</div>';

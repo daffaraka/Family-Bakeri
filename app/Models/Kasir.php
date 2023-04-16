@@ -16,18 +16,22 @@ class Kasir extends Model
         'stok_masuk',
         'jumlah',
         'laku',
+        'ppn',
         'sisa_total',
+        'roti_off',
         'rizky',
         'palem',
         'moro_jaya',
         'total_rizky',
         'total_palem',
         'total_moro_jaya',
-        'ppn',
-        'total_penjualan',
+        // mulai totalan akhir
+        'total_penjualan_ini',
+        'total_penjualan_keseluruhan',
         'total_pesanan',
-        'pemotongan',
-        'sub_total',
+        'total_ppn',
+        'total_toko',
+        'total_after_ppn',
         'tanggal_diproduksi'
     ];
 }
