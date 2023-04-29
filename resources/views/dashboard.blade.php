@@ -4,3 +4,4 @@
     @include('partials.content-dashboard')
 
 @endsection
+@include('partials.scripts')

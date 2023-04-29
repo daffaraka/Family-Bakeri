@@ -12,6 +12,10 @@ class StokBahanBaku extends Model
     [
         'nama_bahan_baku',
         'jumlah',
+        'jumlah_minimal',
+        'harga_keseluruhan',
+        'dp',
+        'deadline_dp',
         'satuan',
         'terakhir_diedit_by'
     ];
@@ -24,5 +28,10 @@ class StokBahanBaku extends Model
     public function resepBahanBakus()
     {
         return $this->hasMany(ResepBahanBaku::class,'id');
+    }
+
+    public function PenggunaanStok()
+    {
+        return $this->hasMany(PenggunaanStokBahanBaku::class);
     }
 }

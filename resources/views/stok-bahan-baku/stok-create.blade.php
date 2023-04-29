@@ -13,6 +13,7 @@
                 <label for="">Jumlah Bahan Baku</label>
                 <input type="text" class="form-control" name="jumlah" >
             </div>
+
             <div class="mb-3">
                 <label for="">Satuan</label>
                 <select name="satuan" class="form-control text-dark" id="">
@@ -21,6 +22,10 @@
                     <option value="Pcs">Pcs</option>
                     <option value="Butir">Butir</option>
                 </select>
+            </div>
+            <div class="mb-3">
+                <label for="">Jumlah Minimal Stok</label>
+                <input type="text" class="form-control" name="jumlah_minimal" >
             </div>
             <button type="submit"  class="btn btn-primary">Simpan</button>
         </form>

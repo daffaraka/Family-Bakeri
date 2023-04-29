@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('nama_bahan_baku');
             $table->bigInteger('jumlah_pesanan');
+            $table->bigInteger('dp');
+            $table->date('deadline_dp');
+            $table->bigInteger('sisa_pembayaran');
             $table->string('status_pesanan');
             $table->bigInteger('harga_satuan');
             $table->bigInteger('total_harga');

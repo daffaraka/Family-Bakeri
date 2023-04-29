@@ -19,116 +19,133 @@ class StokBahanBakuSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Butter',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Gandum',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Butter',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Tepung',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Gandum',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Safron',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Tepung',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Telur',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Butir',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Safron',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Gula',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Telur',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Butir',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Gula Merah',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Gula',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Tepung Tapioka',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Gula Merah',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Gula Pasir',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Tepung Tapioka',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Baking Soda',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Gula Pasir',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Gula',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Baking Soda',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Coklat',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Gula',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Aromatic',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Coklat',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Garam',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Aromatic',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Susu Kering',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Garam',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
 
-            StokBahanBaku::create([
-                'nama_bahan_baku' => 'Tepung Terigu',
-                'jumlah' => $faker->numberBetween(1,10000),
-                'satuan' => 'Kg',
-                'terakhir_diedit_by' => $faker->randomElement(['Admin','User','Family Bakery'])
-            ]);
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Susu Kering',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
+
+        StokBahanBaku::create([
+            'nama_bahan_baku' => 'Tepung Terigu',
+            'jumlah' => $faker->numberBetween(1000, 10000),
+            'jumlah_minimal' => $faker->numberBetween(1000, 10000),
+            'satuan' => 'Kg',
+            'terakhir_diedit_by' => $faker->randomElement(['Admin', 'User', 'Family Bakery'])
+        ]);
     }
 }

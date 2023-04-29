@@ -43,7 +43,7 @@
                                 data-toggle="modal" data-target="#resepModal" data-id="{{ $data->id }}">Lihat Resep</a>
                         </td>
                         <td>Rp. {{ number_format($data->harga) }}</td>
-                        <td>{{ $data->ppn }} %</td>
+                        <td>{{ $data->ppn }} </td>
 
 
                         <td>

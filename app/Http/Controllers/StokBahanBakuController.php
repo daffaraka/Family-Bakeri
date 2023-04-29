@@ -12,6 +12,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class StokBahanBakuController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:stok_bahan_baku-list|stok_bahan_baku-create|stok_bahan_baku-edit|stok_bahan_baku-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:stok_bahan_baku-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:stok_bahan_baku-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:stok_bahan_baku-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $stok = StokBahanBaku::all();
@@ -52,10 +60,12 @@ class StokBahanBakuController extends Controller
             $jumlah = $request->jumlah;
             if ($request->satuan == 'Kg') {
                 $jumlah = $request->jumlah * 1000;
+                $jumlah_min = $request->jumlah_minimal * 1000;
             }
             StokBahanBaku::create(
                 [
                     'nama_bahan_baku' => $request->nama_bahan_baku,
+                    'jumlah_minimal' =>   $jumlah_min,
                     'jumlah' => $jumlah,
                     'satuan' => $request->satuan,
                     'terakhir_diedit_by' => Auth::user()->name ?? 'Test',

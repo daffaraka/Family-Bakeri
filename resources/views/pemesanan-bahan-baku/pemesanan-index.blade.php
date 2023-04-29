@@ -1,7 +1,6 @@
 @extends('layout')
 @section('title', 'Bahan Baku - Family Bakery')
 @section('content')
-
     <style>
         td {
             font-size: 1rem !important;
@@ -16,7 +15,6 @@
         }
     </style>
     <div class="container py-4">
-
         <div class="card">
             <div class="card-body">
                 <div class="form-group">
@@ -42,6 +40,9 @@
                     <th scope="col">Harga Satuan</th>
                     <th scope="col">Total Harga</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Jumlah DP</th>
+                    <th scope="col">Deadline DP</th>
+                    <th scope="col">Sisa Pembayaran</th>
                     <th scope="col">Tanggal Pesanan</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -109,20 +110,36 @@
                     name: 'nama_bahan_baku'
                 },
                 {
-                    data: 'harga_satuan',
-                    name: 'harga_satuan'
-                },
-                {
                     data: 'jumlah_pesanan',
                     name: 'jumlah_pesanan'
                 },
                 {
+                    data: 'harga_satuan',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
+                },
+                {
                     data: 'total_harga',
-                    name: 'total_harga'
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
                 },
                 {
                     data: 'status_pesanan',
                     name: 'status_pesanan'
+                },
+                {
+                    data: 'dp',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
+                },
+                {
+                    data: 'deadline_dp',
+                    type: 'num',
+                    render: {
+                        _: 'display',
+                        sort: 'timestamp'
+                    }
+                },
+                {
+                    data: 'sisa_pembayaran',
+                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
                 },
                 {
                     data: 'created_at',

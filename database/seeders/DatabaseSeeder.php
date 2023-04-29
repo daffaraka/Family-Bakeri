@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         // $this->call(PemesananBahanBakuSeeder::class);
         $this->call(StokBahanBakuSeeder::class);
-        $this->call(KasirSeeder::class);
+        $this->call(PermissionTableSeeder::class);
+        $this->call(RolePermissionSeeder::class);
+        $this->call(AllUserSeeder::class);
 
     }
 }

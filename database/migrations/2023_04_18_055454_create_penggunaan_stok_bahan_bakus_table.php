@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stok_bahan_bakus', function (Blueprint $table) {
+        Schema::create('penggunaan_stok_bahan_bakus', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama_bahan_baku');
-            $table->bigInteger('jumlah');
-            $table->bigInteger('jumlah_minimal');
-            $table->string('satuan');
-            $table->string('terakhir_diedit_by');
+
+            $table->unsignedBigInteger('stok_id');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stok_bahan_bakus');
+        Schema::dropIfExists('penggunaan_stok_bahan_bakus');
     }
 };

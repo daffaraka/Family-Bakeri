@@ -37,8 +37,8 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_bahan_baku }}</td>
                         <td>
-                            <button class="btn btn-sm {{ $data->jumlah < 5000 ? 'btn-danger' : 'btn-success' }}">
-                                {{ $data->jumlah < 50 ? 'Stok menipis' : 'Stok Aman' }}
+                            <button class="btn btn-sm {{ $data->jumlah < $data->jumlah_minimal ? 'btn-danger' : 'btn-success' }}">
+                                {{ $data->jumlah < $data->jumlah_minimal ? 'Stok kritis' : 'Stok Aman' }}
                             </button>
                         </td>
                         <td>
@@ -70,18 +70,19 @@
             allowfullscreen></iframe> --}}
     </div>
 
-    @include('partials.scripts')
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable({
-                language: {
-                    paginate: {
-                        previous: '<span class="fa fa-chevron-left"></span>',
-                        next: '<span class="fa fa-chevron-right"></span>' // or '→'
 
-                    }
-                }
-            });
-        });
-    </script>
 @endsection
+@include('partials.scripts')
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+            language: {
+                paginate: {
+                    previous: '<span class="fa fa-chevron-left"></span>',
+                    next: '<span class="fa fa-chevron-right"></span>' // or '→'
+
+                }
+            }
+        });
+    });
+</script>

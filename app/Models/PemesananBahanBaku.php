@@ -13,6 +13,9 @@ class PemesananBahanBaku extends Model
     [
         'nama_bahan_baku',
         'harga_satuan',
+        'dp',
+        'deadline_dp',
+        'sisa_pembayaran',
         'jumlah_pesanan',
         'status_pesanan',
         'total_harga'

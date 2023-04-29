@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class ResepRotiController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:resep_roti-list|resep_roti-create|resep_roti-show|resep_roti-edit|resep_roti-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:resep_roti-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:resep_roti-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:resep_roti-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $resep = ResepRoti::all();

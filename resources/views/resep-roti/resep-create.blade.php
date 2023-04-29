@@ -38,7 +38,7 @@
                     <div class="mb-3">
                         <label for="">PPn</label>
                         <input type="text" name="ppn" class="form-control m-input" placeholder="Nama Roti"
-                            autocomplete="on" required>
+                            autocomplete="on" >
                     </div>
                     <label for="">Nama Bahan Baku</label>
                     <div id="inputFormRow">

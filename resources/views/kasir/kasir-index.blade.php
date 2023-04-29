@@ -1,7 +1,5 @@
 @extends('layout')
-
 @section('title', 'Kasir')
-
 @section('content')
     @include('kasir.kasir-create')
 
@@ -97,16 +95,17 @@
                 },
                 dataType: 'json',
                 success: function(result) {
-                    $('#harga').val(result.roti.harga.toLocaleString());
+                    $('#harga').val(result.roti.harga);
                     $('#stok_sekarang').val(result.roti.produksi_roti[0].stok_sekarang);
 
                     $('#laku').on('keyup', function() {
                         var laku = parseInt($(this).val());
                         var stok_sekarang = parseInt($('#stok_sekarang').val());
-                        var sisa = stok_sekarang - laku;
 
-                        // Set nilai sisa ke input field dengan id "sisa"
-                        $('#sisa').val(sisa);
+                        // var sisa = stok_sekarang - laku;
+
+                        // // Set nilai sisa ke input field dengan id "sisa"
+                        // $('#sisa').val(sisa);
 
                         if (laku > stok_sekarang) {
                             $('#btn-submit').prop('disabled', true);
@@ -132,18 +131,18 @@
         });
 
 
-        $('#pesanan').on('change', function() {
-            var pilihan = $(this).val(); // Mendapatkan nilai pilihan yang dipilih
+        // $('#pesanan').on('change', function() {
+        //     var pilihan = $(this).val(); // Mendapatkan nilai pilihan yang dipilih
 
-            // Menjalankan kode berdasarkan pilihan yang dipilih
-            if (pilihan == 'Ya') {
-                $('#pemesan').prop('disabled', false); // Mengaktifkan  input #pemesan
-            } else if (pilihan == 'Tidak') {
-                $('#pemesan').prop('disabled', true); // Menonaktifkan input #pemesan
-            } else {
-                $('#pemesan').prop('disabled', true);
-            }
-        });
+        //     // Menjalankan kode berdasarkan pilihan yang dipilih
+        //     if (pilihan == 'Ya') {
+        //         $('#pemesan').prop('disabled', false); // Mengaktifkan  input #pemesan
+        //     } else if (pilihan == 'Tidak') {
+        //         $('#pemesan').prop('disabled', true); // Menonaktifkan input #pemesan
+        //     } else {
+        //         $('#pemesan').prop('disabled', true);
+        //     }
+        // });
 
 
         $('#filter').on('click', function() {
@@ -257,7 +256,7 @@
                     totalPenjualan += parseFloat(rowData.total_penjualan_ini);
                     totalPemesanan += parseFloat(rowData.total_rizky + rowData.total_palem + rowData.total_moro_jaya);
                     totalToko = parseFloat(totalPenjualan - totalPemesanan);
-                    totalPPn += parseFloat(rowData.total_ppn);
+                    totalPPn += parseFloat(rowData.ppn);
                     totalAfterPpn = parseFloat(totalToko - totalPPn);
 
                 });

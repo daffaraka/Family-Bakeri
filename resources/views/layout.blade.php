@@ -76,7 +76,8 @@
 
 
 
-
+    <script src="{{ asset('assets/vendor/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     @include('partials.scripts')
 </body>
 

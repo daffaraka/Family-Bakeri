@@ -47,11 +47,27 @@
         left: 50%;
         transform: translate(-50%, 100%);
     }
+
+    select, option {
+        color: black;
+    }
 </style>
 
 <div class="container my-5 px-5">
     <form action="{{ route('kasir.store') }}" method="POST">
         @csrf
+
+        <div class="form-group">
+            <label for="">Pesanan Oleh </label>
+            <select id="pemesan" name="pemesanan" class="form-control">
+                <option value="">Tidak</option>
+                <option value="Rizky">Rizky</option>
+                <option value="Palem">Palem</option>
+                <option value="Moro Jaya">Moro Jaya</option>
+
+            </select>
+        </div>
+
         <div class="form-group">
             <label for="">Nama Roti</label>
             <select name="nama_roti" id="nama_roti" class="livesearch form-control text-dark">
@@ -68,7 +84,7 @@
         </div>
         <div class="form-group">
             <label for="">Stok Tersedia</label>
-            <input type="number" name="stok_sekarang" readonly id="stok_sekarang" class="form-control">
+            <input type="number" name="stok_sekarang" id="stok_sekarang" class="form-control">
         </div>
         <div class="form-group">
             <label for="">Jumlah Laku</label>
@@ -76,11 +92,11 @@
         </div>
         <div class="form-group">
             <label for="">Sisa </label>
-            <input type="number" name="sisa" id="sisa" readonly class="form-control" id="target-sisa" required>
+            <input type="number" name="sisa" id="sisa" class="form-control" id="target-sisa" required>
         </div>
         <div class="form-group">
             <label for="">Roti Off </label>
-            <input type="number" name="roti_off" id="roti_off"  class="form-control"  value="0">
+            <input type="number" name="roti_off" id="roti_off" class="form-control" value="0">
         </div>
         <div class="form-group d-flex justify-content-left">
             <div>
@@ -91,21 +107,14 @@
                     <option value="Tidak">Tidak</option>
                 </select>
             </div>
-            <div class="pl-5 w-50">
-                <label for="">Pesanan Oleh </label>
-                <select id="pemesan" name="pemesanan" class="form-control" disabled>
-                    <option value="Rizky">Rizky</option>
-                    <option value="Palem">Palem</option>
-                    <option value="Moro Jaya">Moro Jaya</option>
-
-                </select>
-            </div>
 
         </div>
         <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-warning" id="btn-submit"> <i class="fa fa-plus" aria-hidden="true"></i> Tambah Data Baru</button>
+            <button type="submit" class="btn btn-warning" id="btn-submit"> <i class="fa fa-plus"
+                    aria-hidden="true"></i> Tambah Data Baru</button>
 
-            <a href="{{ route('kasir.updateStokTersisa') }}" class="btn btn-primary"> <i class="fa fa-save" aria-hidden="true"></i> Simpan Data Hari Ini </a>
+            <a href="{{ route('kasir.updateStokTersisa') }}" class="btn btn-primary"> <i class="fa fa-save"
+                    aria-hidden="true"></i> Simpan Data Hari Ini </a>
         </div>
 
     </form>

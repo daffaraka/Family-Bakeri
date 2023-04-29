@@ -28,6 +28,10 @@
                 <input type="number" class="form-control" name="jumlah_pesanan">
             </div>
             <div class="mb-3">
+                <label for="">Harga Satuan</label>
+                <input type="number" class="form-control" name="harga_satuan">
+            </div>
+            <div class="mb-3">
                 <label for="">Status Pesanan</label>
                 <select name="status_pesanan" id="" class="form-control">
                     <option value="Sedang Diantar">Sedang Diantar</option>
@@ -37,8 +41,12 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="">Harga Satuan</label>
-                <input type="number" class="form-control" name="harga_satuan">
+                <label for="">DP</label>
+                <input type="number" class="form-control" name="dp">
+            </div>
+            <div class="mb-3">
+                <label for="">Deadline DP</label>
+                <input type="date" class="form-control" name="deadline_dp">
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>

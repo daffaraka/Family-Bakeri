@@ -11,6 +11,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ProduksiRotiController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:produksi_roti-list|produksi_roti-create|produksi_roti-edit|produksi_roti-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:produksi_roti-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:produksi_roti-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:produksi_roti-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $produksi = ProduksiRoti::all();
