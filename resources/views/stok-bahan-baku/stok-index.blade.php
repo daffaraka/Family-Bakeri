@@ -16,14 +16,18 @@
     </style>
     <div class="container py-4">
 
-        <a href="{{ route('stok.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                aria-hidden="true"></i> Tambah Data Stok Bahan Baku</a>
+        @can('stok_bahan_baku-create')
+            <a href="{{ route('stok.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
+                    aria-hidden="true"></i> Tambah Data Stok Bahan Baku</a>
+        @endcan
+
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nama Bahan Baku</th>
                     <th scope="col">Status Jumlah Stok</th>
+                    <th scope="col">Jumlah Stok Minimal</th>
                     <th scope="col">Jumlah</th>
                     <th scope="col">Satuan</th>
                     <th scope="col">Terakhir Diedit oleh</th>
@@ -37,13 +41,27 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_bahan_baku }}</td>
                         <td>
-                            <button class="btn btn-sm {{ $data->jumlah < $data->jumlah_minimal ? 'btn-danger' : 'btn-success' }}">
+                            <button
+                                class="btn btn-sm {{ $data->jumlah < $data->jumlah_minimal ? 'btn-danger' : 'btn-success' }}">
                                 {{ $data->jumlah < $data->jumlah_minimal ? 'Stok kritis' : 'Stok Aman' }}
                             </button>
                         </td>
                         <td>
-                            {{number_format($data->jumlah/1000,2,',','.')}}
+                            @if ($data->satuan == 'Kg')
+                                {{ number_format($data->jumlah / 1000, 2, ',', '.') }}
+                            @else
+                                {{ $data->jumlah }}
+                            @endif
 
+
+                            <br>
+                        </td>
+                        <td>
+                            @if ($data->satuan == 'Kg')
+                                {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.') }}
+                            @else
+                                {{ $data->jumlah_minimal }}
+                            @endif
 
                             <br>
                         </td>
@@ -51,8 +69,12 @@
                         <td>{{ $data->terakhir_diedit_by }}</td>
                         <td>{{ \Carbon\Carbon::parse($data->updated_at)->locale('id')->translatedFormat('d F Y') }}</td>
                         <td>
-                            <a href="{{ route('stok.edit', $data->id) }}" class="btn btn-warning">Edit</a>
-                            <a href="{{ route('stok.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                            @can('stok_bahan_baku-edit')
+                                <a href="{{ route('stok.edit', $data->id) }}" class="btn btn-warning">Edit</a>
+                            @endcan
+                            @can('stok_bahan_baku-delete')
+                                <a href="{{ route('stok.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                            @endcan
 
                         </td>
 

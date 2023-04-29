@@ -48,6 +48,7 @@ class StokBahanBakuController extends Controller
             'satuan.required' => 'Satuan bahan baku harus diisi.',
         ]);
 
+        $jumlah_min = $request->jumlah_minimal;
         // Jika validasi gagal
         if ($validator->fails()) {
             if ($validator->errors())
@@ -77,6 +78,42 @@ class StokBahanBakuController extends Controller
             return redirect()->route('stok.index');
         }
     }
+
+    public function edit($id)
+    {
+        $stok = StokBahanBaku::find($id);
+        return view('stok-bahan-baku.stok-edit', compact('stok'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $stok = StokBahanBaku::find($id);
+        $jumlah_minimal = $request->jumlah_minimal;
+
+        $jumlah = $request->jumlah;
+        if ($request->satuan == 'Kg') {
+            $jumlah = $request->jumlah * 1000;
+            $jumlah_minimal = $request->jumlah_minimal * 1000;
+        }
+
+        $stok->nama_bahan_baku = $request->nama_bahan_baku;
+        $stok->jumlah_minimal = $jumlah_minimal;
+        $stok->jumlah = $jumlah;
+        $stok->satuan = $request->satuan;
+        $stok->terakhir_diedit_by =  Auth::user()->name ?? 'Test';
+        $stok->save();
+
+        if(!$stok) {
+            Alert::success('Gagal diperbarui');
+            return redirect()->back();
+        } else {
+            Alert::success('Berhasil diperbarui');
+            return redirect()->route('stok.index');
+        }
+
+
+    }
+
 
     public function delete($id)
     {

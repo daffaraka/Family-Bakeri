@@ -3,6 +3,9 @@
 @section('content')
 
     <style>
+        select option {
+            color: black;
+        }
         .select2.select2-container {
             width: 50% !important;
             margin-right: 2vh;
@@ -37,8 +40,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="">PPn</label>
-                        <input type="text" name="ppn" class="form-control m-input" placeholder="Nama Roti"
-                            autocomplete="on" >
+                        <select name="ppn" id="" class="form-control text-dark">
+                            <option value="Ya">Ya</option>
+                            <option value="Tidak">Tidak</option>
+
+                        </select>
                     </div>
                     <label for="">Nama Bahan Baku</label>
                     <div id="inputFormRow">

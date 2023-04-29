@@ -131,7 +131,7 @@ class KasirController extends Controller
         $sisa_total = $produksiRoti->stok_sekarang - $request->laku;
 
         // Inisiasi PPN
-        $ppn = 2000;
+        $ppn = $resep->ppn;
         $tanggal_sekarang = Carbon::now()->format('Y-m-d');
 
         // Inisiasi Total Penjualan Ini
@@ -145,7 +145,7 @@ class KasirController extends Controller
         //  Mulai kondisi ketika terdapat data yang telah ADA
         //  Mulai kondisi ketika terdapat data yang telah ADA
         //  Mulai kondisi ketika terdapat data yang telah ADA
-        $result = $this->hitungTotalPenjualan($request, $produksiRoti);
+        $result = $this->hitungTotalPenjualan($resep,$request, $produksiRoti);
 
         if ($kasir) {
 
@@ -182,16 +182,14 @@ class KasirController extends Controller
             }
 
             // INI UPDATE YANG BIASA
-
             if ($produksiRoti->stok_sekarang  == 0 || $produksiRoti->stok_sekarang < $request->laku) {
                 return redirect()->back()->with('warning', 'Stok roti tidak mencukupi pesanan');
             } else {
-                $result = $this->hitungTotalPenjualan($request, $produksiRoti);
+                $result = $this->hitungTotalPenjualan($resep,$request, $produksiRoti);
                 // dd('Ini biasa');
                 $kasir->nama_roti = $nama_resep_roti;
                 $kasir->stok_masuk = $produksiRoti->stok_masuk;
                 $kasir->jumlah = $produksiRoti->stok_sekarang;
-                $kasir->ppn = $ppn * $request->laku;
                 $kasir->laku = $kasir->laku += $laku;
                 $kasir->roti_off = $request->roti_off;
                 $kasir->sisa_total = $request->sisa;
@@ -202,7 +200,7 @@ class KasirController extends Controller
                 $kasir->total_palem = $pemesan == 'Palem' ? $kasir->total_palem += $result['harga_pemesan'] * $request->laku : $kasir->total_palem;
                 $kasir->total_moro_jaya = $pemesan == 'Moro Jaya' ? $kasir->total_moro_jaya += $result['harga_pemesan'] * $request->laku : $kasir->total_moro_jaya;
                 $kasir->total_penjualan_ini = $kasir->total_penjualan_ini += $tpi;
-                $kasir->total_ppn = ($request->harga * $request->laku) * ($resep->ppn) / 100;
+                $kasir->total_ppn += $request->laku * $ppn;
                 $kasir->tanggal_diproduksi  = $tanggal_sekarang;
                 $kasir->save();
 
@@ -260,8 +258,6 @@ class KasirController extends Controller
             // END PEMESANAN
 
 
-
-
             // JIKA PEMBELIAN BIASA
 
             if ($produksiRoti->stok_sekarang  == 0 || $produksiRoti->stok_sekarang < $request->laku) {
@@ -274,7 +270,6 @@ class KasirController extends Controller
                 $newKasir->harga = (int) $request->harga;
                 $newKasir->stok_masuk = $produksiRoti->stok_masuk;
                 $newKasir->jumlah = $produksiRoti->stok_sekarang;
-                $newKasir->ppn = $ppn * $request->laku;
                 $newKasir->laku =  $request->laku;
                 $newKasir->roti_off = $request->roti_off;
                 $newKasir->sisa_total = $request->sisa;
@@ -285,7 +280,7 @@ class KasirController extends Controller
                 $newKasir->total_palem = $pemesan == 'Palem' ? $result['harga_pemesan'] * $request->laku : 0;
                 $newKasir->total_moro_jaya =  $pemesan == 'Moro Jaya' ?  $result['harga_pemesan'] * $request->laku : 0;
                 $newKasir->total_penjualan_ini = $tpi;
-                $newKasir->total_ppn = ($request->harga * $request->laku) * ($resep->ppn) / 100;
+                $newKasir->total_ppn = $request->laku * $ppn;
                 $newKasir->tanggal_diproduksi  = $tanggal_sekarang;
                 $newKasir->save();
 
@@ -319,7 +314,6 @@ class KasirController extends Controller
             $newKasir->harga = $item->harga;
             $newKasir->stok_masuk = $item->stok_masuk;
             $newKasir->jumlah = $item->jumlah;
-            $newKasir->ppn = $item->ppn;
             $newKasir->laku = $item->laku;
             $newKasir->sisa_total = $item->sisa_total;
             $newKasir->roti_off = 0;
@@ -344,11 +338,11 @@ class KasirController extends Controller
         return redirect()->back();
     }
 
-    public function hitungTotalPenjualan($request, $produksiRoti)
+    public function hitungTotalPenjualan($resep, $request, $produksiRoti)
     {
         $pemesan = '';
         $harga_pemesan = $request->harga;
-        $ppn = 2000;
+        $ppn = $resep->ppn;
         $laku = $request->laku;
         $sisa_total = 0;
         $tpi = 0;

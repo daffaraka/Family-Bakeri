@@ -34,10 +34,17 @@ class ResepRotiController extends Controller
 
     public function store(Request $request)
     {
+        $ppn = 0;
+
+        if($request->ppn == 'Ya') {
+            $ppn = 2000;
+        } else{
+            $ppn = 0;
+        }
         $resepRoti = new ResepRoti;
         $resepRoti->harga = $request->harga;
         $resepRoti->nama_resep_roti = $request->nama_resep_roti;
-        $resepRoti->ppn = $request->ppn ?? 0;
+        $resepRoti->ppn = $ppn ;
         $resepRoti->save();
 
 

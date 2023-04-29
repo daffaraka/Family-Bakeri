@@ -3,7 +3,7 @@
         font-size: 1rem !important;
     }
 
-    .dataTables_length,
+
     .dataTables_length select {
         font-size: 1em;
         margin: 10px 0;
@@ -11,6 +11,9 @@
         width: 50px !important;
     }
 
+    #dataTables_length {
+        padding-left: unset !important;
+    }
     input {
         color: black !important;
     }
@@ -59,7 +62,7 @@
 
         <div class="form-group">
             <label for="">Pesanan Oleh </label>
-            <select id="pemesan" name="pemesanan" class="form-control">
+            <select id="pemesan" name="pemesanan" class="form-control text-dark">
                 <option value="">Tidak</option>
                 <option value="Rizky">Rizky</option>
                 <option value="Palem">Palem</option>
@@ -98,17 +101,7 @@
             <label for="">Roti Off </label>
             <input type="number" name="roti_off" id="roti_off" class="form-control" value="0">
         </div>
-        <div class="form-group d-flex justify-content-left">
-            <div>
-                <label for="">Apakah ini Pesanan? </label>
-                <select id="pesanan" name="pesanan" class="form-control">
-                    <option value="">Tentukan</option>
-                    <option value="Ya">Ya</option>
-                    <option value="Tidak">Tidak</option>
-                </select>
-            </div>
 
-        </div>
         <div class="d-flex justify-content-between">
             <button type="submit" class="btn btn-warning" id="btn-submit"> <i class="fa fa-plus"
                     aria-hidden="true"></i> Tambah Data Baru</button>

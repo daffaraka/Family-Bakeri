@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title','Tambah Bahan Baku - Family Bakery')
+@section('title','Tambah Stok Bahan Baku - Family Bakery')
 @section('content')
     @include('flash')
     <div class="container py-3">
@@ -18,7 +18,7 @@
                 <label for="">Satuan</label>
                 <select name="satuan" class="form-control text-dark" id="">
                     <option value="Kg">Kg</option>
-                    <option value="Gram">G</option>
+                    <option value="Gram">Gram</option>
                     <option value="Pcs">Pcs</option>
                     <option value="Butir">Butir</option>
                 </select>

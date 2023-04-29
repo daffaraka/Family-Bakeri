@@ -1,8 +1,10 @@
 @extends('layout')
 @section('title', 'Kasir')
 @section('content')
-    @include('kasir.kasir-create')
 
+    @can('kasir-create')
+        @include('kasir.kasir-create')
+    @endcan
 
     <div class="container py-4 px-5">
 
@@ -11,7 +13,7 @@
                 <input type="date" name="from_date" id="from_date" class="form-control mx-1" placeholder="From Date" />
             </div>
 
-            <div class="col-md-6 d-block">
+            <div class="col-md-6 d-block mb-5">
                 <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>
                 <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
             </div>
@@ -102,33 +104,45 @@
                         var laku = parseInt($(this).val());
                         var stok_sekarang = parseInt($('#stok_sekarang').val());
 
-                        // var sisa = stok_sekarang - laku;
+                        var sisa = stok_sekarang - laku;
 
-                        // // Set nilai sisa ke input field dengan id "sisa"
-                        // $('#sisa').val(sisa);
+                        // Set nilai sisa ke input field dengan id "sisa"
+                        $('#sisa').val(sisa);
 
-                        if (laku > stok_sekarang) {
-                            $('#btn-submit').prop('disabled', true);
-                            // Tampilkan pesan error atau lakukan tindakan yang sesuai
-                            Swal.fire({
-                                text: 'Jumlah laku melebihi stok',
-                                target: '#target-sisa',
-                                customClass: {
-                                    container: 'position-absolute',
-                                },
-                                toast: true,
-                                position: 'auto'
-                            });
 
-                            // Atau bisa juga mengosongkan input field "laku" atau menetapkan nilai maksimum yang diizinkan
-                            // $(this).val(stok_masuk);
-                        } else {
-                            $('#btn-submit').prop('disabled', false);
-                        }
+
+
+                        // if (laku > stok_sekarang) {
+                        //     $('#btn-submit').prop('disabled', true);
+                        //     // Tampilkan pesan error atau lakukan tindakan yang sesuai
+                        //     Swal.fire({
+                        //         text: 'Jumlah laku melebihi stok',
+                        //         target: '#target-sisa',
+                        //         customClass: {
+                        //             container: 'position-absolute',
+                        //         },
+                        //         toast: true,
+                        //         position: 'auto'
+                        //     });
+
+                        //     // Atau bisa juga mengosongkan input field "laku" atau menetapkan nilai maksimum yang diizinkan
+                        //     // $(this).val(stok_masuk);
+                        // } else {
+                        //     $('#btn-submit').prop('disabled', false);
+                        // }
                     });
                 }
             });
         });
+
+        $('#sisa').on('keyup', function() {
+            var sisa = parseInt($(this).val());
+            var stok_sekarang = parseInt($('#stok_sekarang').val());
+            var laku = stok_sekarang - sisa;
+
+            $('#laku').val(laku);
+        });
+
 
 
         // $('#pesanan').on('change', function() {
@@ -238,7 +252,7 @@
 
 
             ],
-            footerCallback: function(row, data, start, end, display,response) {
+            footerCallback: function(row, data, start, end, display, response) {
 
 
                 var totalPenjualan = 0; // Inisialisasi total penjualan dengan nilai 0
@@ -254,9 +268,10 @@
                 data.forEach(function(rowData) {
                     // Mengakses nilai total_penjualan dari setiap data baris (rowData) pada table
                     totalPenjualan += parseFloat(rowData.total_penjualan_ini);
-                    totalPemesanan += parseFloat(rowData.total_rizky + rowData.total_palem + rowData.total_moro_jaya);
+                    totalPemesanan += parseFloat(rowData.total_rizky + rowData.total_palem +
+                        rowData.total_moro_jaya);
                     totalToko = parseFloat(totalPenjualan - totalPemesanan);
-                    totalPPn += parseFloat(rowData.ppn);
+                    totalPPn += parseFloat(rowData.total_ppn);
                     totalAfterPpn = parseFloat(totalToko - totalPPn);
 
                 });

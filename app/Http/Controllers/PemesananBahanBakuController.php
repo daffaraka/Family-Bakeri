@@ -29,6 +29,8 @@ class PemesananBahanBakuController extends Controller
         // return view('pemesanan-bahan-baku.pemesanan-index', compact('bb'));
 
         if ($request->ajax()) {
+            $user = auth()->user();
+
             $data = PemesananBahanBaku::select('*');
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -57,11 +59,16 @@ class PemesananBahanBakuController extends Controller
                         });
                     }
                 })
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function ($row) use ($user) {
+                    $btn = '';
 
-                    $btn = '<a href="' . route("pemesanan.edit", ['id' => $row->id]) . '"data-original-title="Detail" class="btn btn-warning mr-1 btn-sm ">Edit</a>
-                    <a href="' . route("pemesanan.delete", ['id' => $row->id]) . '"data-original-title="Detail" class="btn btn-danger mr-1 btn-sm ">Hapus</a>';
+                    if ($user->can('pemesanan_bahan_baku-edit')) {
+                        $btn .= '<a href="'.route("pemesanan.edit",$row->id).'" data-toggle="tooltip" title="Edit" class="btn btn-warning mr-1 btn-sm">Edit </a>';
+                    }
 
+                    if ($user->can('pemesanan_bahan_baku-delete')) {
+                        $btn .= '<a href="'.route("pemesanan.delete",$row->id).'" data-toggle="tooltip" title="Delete" class="btn btn-danger btn-sm delete">Hapus</a>';
+                    }
                     return $btn;
                 })
                 ->editColumn('deadline_dp', function ($row) {
@@ -140,18 +147,30 @@ class PemesananBahanBakuController extends Controller
         $req_bahan = $request->nama_bahan_baku;
         $cekStok = StokBahanBaku::firstWhere('nama_bahan_baku', $req_bahan);
 
+        $jumlah_pesanan = $request->jumlah_pesanan;
+        $harga_satuan = $request->harga_satuan;
+
         if ($request->status_pesanan == 'Diterima' && $cekStok) {
             $cekStok->jumlah = $cekStok->jumlah + $request->jumlah_pesanan;
             $cekStok->save();
         }
 
-        $jumlah_pesanan = $request->jumlah_pesanan;
-        $harga_satuan = $request->harga_satuan;
-        $bb->nama_bahan_baku = $request->nama_bahan_baku;
+        $total_harga = $jumlah_pesanan * $harga_satuan;
+
+        if($request->dp >= 0) {
+            $sisa_pembayaran = $total_harga - $request->dp;
+        }
+
+
+        $bb->nama_bahan_baku = $request->nama_bahan_baku ?? $bb->nama_bahan_baku;
         $bb->jumlah_pesanan = $jumlah_pesanan;
         $bb->status_pesanan = $request->status_pesanan;
         $bb->harga_satuan = $harga_satuan;
-        $bb->total_harga = $jumlah_pesanan * $harga_satuan;
+        $bb->dp = $request->dp;
+        $bb->deadline_dp = $request->deadline_dp;
+        $bb->total_harga = $total_harga;
+        $bb->sisa_pembayaran = $sisa_pembayaran;
+
         $bb->save();
         return redirect()->route('pemesanan.index');
     }

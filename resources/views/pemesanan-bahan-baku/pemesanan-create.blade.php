@@ -2,7 +2,7 @@
 @section('title', 'Tambah Bahan Baku - Family Bakery')
 @section('content')
     <style>
-       .select2-container .select2-selection--single {
+        .select2-container .select2-selection--single {
             height: auto;
             line-height: inherit;
             padding: 0.5rem 1rem;
@@ -25,11 +25,15 @@
             </div>
             <div class="mb-3">
                 <label for="">Jumlah Pesanan</label>
-                <input type="number" class="form-control" name="jumlah_pesanan">
+                <input type="number" class="form-control" name="jumlah_pesanan" id="jumlah_pesanan">
             </div>
             <div class="mb-3">
                 <label for="">Harga Satuan</label>
-                <input type="number" class="form-control" name="harga_satuan">
+                <input type="number" class="form-control" name="harga_satuan" id="harga_satuan">
+            </div>
+            <div class="mb-3">
+                <label for="">Total Harga</label>
+                <input type="number" class="form-control" name="total_harga" id="total_harga">
             </div>
             <div class="mb-3">
                 <label for="">Status Pesanan</label>
@@ -57,5 +61,12 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('.livesearch').select2();
+
+        $('#jumlah_pesanan, #harga_satuan').on('input', function() {
+            var jumlah_pesanan = $('#jumlah_pesanan').val();
+            var harga_satuan = $('#harga_satuan').val();
+            var total_harga = jumlah_pesanan * harga_satuan;
+            $('#total_harga').val(total_harga);
+        });
     });
 </script>

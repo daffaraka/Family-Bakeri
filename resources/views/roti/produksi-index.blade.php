@@ -16,10 +16,13 @@
     </style>
     <div class="container py-4">
 
-        <a href="{{ route('produksi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                aria-hidden="true"></i> Tambah Data Produksi Roti Baru</a>
-        <a href="{{ route('produksi.edit') }}" class="btn btn-sm btn-warning my-2 py-2 rounded"> <i class="fa fa-plus"
-                aria-hidden="true"></i> Perbarui Data Roti Tersedia</a>
+        @can(['produksi_roti-create', 'produksi_roti-edit'])
+            <a href="{{ route('produksi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
+                    aria-hidden="true"></i> Tambah Data Produksi Roti Baru</a>
+            <a href="{{ route('produksi.edit') }}" class="btn btn-sm btn-warning my-2 py-2 rounded"> <i class="fa fa-plus"
+                    aria-hidden="true"></i> Perbarui Data Roti Tersedia</a>
+        @endcan
+
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">
                 <tr>
@@ -45,7 +48,9 @@
                         <td>{{ \Carbon\Carbon::parse($data->created_at)->locale('id')->translatedFormat('d F Y') }}</td>
                         <td>
                             {{-- <a href="{{ route('produksi.edit', $data->id) }}" class="btn btn-warning">Edit</a> --}}
-                            <a href="{{ route('produksi.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                            @can('produksi_roti-delete')
+                                <a href="{{ route('produksi.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                            @endcan
 
                         </td>
 

@@ -29,8 +29,11 @@
                 </div>
             </div>
         </div>
-        <a href="{{ route('pemesanan.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                aria-hidden="true"></i> Tambah Bahan Baku</a>
+        @can('pemesanan_bahan_baku-create')
+            <a href="{{ route('pemesanan.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
+                    aria-hidden="true"></i> Tambah Bahan Baku</a>
+        @endcan
+
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark">
                 <tr>

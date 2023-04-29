@@ -20,8 +20,11 @@
 
         {{-- <
              --}}
-        <a href="{{ route('resep.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded">
-            <i class="fa fa-plus" aria-hidden="true"></i> Tambah Resep Roti</a>
+        @can('resep_roti-create')
+            <a href="{{ route('resep.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded">
+                <i class="fa fa-plus" aria-hidden="true"></i> Tambah Resep Roti</a>
+        @endcan
+
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">
                 <tr>
@@ -43,12 +46,16 @@
                                 data-toggle="modal" data-target="#resepModal" data-id="{{ $data->id }}">Lihat Resep</a>
                         </td>
                         <td>Rp. {{ number_format($data->harga) }}</td>
-                        <td>{{ $data->ppn }} </td>
+                        <td>Rp. {{ number_format($data->ppn) }} </td>
 
 
                         <td>
-                            <a href="{{ route('resep.edit', $data->id) }}" class="btn btn-warning">Edit</a>
-                            <a href="{{ route('resep.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                            @can('resep_roti-edit')
+                                <a href="{{ route('resep.edit', $data->id) }}" class="btn btn-warning">Edit</a>
+                            @endcan
+                            @can('resep_roti-delete')
+                                <a href="{{ route('resep.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                            @endcan
 
                         </td>
 

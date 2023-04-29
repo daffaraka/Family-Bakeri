@@ -16,7 +16,6 @@ class Kasir extends Model
         'stok_masuk',
         'jumlah',
         'laku',
-        'ppn',
         'sisa_total',
         'roti_off',
         'rizky',
