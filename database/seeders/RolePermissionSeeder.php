@@ -29,7 +29,9 @@ class RolePermissionSeeder extends Seeder
             'stok_bahan_baku-list', 'stok_bahan_baku-create', 'stok_bahan_baku-edit', 'stok_bahan_baku-delete',
             'resep_roti-list', 'resep_roti-create', 'resep_roti-edit', 'resep_roti-delete',
             'produksi_roti-list', 'produksi_roti-create', 'produksi_roti-edit', 'produksi_roti-delete',
-            'kasir-list', 'kasir-create', 'kasir-edit', 'kasir-delete'
+            'kasir-list', 'kasir-create', 'kasir-edit', 'kasir-delete',
+            'user-list','user-create','user-edit','user-delete',
+            'role-list','role-create','role-edit','role-delete'
         ];
 
         // Owner permission

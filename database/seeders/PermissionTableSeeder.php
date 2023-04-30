@@ -38,6 +38,14 @@ class PermissionTableSeeder extends Seeder
             'kasir-create',
             'kasir-edit',
             'kasir-delete',
+            'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
+            'role-list',
+            'role-create',
+            'role-edit',
+            'role-delete',
             'keuangan-list'
         ];
 

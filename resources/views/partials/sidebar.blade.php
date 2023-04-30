@@ -3,7 +3,7 @@
         <!-- Brand -->
         <div class="sidenav-header  align-items-center">
             <a class="navbar-brand" href="/">
-                <img src="assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+                <h1 class="fw-900">Family Bakery </h1>
             </a>
         </div>
         <div class="navbar-inner">
@@ -47,7 +47,7 @@
                     @can('produksi_roti-list')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('produksi.index') }}">
-                                <i class="ni ni-single-02 text-yellow"></i>
+                                <i class="ni ni-square-pin text-yellow"></i>
                                 <span class="nav-link-text">Produksi Roti</span>
                             </a>
                         </li>
@@ -56,11 +56,30 @@
                     @can('kasir-list')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('kasir.index') }}">
-                                <i class="ni ni-bullet-list-67 text-default"></i>
+                                <i class="ni ni-shop text-default"></i>
                                 <span class="nav-link-text">Kasir</span>
                             </a>
                         </li>
                     @endcan
+                    @can('user-list')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('users.index') }}">
+                                <i class="ni ni-single-02 text-default"></i>
+                                <span class="nav-link-text">User</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('role-list')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('roles.index') }}">
+                                <i class="ni ni-user-run text-default"></i>
+                                <span class="nav-link-text">Role</span>
+                            </a>
+                        </li>
+                    @endcan
+
+
 
 
                 </ul>

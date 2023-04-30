@@ -10,6 +10,8 @@ use App\Http\Controllers\ResepRotiController;
 use App\Http\Controllers\ProduksiRotiController;
 use App\Http\Controllers\StokBahanBakuController;
 use App\Http\Controllers\PemesananBahanBakuController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +82,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/kasir/delete/{id}', [KasirController::class, 'delete'])->name('kasir.delete');
     Route::get('/kasir/update-stok-tersisa', [KasirController::class, 'updateStokTersisa'])->name('kasir.updateStokTersisa');
 
+
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
     // Dropdown dinamis
 
     Route::post('/get-data-roti/{id}', [KasirController::class, 'getDataRoti'])->name('getDataRoti');
