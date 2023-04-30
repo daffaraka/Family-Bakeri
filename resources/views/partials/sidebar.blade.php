@@ -70,14 +70,14 @@
                         </li>
                     @endcan
 
-                    @can('role-list')
+                    {{-- @can('role-list')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('roles.index') }}">
                                 <i class="ni ni-user-run text-default"></i>
                                 <span class="nav-link-text">Role</span>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
 
 
 

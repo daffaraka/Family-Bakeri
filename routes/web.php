@@ -84,7 +84,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('users', UserController::class);
-    Route::resource('roles', RoleController::class);
+    // Route::resource('roles', RoleController::class);
     // Dropdown dinamis
 
     Route::post('/get-data-roti/{id}', [KasirController::class, 'getDataRoti'])->name('getDataRoti');
