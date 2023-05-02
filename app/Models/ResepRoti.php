@@ -14,6 +14,8 @@ class ResepRoti extends Model
     [
         'nama_resep_roti',
         'nama_bahan_baku',
+        'stok_sekarang',
+        'laku',
         'harga',
         'jumlah_bahan_baku'
     ];

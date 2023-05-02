@@ -34,46 +34,85 @@ class ProduksiRotiController extends Controller
 
     public function store(Request $request)
     {
-
         $resep = ResepRoti::with('bahanBaku')->find($request->nama);
-
-        foreach ($resep->resepBahanBakus as $bahanBaku) {
-            // Hitung jumlah bahan baku yang dibutuhkan
+        $roti = ProduksiRoti::firstWhere('nama_roti', $resep->nama_resep_roti);
 
 
-            $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->stok_masuk;
+        // Jika sudah ada data roti
+        // if ($roti) {
+        //     foreach ($resep->resepBahanBakus as $bahanBaku) {
+        //         // Hitung jumlah bahan baku yang dibutuhkan
 
-            // Ambil stok bahan baku dari database
-            $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
 
-            // Periksa apakah stok cukup
-            if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $bahanBakuNeeded) {
-                // Jika stok tidak cukup, kembalikan response error
+        //         $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->stok_masuk;
 
-                alert()->error('Kesalahan', 'Bahan Baku Tidak Cukup');
-                return redirect()->back();
+        //         // Ambil stok bahan baku dari database
+        //         $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
+
+        //         // Periksa apakah stok cukup
+        //         if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $bahanBakuNeeded) {
+        //             // Jika stok tidak cukup, kembalikan response error
+
+        //             alert()->error('Kesalahan', 'Bahan Baku Tidak Cukup');
+        //             return redirect()->back();
+        //         }
+
+        //         // Kurangi stok bahan baku
+        //         $stokBahanBaku->jumlah -= $bahanBakuNeeded;
+        //         $stokBahanBaku->save();
+        //     }
+
+        //     $roti->stok_masuk += $request->stok_masuk;
+        //     $roti->stok_sekarang += $request->stok_masuk;
+        //     $roti->save();
+
+        //     alert()->success('Sukses', 'Roti telah diperbarui');
+        //     return redirect()->route('produksi.index');
+
+
+        // } else {
+
+            foreach ($resep->resepBahanBakus as $bahanBaku) {
+                // Hitung jumlah bahan baku yang dibutuhkan
+
+
+                $bahanBakuNeeded = $bahanBaku->jumlah_bahan_baku * $request->stok_masuk;
+
+
+                // Ambil stok bahan baku dari database
+                $stokBahanBaku = StokBahanBaku::findOrFail($bahanBaku->stok_bahan_baku_id);
+
+                // Periksa apakah stok cukup
+                if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $bahanBakuNeeded) {
+                    // Jika stok tidak cukup, kembalikan response error
+
+                    alert()->error('Kesalahan', 'Bahan Baku Tidak Cukup');
+                    return redirect()->back();
+                }
+
+                // Kurangi stok bahan baku
+                $stokBahanBaku->jumlah -= $bahanBakuNeeded;
+                $stokBahanBaku->save();
             }
 
-            // Kurangi stok bahan baku
-            $stokBahanBaku->jumlah -= $bahanBakuNeeded;
-            $stokBahanBaku->save();
-        }
+            // Buat objek ProduksiRoti baru
+            $produksiRoti = new ProduksiRoti([
+                'nama_roti' => $resep->nama_resep_roti,
+                'stok_masuk' => $request->stok_masuk,
+                'diproduksi_oleh' => Auth::check() ? Auth::user()->name : 'Test',
+                'resep_id' => $request->nama,
+            ]);
 
-        // Buat objek ProduksiRoti baru
-        $produksiRoti = new ProduksiRoti([
-            'nama_roti' => $resep->nama_resep_roti,
-            'stok_masuk' => $request->stok_masuk,
-            'stok_sekarang' => $request->stok_masuk,
-            'laku' => 0,
-            'diproduksi_oleh' => Auth::check() ? Auth::user()->name : 'Test',
-            'resep_id' => $request->nama,
-        ]);
+            $resep->stok_sekarang += $request->stok_masuk;
+            $resep->save();
 
-        // Simpan objek ke database
-        $produksiRoti->save();
+            // Simpan objek ke database
+            $produksiRoti->save();
+            alert()->success('Sukses', 'Roti baru telah ditambahkan');
 
 
-        return redirect()->route('produksi.index');
+            return redirect()->route('produksi.index');
+        // }
     }
 
     public function edit()

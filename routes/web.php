@@ -54,14 +54,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/stok-bahan-baku/update/{id}', [StokBahanBakuController::class, 'update'])->name('stok.update');
     Route::get('/stok-bahan-baku/delete/{id}', [StokBahanBakuController::class, 'delete'])->name('stok.delete');
 
-
     Route::get('/produksi-roti', [ProduksiRotiController::class, 'index'])->name('produksi.index');
     Route::get('/produksi-roti/create', [ProduksiRotiController::class, 'create'])->name('produksi.create');
     Route::post('/produksi-roti/store', [ProduksiRotiController::class, 'store'])->name('produksi.store');
     Route::get('/produksi-roti/edit', [ProduksiRotiController::class, 'edit'])->name('produksi.edit');
     Route::post('/produksi-roti/update', [ProduksiRotiController::class, 'update'])->name('produksi.update');
     Route::get('/produksi-roti/delete/{id}', [ProduksiRotiController::class, 'delete'])->name('produksi.delete');
-
 
     Route::get('/resep-roti', [ResepRotiController::class, 'index'])->name('resep.index');
     Route::get('/resep-roti/create', [ResepRotiController::class, 'create'])->name('resep.create');
@@ -70,8 +68,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/resep-roti/edit/{id}', [ResepRotiController::class, 'edit'])->name('resep.edit');
     Route::post('/resep-roti/update/{id}', [ResepRotiController::class, 'update'])->name('resep.update');
     Route::get('/resep-roti/delete/{id}', [ResepRotiController::class, 'delete'])->name('resep.delete');
-
-
 
     Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
     Route::get('/kasir/create', [KasirController::class, 'create'])->name('kasir.create');
@@ -87,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::resource('roles', RoleController::class);
     // Dropdown dinamis
 
+    Route::post('/get-data-satuan/{id}', [ResepRotiController::class, 'getDataSatuan'])->name('getDataSatuan');
     Route::post('/get-data-roti/{id}', [KasirController::class, 'getDataRoti'])->name('getDataRoti');
     Route::get('/get-data-by-date/}', [KasirController::class, 'getDataByDate'])->name('getDataByDate');
 });

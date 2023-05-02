@@ -6,6 +6,7 @@
         select option {
             color: black;
         }
+
         .select2.select2-container {
             width: 50% !important;
             margin-right: 2vh;
@@ -35,7 +36,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="">Harga Roti</label>
-                        <input type="text" name="harga" class="form-control m-input" placeholder="Nama Roti"
+                        <input type="text" name="harga" class="form-control m-input" placeholder="Harga Roti"
                             autocomplete="on" required>
                     </div>
                     <div class="mb-3">
@@ -50,6 +51,7 @@
                     <div id="inputFormRow">
                         <div class="input-group mb-3">
                             <select class="livesearch form-control d-flex" name="nama_bahan_baku[]">
+                                <option value="">Pilih bahan baku</option>
                                 @foreach ($stok as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama_bahan_baku }}</option>
                                 @endforeach
@@ -58,7 +60,6 @@
                                 placeholder="Jumlah Bahan Baku" autocomplete="on">
                             <select name="satuan[]" class="form-control text-dark" id="">
                                 <option value="Gram">Gram</option>
-                                <option value="Kg">Kg</option>
                                 <option value="Pcs">Pcs</option>
                                 <option value="Butir">Butir</option>
                             </select>
@@ -100,6 +101,7 @@
             html +=
                 '<select class="livesearch form-control" name="nama_bahan_baku[]" ';
             html += '<option>Pilih Bahan Baku </option> '
+            html += '<option>Pilih Bahan Baku </option> ';
             html += options;
             html += '</select>';
             html +=
@@ -107,7 +109,6 @@
             html +=
                 '  <select name="satuan[]" class="form-control text-dark" id="">'
             html += '<option value="Gram">Gram</option>'
-            html += '<option value="Kg">Kg</option>'
             html += '<option value="Pcs">Pcs</option>'
             html += '<option value="Butir">Butir</option>'
             html += '</select>'

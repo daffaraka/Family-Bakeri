@@ -27,8 +27,8 @@
                     <th scope="col">#</th>
                     <th scope="col">Nama Bahan Baku</th>
                     <th scope="col">Status Jumlah Stok</th>
-                    <th scope="col">Jumlah Stok Minimal</th>
                     <th scope="col">Jumlah</th>
+                    <th scope="col">Jumlah Stok Minimal</th>
                     <th scope="col">Satuan</th>
                     <th scope="col">Terakhir Diedit oleh</th>
                     <th scope="col">Waktu Diupdate</th>
@@ -48,7 +48,15 @@
                         </td>
                         <td>
                             @if ($data->satuan == 'Kg')
-                                {{ number_format($data->jumlah / 1000, 2, ',', '.') }}
+                                @if ($data->satuan == 'Kg' && $data->jumlah / 1000 < 10)
+                                    {{ number_format($data->jumlah / 1000, 2, ',', '.') . ' Opsi A' }}
+                                @elseif ($data->satuan == 'Kg' && $data->jumlah / 1000 <= 100 && $data->jumlah / 1000 >= 10)
+                                    {{ number_format($data->jumlah / 1000, 2, ',', '.') . ' Opsi B' }}
+                                @elseif($data->satuan == 'Kg' && $data->jumlah / 1000 <= 1000 && $data->jumlah / 1000 >= 100)
+                                    {{ number_format($data->jumlah / 1000, 2, ',', '.') . ' Opsi Ratusan' }}
+                                @elseif($data->satuan == 'Kg' && $data->jumlah / 1000 <= 10000 && $data->jumlah / 1000 >= 1000)
+                                    {{ number_format($data->jumlah / 1000, 0, ',', '.') . ' Opsi Ribuan' }}
+                                @endif
                             @else
                                 {{ $data->jumlah }}
                             @endif
@@ -58,7 +66,15 @@
                         </td>
                         <td>
                             @if ($data->satuan == 'Kg')
-                                {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.') }}
+                                @if ($data->satuan == 'Kg' && $data->jumlah_minimal / 1000 <= 10)
+                                    {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.') }}
+                                @elseif ($data->satuan == 'Kg' && $data->jumlah_minimal / 1000 <= 100)
+                                    {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.') . ' Opsi B' }}
+                                @elseif ($data->satuan == 'Kg' && $data->jumlah_minimal / 1000 <= 1000 && $data->jumlah_minimal / 1000 >= 100)
+                                    {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.') . ' Opsi Ratusan' }}
+                                @elseif($data->satuan == 'Kg' && $data->jumlah_minimal / 1000 <= 10000 && $data->jumlah_minimal / 1000 >= 1000)
+                                    {{ number_format($data->jumlah_minimal / 1000, 0, ',', '.') . ' Opsi Ribuan' }}
+                                @endif
                             @else
                                 {{ $data->jumlah_minimal }}
                             @endif
@@ -73,7 +89,7 @@
                                 <a href="{{ route('stok.edit', $data->id) }}" class="btn btn-warning">Edit</a>
                             @endcan
                             @can('stok_bahan_baku-delete')
-                                <a href="{{ route('stok.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                                <a href="#" class="btn btn-danger delete-btn" data-id="{{ $data->id }}">Hapus</a>
                             @endcan
 
                         </td>
@@ -105,6 +121,26 @@
 
                 }
             }
+        });
+
+        $('.delete-btn').click(function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda tidak dapat mengembalikan tindakan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lanjutkan dengan tindakan hapus
+                    window.location = "{{ route('stok.delete', ':id') }}".replace(':id', id);
+                }
+            })
         });
     });
 </script>

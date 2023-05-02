@@ -29,6 +29,7 @@
                     <th rowspan="2">Jumlah <br> Awal</th>
                     <th rowspan="2">Laku</th>
                     <th rowspan="2">Sisa</th>
+                    <th rowspan="2">Roti Off</th>
                     <th scope="col">Pesanan 1</th>
                     <th scope="col">Pesanan 2</th>
                     <th scope="col">Pesanan 3</th>
@@ -98,7 +99,11 @@
                 dataType: 'json',
                 success: function(result) {
                     $('#harga').val(result.roti.harga);
-                    $('#stok_sekarang').val(result.roti.produksi_roti[0].stok_sekarang);
+                    if (result.roti.produksi_roti && result.roti.produksi_roti.length > 0) {
+                        $('#stok_sekarang').val(result.roti.stok_sekarang);
+                    } else {
+                        $('#stok_sekarang').val('Belum ada produksi roti');
+                    }
 
                     $('#laku').on('keyup', function() {
                         var laku = parseInt($(this).val());
@@ -108,29 +113,26 @@
 
                         // Set nilai sisa ke input field dengan id "sisa"
                         $('#sisa').val(sisa);
-
-
-
-
-                        // if (laku > stok_sekarang) {
-                        //     $('#btn-submit').prop('disabled', true);
-                        //     // Tampilkan pesan error atau lakukan tindakan yang sesuai
-                        //     Swal.fire({
-                        //         text: 'Jumlah laku melebihi stok',
-                        //         target: '#target-sisa',
-                        //         customClass: {
-                        //             container: 'position-absolute',
-                        //         },
-                        //         toast: true,
-                        //         position: 'auto'
-                        //     });
-
-                        //     // Atau bisa juga mengosongkan input field "laku" atau menetapkan nilai maksimum yang diizinkan
-                        //     // $(this).val(stok_masuk);
-                        // } else {
-                        //     $('#btn-submit').prop('disabled', false);
-                        // }
                     });
+                    // if (laku > stok_sekarang) {
+                    //     $('#btn-submit').prop('disabled', true);
+                    //     // Tampilkan pesan error atau lakukan tindakan yang sesuai
+                    //     Swal.fire({
+                    //         text: 'Jumlah laku melebihi stok',
+                    //         target: '#target-sisa',
+                    //         customClass: {
+                    //             container: 'position-absolute',
+                    //         },
+                    //         toast: true,
+                    //         position: 'auto'
+                    //     });
+
+                    //     // Atau bisa juga mengosongkan input field "laku" atau menetapkan nilai maksimum yang diizinkan
+                    //     // $(this).val(stok_masuk);
+                    // } else {
+                    //     $('#btn-submit').prop('disabled', false);
+                    // }
+
                 }
             });
         });
@@ -142,21 +144,6 @@
 
             $('#laku').val(laku);
         });
-
-
-
-        // $('#pesanan').on('change', function() {
-        //     var pilihan = $(this).val(); // Mendapatkan nilai pilihan yang dipilih
-
-        //     // Menjalankan kode berdasarkan pilihan yang dipilih
-        //     if (pilihan == 'Ya') {
-        //         $('#pemesan').prop('disabled', false); // Mengaktifkan  input #pemesan
-        //     } else if (pilihan == 'Tidak') {
-        //         $('#pemesan').prop('disabled', true); // Menonaktifkan input #pemesan
-        //     } else {
-        //         $('#pemesan').prop('disabled', true);
-        //     }
-        // });
 
 
         $('#filter').on('click', function() {
@@ -210,8 +197,8 @@
                     name: 'stok_masuk'
                 },
                 {
-                    data: 'jumlah',
-                    name: 'jumlah'
+                    data: 'stok_sekarang',
+                    name: 'stok_sekarang'
                 },
                 {
                     data: 'laku',
@@ -220,6 +207,10 @@
                 {
                     data: 'sisa_total',
                     name: 'sisa_total'
+                },
+                {
+                    data: 'roti_off',
+                    name: 'roti_off'
                 },
                 {
                     data: 'rizky',

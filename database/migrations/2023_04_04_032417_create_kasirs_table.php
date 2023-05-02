@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama_roti');
             $table->bigInteger('harga');
             $table->bigInteger('stok_masuk');
-            $table->bigInteger('jumlah');
+            $table->bigInteger('stok_sekarang');
             $table->integer('laku');
             $table->bigInteger('sisa_total');
             $table->bigInteger('roti_off');

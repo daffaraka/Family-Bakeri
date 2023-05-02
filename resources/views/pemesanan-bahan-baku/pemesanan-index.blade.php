@@ -83,10 +83,29 @@
 @endsection
 @include('partials.scripts')
 <script>
-    //
-    $(function() {
+    $(document).ready(function() {
+        $('#dataTable').on('click', '#delete-btn', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
 
-        var table = $('#dataTable').DataTable({
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda tidak dapat mengembalikan tindakan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lanjutkan dengan tindakan hapus
+                    window.location = "{{ route('pemesanan.delete', ':id') }}".replace(':id',
+                        id);
+                }
+            })
+        });
+
+        $('#dataTable').DataTable({
             language: {
                 paginate: {
                     previous: '<span class="fa fa-chevron-left"></span>',
@@ -118,7 +137,7 @@
                 },
                 {
                     data: 'harga_satuan',
-                    render: $.fn.dataTable.render.number(',', '.', 0, 'Rp.')
+                    render: $.fn.dataTable.render.number(',', '.', 2, 'Rp.')
                 },
                 {
                     data: 'total_harga',
@@ -136,7 +155,7 @@
                     data: 'deadline_dp',
                     type: 'num',
                     render: {
-                        _: 'display',
+                        _: 'deadline_dp',
                         sort: 'timestamp'
                     }
                 },
@@ -158,8 +177,15 @@
             ]
         });
 
+
+
+
+
         $('#status').change(function() {
             table.draw();
         });
+
+
+
     });
 </script>

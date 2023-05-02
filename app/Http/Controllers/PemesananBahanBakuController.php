@@ -63,17 +63,17 @@ class PemesananBahanBakuController extends Controller
                     $btn = '';
 
                     if ($user->can('pemesanan_bahan_baku-edit')) {
-                        $btn .= '<a href="'.route("pemesanan.edit",$row->id).'" data-toggle="tooltip" title="Edit" class="btn btn-warning mr-1 btn-sm">Edit </a>';
+                        $btn .= '<a href="'.route("pemesanan.edit",$row->id).'" data-toggle="tooltip" title="Edit" class="btn btn-warning mr-1 btn-sm edit-btn">Edit </a>';
                     }
 
                     if ($user->can('pemesanan_bahan_baku-delete')) {
-                        $btn .= '<a href="'.route("pemesanan.delete",$row->id).'" data-toggle="tooltip" title="Delete" class="btn btn-danger btn-sm delete">Hapus</a>';
+                        $btn .= '<a href="#" data-id="'.$row->id.'"  title="Delete" class="btn btn-danger btn-sm " id="delete-btn">Hapus</a>';
                     }
                     return $btn;
                 })
                 ->editColumn('deadline_dp', function ($row) {
                     return [
-                        'display' => Carbon::parse($row->created_at)->locale('id')->isoFormat('dddd, DD MMMM YYYY'),
+                        'deadline_dp' => Carbon::parse($row->deadline_dp)->locale('id')->isoFormat('dddd, DD MMMM YYYY'),
                         'timestamp' => $row->deadline_dp
                     ];
                 })
@@ -100,16 +100,17 @@ class PemesananBahanBakuController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request->all());
         $bb = new PemesananBahanBaku();
 
         $jumlah_pesanan = $request->jumlah_pesanan;
-        $harga_satuan = $request->harga_satuan;
+        $harga_satuan = (float) $request->harga_satuan;
 
         $req_bahan = $request->nama_bahan_baku;
         $cekStok = StokBahanBaku::firstWhere('nama_bahan_baku', $req_bahan);
 
         if ($request->status_pesanan == 'Diterima' && $cekStok) {
-            $cekStok->jumlah = $cekStok->jumlah + $request->jumlah_pesanan;
+            $cekStok->jumlah += $request->jumlah_pesanan * 1000;
             $cekStok->save();
         }
 
@@ -123,7 +124,7 @@ class PemesananBahanBakuController extends Controller
         $bb->nama_bahan_baku = $request->nama_bahan_baku;
         $bb->jumlah_pesanan = $jumlah_pesanan;
         $bb->dp = $request->dp;
-        $bb->deadline_dp = $request->deadline_dp;
+        $bb->deadline_dp = $request->deadline_dp ?? Carbon::now();
         $bb->status_pesanan = $request->status_pesanan;
         $bb->harga_satuan = $harga_satuan;
         $bb->total_harga = $total_harga;
@@ -142,6 +143,7 @@ class PemesananBahanBakuController extends Controller
 
     public function update($id, Request $request)
     {
+        // dd($request->all());
         $bb = PemesananBahanBaku::find($id);
 
         $req_bahan = $request->nama_bahan_baku;
@@ -151,8 +153,9 @@ class PemesananBahanBakuController extends Controller
         $harga_satuan = $request->harga_satuan;
 
         if ($request->status_pesanan == 'Diterima' && $cekStok) {
-            $cekStok->jumlah = $cekStok->jumlah + $request->jumlah_pesanan;
+            $cekStok->jumlah += $request->jumlah_pesanan * 1000;
             $cekStok->save();
+
         }
 
         $total_harga = $jumlah_pesanan * $harga_satuan;

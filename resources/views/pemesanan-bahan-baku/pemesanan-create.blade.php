@@ -24,16 +24,16 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="">Jumlah Pesanan</label>
-                <input type="number" class="form-control" name="jumlah_pesanan" id="jumlah_pesanan">
+                <label for="">Jumlah Pesanan (Kg) </label>
+                <input type="text" class="form-control" name="jumlah_pesanan" id="jumlah_pesanan">
             </div>
             <div class="mb-3">
                 <label for="">Harga Satuan</label>
-                <input type="number" class="form-control" name="harga_satuan" id="harga_satuan">
+                <input type="text" class="form-control" name="harga_satuan" id="harga_satuan">
             </div>
             <div class="mb-3">
                 <label for="">Total Harga</label>
-                <input type="number" class="form-control" name="total_harga" id="total_harga">
+                <input type="text" class="form-control" name="total_harga" id="total_harga">
             </div>
             <div class="mb-3">
                 <label for="">Status Pesanan</label>
@@ -49,7 +49,7 @@
                 <input type="number" class="form-control" name="dp">
             </div>
             <div class="mb-3">
-                <label for="">Deadline DP</label>
+                <label for="">Deadline Pembayaran</label>
                 <input type="date" class="form-control" name="deadline_dp">
             </div>
 
@@ -67,6 +67,14 @@
             var harga_satuan = $('#harga_satuan').val();
             var total_harga = jumlah_pesanan * harga_satuan;
             $('#total_harga').val(total_harga);
+        });
+
+        $('#total_harga').on('keyup', function() {
+            var total_harga = parseInt($(this).val());
+            var jumlah_pesanan = $('#jumlah_pesanan').val();
+            var harga_satuan = total_harga / jumlah_pesanan;
+
+            $('#harga_satuan').val(harga_satuan);
         });
     });
 </script>

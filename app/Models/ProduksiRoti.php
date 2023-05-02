@@ -13,12 +13,8 @@ class ProduksiRoti extends Model
     [
         'nama_roti',
         'stok_masuk',
-        'stok_sekarang',
-        'laku',
         'diproduksi_oleh',
-        'resep_id',
-
-
+        'resep_id'
     ];
 
     public function ResepRoti()

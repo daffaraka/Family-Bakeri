@@ -26,14 +26,14 @@
 
                 </select>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="">Jumlah Stok Terakhir</label>
                 <input type="number" readonly id="stok_masuk" class="form-control">
             </div>
             <div class="form-group">
                 <label for="">Tambahkan Jumlah Produksi </label>
                 <input type="number" name="stok_masuk" id="stok_masuk" class="form-control">
-            </div>
+            </div> --}}
 
 
             <button type="submit" class="btn btn-primary">Simpan</button>

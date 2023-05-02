@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama_resep_roti');
             $table->integer('harga');
+            $table->integer('stok_sekarang')->default(0);
+            $table->integer('laku');
             $table->integer('ppn');
             $table->timestamps();
         });

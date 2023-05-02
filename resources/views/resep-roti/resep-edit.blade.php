@@ -29,6 +29,14 @@
                         <input type="text" name="nama_resep_roti" class="form-control m-input text-dark"
                             placeholder="Nama Roti" autocomplete="on" value="{{ $resep->nama_resep_roti }}">
                     </div>
+                    <div class="mb-3">
+                        <label for="">PPn</label>
+                        <select name="ppn" id="" class="form-control text-dark">
+                            <option value="Ya" {{$resep->ppn == 2000 ? 'selected' : ''}}>Ya</option>
+                            <option value="Tidak" {{$resep->ppn == 2000 ? '' : 'selected'}} >Tidak</option>
+
+                        </select>
+                    </div>
 
 
                     @foreach ($resep_select->resepBahanBakus as $data)

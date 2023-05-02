@@ -35,20 +35,23 @@ class StokBahanBakuController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'nama_bahan_baku' => 'required|unique:stok_bahan_bakus,nama_bahan_baku',
-            'jumlah' => 'required|numeric|min:0',
+            'jumlah' => 'required|min:0',
             'satuan' => 'required',
         ], [
             'nama_bahan_baku.required' => 'Nama bahan baku harus diisi.',
             'nama_bahan_baku.unique' => 'Nama bahan baku sudah terdaftar.',
             'jumlah.required' => 'Jumlah bahan baku harus diisi.',
-            'jumlah.numeric' => 'Jumlah bahan baku harus berupa angka.',
             'jumlah.min' => 'Jumlah bahan baku harus lebih dari atau sama dengan 0.',
             'satuan.required' => 'Satuan bahan baku harus diisi.',
         ]);
 
         $jumlah_min = $request->jumlah_minimal;
+        $jumlah =  $request->jumlah;
+
+        // dd($jumlah * 1000);
         // Jika validasi gagal
         if ($validator->fails()) {
             if ($validator->errors())
@@ -58,11 +61,12 @@ class StokBahanBakuController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            $jumlah = $request->jumlah;
             if ($request->satuan == 'Kg') {
                 $jumlah = $request->jumlah * 1000;
                 $jumlah_min = $request->jumlah_minimal * 1000;
             }
+
+
             StokBahanBaku::create(
                 [
                     'nama_bahan_baku' => $request->nama_bahan_baku,
@@ -82,18 +86,46 @@ class StokBahanBakuController extends Controller
     public function edit($id)
     {
         $stok = StokBahanBaku::find($id);
-        return view('stok-bahan-baku.stok-edit', compact('stok'));
+
+
+
+        $jb = 0;
+        $jm = 0;
+
+
+        if($stok->satuan == 'Kg') {
+            $jb = $stok->jumlah/1000;
+            $jm = $stok->jumlah_minimal/1000;
+        } else {
+            $jb = $stok->jumlah;
+            $jm = $stok->jumlah_minimal;
+        }
+
+        return view('stok-bahan-baku.stok-edit', compact('stok', 'jb','jm'));
     }
 
     public function update(Request $request, $id)
     {
         $stok = StokBahanBaku::find($id);
+        // $raw_jm = str_replace(',', '', $request->jumlah_minimal);
+
+        // $jumlah_minimal = intval($raw_jm);
+        // $jumlah_minimal = ;
         $jumlah_minimal = $request->jumlah_minimal;
 
         $jumlah = $request->jumlah;
-        if ($request->satuan == 'Kg') {
+
+
+        if ($request->satuan == 'Kg' && is_numeric($request->jumlah)) {
             $jumlah = $request->jumlah * 1000;
+        } else {
+            $jumlah = str_replace([',', '.'], '', $request->jumlah);
+        }
+
+        if ($request->satuan == 'Kg' && is_numeric($request->jumlah_minimal)) {
             $jumlah_minimal = $request->jumlah_minimal * 1000;
+        } else {
+            $jumlah_minimal = str_replace([',', '.'], '', $request->jumlah_minimal);
         }
 
         $stok->nama_bahan_baku = $request->nama_bahan_baku;
@@ -103,15 +135,13 @@ class StokBahanBakuController extends Controller
         $stok->terakhir_diedit_by =  Auth::user()->name ?? 'Test';
         $stok->save();
 
-        if(!$stok) {
+        if (!$stok) {
             Alert::success('Gagal diperbarui');
             return redirect()->back();
         } else {
             Alert::success('Berhasil diperbarui');
             return redirect()->route('stok.index');
         }
-
-
     }
 
 

@@ -76,7 +76,7 @@
             <select name="nama_roti" id="nama_roti" class="livesearch form-control text-dark">
                 <option value="">Pilih Roti</option>
                 @foreach ($roti as $data)
-                    <option class="text-dark" value="{{ $data->nama_roti }}">{{ $data->nama_roti }}</option>
+                    <option class="text-dark" value="{{ $data->nama_resep_roti }}">{{ $data->nama_resep_roti }}</option>
                 @endforeach
 
             </select>
@@ -87,7 +87,7 @@
         </div>
         <div class="form-group">
             <label for="">Stok Tersedia</label>
-            <input type="number" name="stok_sekarang" id="stok_sekarang" class="form-control">
+            <input type="text" name="stok_sekarang" id="stok_sekarang" class="form-control">
         </div>
         <div class="form-group">
             <label for="">Jumlah Laku</label>

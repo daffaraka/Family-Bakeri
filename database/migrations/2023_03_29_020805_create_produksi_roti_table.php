@@ -17,8 +17,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('nama_roti');
             $table->integer('stok_masuk');
-            $table->integer('stok_sekarang');
-            $table->integer('laku');
+            // $table->integer('stok_sekarang');
+            // $table->integer('laku');
             $table->string('diproduksi_oleh');
             $table->unsignedBigInteger('resep_id');
 

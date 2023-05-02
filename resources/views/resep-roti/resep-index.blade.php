@@ -30,6 +30,8 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nama Roti</th>
+                    <th scope="col">Jumlah Tersedia Sekarang</th>
+                    <th scope="col">Laku</th>
                     <th scope="col">Resep</th>
                     <th scope="col">Harga</th>
                     <th scope="col">PPn</th>
@@ -41,6 +43,8 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_resep_roti }}</td>
+                        <td>{{ $data->stok_sekarang }}</td>
+                        <td>{{ $data->laku }}</td>
                         <td>
                             <a class="btn btn-primary" href="{{ route('resep.show', $data->id) }}" id="button-resep"
                                 data-toggle="modal" data-target="#resepModal" data-id="{{ $data->id }}">Lihat Resep</a>
@@ -54,7 +58,7 @@
                                 <a href="{{ route('resep.edit', $data->id) }}" class="btn btn-warning">Edit</a>
                             @endcan
                             @can('resep_roti-delete')
-                                <a href="{{ route('resep.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
+                                <a href="#" class="btn btn-danger delete-btn" data-id="{{$data->id}}">Hapus</a>
                             @endcan
 
                         </td>
@@ -97,22 +101,6 @@
 @endsection
 @include('partials.scripts')
 <script>
-    // $('#resepModal').on('show.bs.modal', function(event) {
-    //     var button = $(event.relatedTarget);
-    //     var resepId = button.data('id');
-    //     var modal = $(this);
-    //     $.ajax({
-    //         url: '/resep-roti/details/' + resepId,
-    //         type: 'GET',
-    //         dataType: 'json',
-    //         success: function(response) {
-    //             modal.find('.modal-title').text(response.nama)
-    //             modal.find('#nama_bahan_baku').text(response.nama_bahan_baku)
-    //             modal.find('#jumlah_bahan_baku').text(response.jumlah_bahan_baku)
-    //         }
-    //     })
-    // })
-
     // A function to find the intersection between two arrays
     function arrayIntersect(a, b) {
         var result = [];
@@ -126,7 +114,9 @@
 
 
 
+
     $(document).ready(function() {
+
         $('#dataTable').DataTable({
             language: {
                 paginate: {
@@ -136,9 +126,6 @@
                 }
             }
         });
-    });
-
-    $(document).ready(function() {
 
         $('#dataTable').on('click', '#button-resep', function() {
             var id = $(this).attr('data-id');
@@ -164,6 +151,26 @@
                     }
                 });
             }
+        });
+
+        $('#dataTable').on('click','.delete-btn',function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda tidak dapat mengembalikan tindakan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lanjutkan dengan tindakan hapus
+                    window.location = "{{ route('resep.delete', ':id') }}".replace(':id', id);
+                }
+            })
         });
 
     });
