@@ -113,6 +113,7 @@ class KasirController extends Controller
     public function store(Request $request)
     {
 
+
         $kasir = Kasir::where('nama_roti', $request->nama_roti)->first();
 
 
@@ -141,12 +142,25 @@ class KasirController extends Controller
 
         $laku = $request->laku;
 
+        // Cek jika mempunyai ROti Off
+        if($request->has('roti_off')) {
+            if($request->roti_off < $resep->stok_sekarang) {
+                Alert::error('Kesalahan', 'Stok roti tidak cukup');
+                return redirect()->back();
+            } else {
+                $resep->stok_sekarang -= $request->roti_off;
+                $resep->save();
+            }
 
+        }
         //  Mulai kondisi ketika terdapat data yang telah ADA
         //  Mulai kondisi ketika terdapat data yang telah ADA
         //  Mulai kondisi ketika terdapat data yang telah ADA
         //  Mulai kondisi ketika terdapat data yang telah ADA
         $result = $this->hitungTotalPenjualan($request,$resep, $produksiRoti);
+
+
+
 
         if ($kasir) {
             // INI UPDATE PEMESANAN
@@ -256,7 +270,7 @@ class KasirController extends Controller
                     if ($stokBahanBaku->jumlah == 0 || $stokBahanBaku->jumlah < $bahanBakuNeeded) {
                         // Jika stok tidak cukup, kembalikan response error
 
-                        alert()->error('Kesalahan', 'Bahan Baku Tidak Cukup');
+                        Alert::error('Kesalahan', 'Bahan Baku Tidak Cukup');
                         return redirect()->back();
                     }
 
@@ -409,5 +423,7 @@ class KasirController extends Controller
     public function setRotiOff($request,$resep)
     {
         $rotiOff = 0;
+
+
     }
 }

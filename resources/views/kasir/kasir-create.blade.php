@@ -73,7 +73,7 @@
 
         <div class="form-group">
             <label for="">Nama Roti</label>
-            <select name="nama_roti" id="nama_roti" class="livesearch form-control text-dark">
+            <select name="nama_roti" id="nama_roti" class="livesearch form-control text-dark" required>
                 <option value="">Pilih Roti</option>
                 @foreach ($roti as $data)
                     <option class="text-dark" value="{{ $data->nama_resep_roti }}">{{ $data->nama_resep_roti }}</option>
@@ -91,11 +91,11 @@
         </div>
         <div class="form-group">
             <label for="">Jumlah Laku</label>
-            <input type="number" name="laku" id="laku" class="form-control" required>
+            <input type="number" name="laku" id="laku" class="form-control" required value="0">
         </div>
         <div class="form-group">
             <label for="">Sisa </label>
-            <input type="number" name="sisa" id="sisa" class="form-control" id="target-sisa" required>
+            <input type="number" name="sisa" id="sisa" class="form-control" id="target-sisa" required value="0">
         </div>
         <div class="form-group">
             <label for="">Roti Off </label>

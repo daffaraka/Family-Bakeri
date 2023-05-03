@@ -113,26 +113,44 @@
 
                         // Set nilai sisa ke input field dengan id "sisa"
                         $('#sisa').val(sisa);
+                        if (laku > stok_sekarang) {
+                            // $('#btn-submit').prop('disabled', true);
+                            // Tampilkan pesan error atau lakukan tindakan yang sesuai
+                            Swal.fire({
+                                text: 'Jumlah laku melebihi stok',
+                                target: '#target-sisa',
+                                customClass: {
+                                    container: 'position-absolute',
+                                },
+                                toast: true,
+                                position: 'auto'
+                            });
+
+                            // Atau bisa juga mengosongkan input field "laku" atau menetapkan nilai maksimum yang diizinkan
+                            // $(this).val(stok_masuk);
+                        } else {
+                            $('#btn-submit').prop('disabled', false);
+                        }
                     });
-                    // if (laku > stok_sekarang) {
-                    //     $('#btn-submit').prop('disabled', true);
-                    //     // Tampilkan pesan error atau lakukan tindakan yang sesuai
-                    //     Swal.fire({
-                    //         text: 'Jumlah laku melebihi stok',
-                    //         target: '#target-sisa',
-                    //         customClass: {
-                    //             container: 'position-absolute',
-                    //         },
-                    //         toast: true,
-                    //         position: 'auto'
-                    //     });
 
-                    //     // Atau bisa juga mengosongkan input field "laku" atau menetapkan nilai maksimum yang diizinkan
-                    //     // $(this).val(stok_masuk);
-                    // } else {
-                    //     $('#btn-submit').prop('disabled', false);
-                    // }
 
+                }
+            });
+
+            $('#roti_off').keyup(function(e) {
+                var roti_off = parseInt($(this).val());
+                var stok_sekarang = parseInt($('#stok_sekarang').val());
+                if (roti_off > stok_sekarang) {
+
+                    Swal.fire({
+                        text: 'Roti Off tidak bisa melebihi stok',
+                        target: '#target-sisa',
+                        customClass: {
+                            container: 'position-absolute',
+                        },
+                        toast: true,
+                        position: 'auto'
+                    });
                 }
             });
         });
@@ -144,6 +162,8 @@
 
             $('#laku').val(laku);
         });
+
+
 
 
         $('#filter').on('click', function() {

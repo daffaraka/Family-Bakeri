@@ -49,13 +49,13 @@
                         <td>
                             @if ($data->satuan == 'Kg')
                                 @if ($data->satuan == 'Kg' && $data->jumlah / 1000 < 10)
-                                    {{ number_format($data->jumlah / 1000, 2, ',', '.') . ' Opsi A' }}
+                                    {{ number_format($data->jumlah / 1000, 2, ',', '.')}}
                                 @elseif ($data->satuan == 'Kg' && $data->jumlah / 1000 <= 100 && $data->jumlah / 1000 >= 10)
-                                    {{ number_format($data->jumlah / 1000, 2, ',', '.') . ' Opsi B' }}
+                                    {{ number_format($data->jumlah / 1000, 2, ',', '.')}}
                                 @elseif($data->satuan == 'Kg' && $data->jumlah / 1000 <= 1000 && $data->jumlah / 1000 >= 100)
-                                    {{ number_format($data->jumlah / 1000, 2, ',', '.') . ' Opsi Ratusan' }}
+                                    {{ number_format($data->jumlah / 1000, 2, ',', '.')}}
                                 @elseif($data->satuan == 'Kg' && $data->jumlah / 1000 <= 10000 && $data->jumlah / 1000 >= 1000)
-                                    {{ number_format($data->jumlah / 1000, 0, ',', '.') . ' Opsi Ribuan' }}
+                                    {{ number_format($data->jumlah / 1000, 0, ',', '.') }}
                                 @endif
                             @else
                                 {{ $data->jumlah }}
@@ -69,11 +69,11 @@
                                 @if ($data->satuan == 'Kg' && $data->jumlah_minimal / 1000 <= 10)
                                     {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.') }}
                                 @elseif ($data->satuan == 'Kg' && $data->jumlah_minimal / 1000 <= 100)
-                                    {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.') . ' Opsi B' }}
+                                    {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.')}}
                                 @elseif ($data->satuan == 'Kg' && $data->jumlah_minimal / 1000 <= 1000 && $data->jumlah_minimal / 1000 >= 100)
-                                    {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.') . ' Opsi Ratusan' }}
+                                    {{ number_format($data->jumlah_minimal / 1000, 2, ',', '.')}}
                                 @elseif($data->satuan == 'Kg' && $data->jumlah_minimal / 1000 <= 10000 && $data->jumlah_minimal / 1000 >= 1000)
-                                    {{ number_format($data->jumlah_minimal / 1000, 0, ',', '.') . ' Opsi Ribuan' }}
+                                    {{ number_format($data->jumlah_minimal / 1000, 0, ',', '.')}}
                                 @endif
                             @else
                                 {{ $data->jumlah_minimal }}
