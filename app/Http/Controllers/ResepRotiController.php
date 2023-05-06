@@ -200,7 +200,7 @@ class ResepRotiController extends Controller
 
     public function getDataSatuan(Request $request)
     {
-        $data['satuan'] = StokBahanBaku::where('id', $request->id)->first();
+        $data['satuan'] = StokBahanBaku::where('nama_bahan_baku', $request->nama_bahan_baku)->first();
         return response()->json($data);
     }
 }

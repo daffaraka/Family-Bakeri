@@ -17,14 +17,14 @@
             @csrf
             <div class="mb-3">
                 <label for="">Nama Bahan Baku</label>
-                <select class="livesearch form-control" name="nama_bahan_baku">
+                <select class="livesearch form-control" name="nama_bahan_baku" id="nama_bahan_Baku">
                     @foreach ($stok as $item)
                         <option value="{{ $item->nama_bahan_baku }}">{{ $item->nama_bahan_baku }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-3">
-                <label for="">Jumlah Pesanan (Kg) </label>
+                <label for="" id="label_jumlah_pesanan">Jumlah Pesanan (<span id="satuan"></span>) </label>
                 <input type="text" class="form-control" name="jumlah_pesanan" id="jumlah_pesanan">
             </div>
             <div class="mb-3">
@@ -75,6 +75,25 @@
             var harga_satuan = total_harga / jumlah_pesanan;
 
             $('#harga_satuan').val(harga_satuan);
+        });
+
+        $('#nama_bahan_Baku').on('change', function() {
+            var nama_bahan_baku = this.value;
+
+            $.ajax({
+                url: "{{ url('get-data-satuan') }}/" + nama_bahan_baku,
+                type: "post",
+                data: {
+                    nama_bahan_baku: nama_bahan_baku,
+                    _token: '{{ csrf_token() }}'
+                },
+                dataType: 'json',
+                success: function(result) {
+                    $('#satuan').text(result.satuan.satuan);
+
+                }
+            });
+
         });
     });
 </script>

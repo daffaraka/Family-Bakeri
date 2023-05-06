@@ -142,17 +142,22 @@ class KasirController extends Controller
 
         $laku = $request->laku;
 
+
+
         // Cek jika mempunyai ROti Off
-        if($request->has('roti_off')) {
-            if($request->roti_off < $resep->stok_sekarang) {
-                Alert::error('Kesalahan', 'Stok roti tidak cukup');
+        if($request->has('roti_off') && $request->roti_off != null) {
+            if($request->roti_off > $resep->stok_sekarang) {
+                Alert::error('Kesalahan', 'Stok roti tidak cukup untuk diberikan data Roti Off');
                 return redirect()->back();
             } else {
                 $resep->stok_sekarang -= $request->roti_off;
                 $resep->save();
+                Alert::success('Sukses','Berhasil memperbarui stok roti dari roti Off');
+                return redirect()->back();
             }
 
         }
+
         //  Mulai kondisi ketika terdapat data yang telah ADA
         //  Mulai kondisi ketika terdapat data yang telah ADA
         //  Mulai kondisi ketika terdapat data yang telah ADA
@@ -196,7 +201,7 @@ class KasirController extends Controller
                 $kasir->stok_masuk = $stokMasuk;
                 $kasir->stok_sekarang = $resep->stok_sekarang;
                 $kasir->laku = $kasir->laku += $laku;
-                $kasir->roti_off = $request->roti_off;
+                $kasir->roti_off = $request->roti_off ?? 0;
                 $kasir->sisa_total = $kasir->sisa_total;
                 $kasir->rizky = $pemesan == 'Rizky' ?  $kasir->rizky += $request->laku : $kasir->rizky;
                 $kasir->palem =  $pemesan == 'Palem' ?  $kasir->palem += $request->laku : $kasir->palem;
@@ -218,7 +223,7 @@ class KasirController extends Controller
                     $kasir->stok_masuk = $stokMasuk;
                     $kasir->stok_sekarang = $resep->stok_sekarang;
                     $kasir->laku = $kasir->laku += $laku;
-                    $kasir->roti_off = $request->roti_off;
+                    $kasir->roti_off = $request->roti_off ?? 0;
                     $kasir->sisa_total = $request->sisa;
                     $kasir->rizky = $pemesan == 'Rizky' ?  $kasir->rizky += $request->laku : $kasir->rizky;
                     $kasir->palem =  $pemesan == 'Palem' ?  $kasir->palem += $request->laku : $kasir->palem;
@@ -292,7 +297,7 @@ class KasirController extends Controller
                 $newKasir->stok_masuk = $stokMasuk;
                 $newKasir->stok_sekarang = $resep->stok_sekarang;
                 $newKasir->laku =  $request->laku;
-                $newKasir->roti_off = $request->roti_off;
+                $newKasir->roti_off = $request->roti_off ?? 0;
                 $newKasir->sisa_total = $sisa_total ;
                 $newKasir->rizky = $pemesan == 'Rizky' ?  $request->input('laku') : 0;   // tambahkan kolom untuk Rizky
                 $newKasir->palem = $pemesan == 'Palem' ?  $request->input('laku') : 0; // tambahkan kolom untuk Palem
@@ -324,7 +329,7 @@ class KasirController extends Controller
                 $newKasir->stok_masuk = $stokMasuk;
                 $newKasir->stok_sekarang = $resep->stok_sekarang;
                 $newKasir->laku =  $request->laku;
-                $newKasir->roti_off = $request->roti_off;
+                $newKasir->roti_off = $request->roti_off ?? 0;
                 $newKasir->sisa_total = $sisa_total;
                 $newKasir->rizky = $pemesan == 'Rizky' ?  $request->input('laku') : 0;   // tambahkan kolom untuk Rizky
                 $newKasir->palem = $pemesan == 'Palem' ?  $request->input('laku') : 0; // tambahkan kolom untuk Palem

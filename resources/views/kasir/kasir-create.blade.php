@@ -99,7 +99,7 @@
         </div>
         <div class="form-group">
             <label for="">Roti Off </label>
-            <input type="number" name="roti_off" id="roti_off" class="form-control" value="0">
+            <input type="number" name="roti_off" id="roti_off" class="form-control">
         </div>
 
         <div class="d-flex justify-content-between">

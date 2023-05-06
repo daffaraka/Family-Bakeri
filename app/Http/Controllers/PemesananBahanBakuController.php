@@ -110,7 +110,7 @@ class PemesananBahanBakuController extends Controller
         $cekStok = StokBahanBaku::firstWhere('nama_bahan_baku', $req_bahan);
 
         if ($request->status_pesanan == 'Diterima' && $cekStok) {
-            $cekStok->jumlah += $request->jumlah_pesanan * 1000;
+            $cekStok->jumlah += $request->jumlah_pesanan;
             $cekStok->save();
         }
 
@@ -123,7 +123,7 @@ class PemesananBahanBakuController extends Controller
 
         $bb->nama_bahan_baku = $request->nama_bahan_baku;
         $bb->jumlah_pesanan = $jumlah_pesanan;
-        $bb->dp = $request->dp;
+        $bb->dp = $request->dp ?? 0;
         $bb->deadline_dp = $request->deadline_dp ?? Carbon::now();
         $bb->status_pesanan = $request->status_pesanan;
         $bb->harga_satuan = $harga_satuan;
@@ -169,7 +169,7 @@ class PemesananBahanBakuController extends Controller
         $bb->jumlah_pesanan = $jumlah_pesanan;
         $bb->status_pesanan = $request->status_pesanan;
         $bb->harga_satuan = $harga_satuan;
-        $bb->dp = $request->dp;
+        $bb->dp = $request->dp ?? 0;
         $bb->deadline_dp = $request->deadline_dp;
         $bb->total_harga = $total_harga;
         $bb->sisa_pembayaran = $sisa_pembayaran;
