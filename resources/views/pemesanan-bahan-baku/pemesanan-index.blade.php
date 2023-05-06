@@ -78,6 +78,7 @@
     </div>
 
 
+    @include('vendor.sweetalert.alert')
 
 
 @endsection

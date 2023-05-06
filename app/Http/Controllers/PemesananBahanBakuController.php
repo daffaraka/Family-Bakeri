@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PemesananBahanBaku;
-use App\Models\StokBahanBaku;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\StokBahanBaku;
 use Yajra\DataTables\DataTables;
+use App\Models\PemesananBahanBaku;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PemesananBahanBakuController extends Controller
 {
@@ -63,11 +64,11 @@ class PemesananBahanBakuController extends Controller
                     $btn = '';
 
                     if ($user->can('pemesanan_bahan_baku-edit')) {
-                        $btn .= '<a href="'.route("pemesanan.edit",$row->id).'" data-toggle="tooltip" title="Edit" class="btn btn-warning mr-1 btn-sm edit-btn">Edit </a>';
+                        $btn .= '<a href="' . route("pemesanan.edit", $row->id) . '" data-toggle="tooltip" title="Edit" class="btn btn-warning mr-1 btn-sm edit-btn">Edit </a>';
                     }
 
                     if ($user->can('pemesanan_bahan_baku-delete')) {
-                        $btn .= '<a href="#" data-id="'.$row->id.'"  title="Delete" class="btn btn-danger btn-sm " id="delete-btn">Hapus</a>';
+                        $btn .= '<a href="#" data-id="' . $row->id . '"  title="Delete" class="btn btn-danger btn-sm " id="delete-btn">Hapus</a>';
                     }
                     return $btn;
                 })
@@ -116,7 +117,7 @@ class PemesananBahanBakuController extends Controller
 
         $total_harga = $jumlah_pesanan * $harga_satuan;
 
-        if($request->dp >= 0) {
+        if ($request->dp >= 0) {
             $sisa_pembayaran = $total_harga - $request->dp;
         }
 
@@ -155,12 +156,11 @@ class PemesananBahanBakuController extends Controller
         if ($request->status_pesanan == 'Diterima' && $cekStok) {
             $cekStok->jumlah += $request->jumlah_pesanan * 1000;
             $cekStok->save();
-
         }
 
         $total_harga = $jumlah_pesanan * $harga_satuan;
 
-        if($request->dp >= 0) {
+        if ($request->dp >= 0) {
             $sisa_pembayaran = $total_harga - $request->dp;
         }
 
@@ -180,14 +180,29 @@ class PemesananBahanBakuController extends Controller
 
     public function delete($id)
     {
-        $bb = PemesananBahanBaku::find($id);
-        $bb->delete();
+        $pbb = PemesananBahanBaku::find($id);
+        // dd($pbb->nama_bahan_baku);
+        if ($pbb) {
+            if ($pbb->status_pesanan == 'Diterima') {
+                $bb = StokBahanBaku::firstWhere('nama_bahan_baku', $pbb->nama_bahan_baku);
+                $bb->jumlah -= $pbb->jumlah_pesanan;
+                $bb->save();
+                $pbb->delete();
 
-        return redirect()->route('pemesanan.index');
+                Alert::success('Berhasil', 'Data pemesanan berhasil dihapus dengan mengurangi stok bahan baku. Status pesanan sebelumnya '. $pbb->status_pesanan);
+
+                return redirect()->route('pemesanan.index');
+            } else {
+                $pbb->delete();
+                Alert::success('Berhasil', 'Data pemesanan berhasil dihapus tanpa mengurangi stok bahan baku. Status Pesanan sebelumnya '. $pbb->status_pesanan);
+                return redirect()->route('pemesanan.index');
+            }
+        } else {
+            Alert::error('Gagal', 'Data pemesanan tidak valid');
+            return redirect()->route('pemesanan.index');
+
+        }
     }
 
-    public function updateStok($stok)
-    {
-        # code...
-    }
+
 }

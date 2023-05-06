@@ -138,9 +138,22 @@ class ProduksiRotiController extends Controller
 
     public function delete($id)
     {
-        $produksiRoti = ProduksiRoti::find($id);
-        $produksiRoti->delete();
+        $produksiRoti = ProduksiRoti::with('ResepRoti')->find($id);
 
-        return redirect()->route('produksi.index');
+
+
+
+        if($produksiRoti) {
+            $produksiRoti->ResepRoti->stok_sekarang -= $produksiRoti->stok_masuk;
+            $produksiRoti->ResepRoti->save();
+            $produksiRoti->delete();
+            alert::success('Berhasil','Data produksi roti telah dihapus');
+
+            return redirect()->route('produksi.index');
+        } else {
+            alert::error('Kesalahan','Data produksi roti tidak berhasil dihapus');
+            return redirect()->route('produksi.index');
+        }
+
     }
 }
