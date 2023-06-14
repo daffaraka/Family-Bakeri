@@ -87,8 +87,6 @@ class StokBahanBakuController extends Controller
     {
         $stok = StokBahanBaku::find($id);
 
-
-
         $jb = 0;
         $jm = 0;
 
@@ -149,6 +147,7 @@ class StokBahanBakuController extends Controller
     {
         $stok = StokBahanBaku::find($id);
         $stok->delete();
+
         return redirect()->route('stok.index');
     }
 }

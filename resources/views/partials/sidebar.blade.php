@@ -19,6 +19,18 @@
                             <span class="nav-link-text">Dashboard</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('keuangan-harian.index') }}">
+                            <i class="ni ni-money-coins text-success"></i>
+                            <span class="nav-link-text">Keuangan Harian</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('keuangan-harian.index') }}">
+                            <i class="ni ni-money-coins text-danger"></i>
+                            <span class="nav-link-text">Keuangan Bulanan</span>
+                        </a>
+                    </li>
                     @can('pemesanan_bahan_baku-list')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('pemesanan.index') }}">
@@ -27,6 +39,10 @@
                             </a>
                         </li>
                     @endcan
+
+                    {{-- @can('pemesanan_bahan_baku-list') --}}
+
+                    {{-- @endcan --}}
 
                     @can('stok_bahan_baku-list')
                         <li class="nav-item">

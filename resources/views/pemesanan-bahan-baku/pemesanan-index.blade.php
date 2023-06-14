@@ -51,27 +51,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- @forelse ($bb as $data)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nama_bahan_baku }}</td>
-                        <td>{{ $data->jumlah_pesanan }}</td>
-                        <td>Rp.{{ number_format($data->harga_satuan) }}</td>
-                        <td>Rp.{{ number_format($data->total_harga) }}</td>
-                        <td> <button
-                                class="btn py-1 btn-{{ $data->status_pesanan == 'Sedang Diantar' ? 'primary' : ($data->status_pesanan == 'Diterima' ? 'success' : 'info') }}">{{ $data->status_pesanan }}
-                            </button> </td>
-                        <td>{{ $data->created_at }}</td>
-                        <td>
-                            <a href="{{ route('pemesanan.edit', $data->id) }}" class="btn btn-warning">Edit</a>
-                            <a href="{{ route('pemesanan.delete', $data->id) }}" class="btn btn-danger">Hapus</a>
 
-                        </td>
-
-                    </tr>
-                @empty
-                    <h3>Belum ada data</h3>
-                @endforelse --}}
 
             </tbody>
         </table>
@@ -179,11 +159,8 @@
         });
 
 
-
-
-
         $('#status').change(function() {
-            table.draw();
+            $('#dataTable').DataTable().ajax.reload();
         });
 
 

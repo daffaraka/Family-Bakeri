@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Select2Controller;
@@ -8,10 +10,10 @@ use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResepRotiController;
 use App\Http\Controllers\ProduksiRotiController;
+use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\StokBahanBakuController;
+use App\Http\Controllers\KeuanganHarianController;
 use App\Http\Controllers\PemesananBahanBakuController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +84,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     // Route::resource('roles', RoleController::class);
     // Dropdown dinamis
+
+    Route::resource('keuangan-harian', KeuanganHarianController::class, ['except' => ['destroy', 'update']]);
+    Route::get('keuangan-harian/delete/{id}', [KeuanganHarianController::class, 'destroy'])->name('keuangan-harian.destroy');
+    Route::post('keuangan-harian/update/{id}', [KeuanganHarianController::class, 'update'])->name('keuangan-harian.update');
+
 
     Route::post('/get-data-satuan/{id}', [ResepRotiController::class, 'getDataSatuan'])->name('getDataSatuan');
     Route::post('/get-data-roti/{id}', [KasirController::class, 'getDataRoti'])->name('getDataRoti');
