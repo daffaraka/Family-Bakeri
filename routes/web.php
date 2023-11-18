@@ -8,12 +8,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Select2Controller;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FrontEndController;
 use App\Http\Controllers\ResepRotiController;
 use App\Http\Controllers\ProduksiRotiController;
 use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\StokBahanBakuController;
 use App\Http\Controllers\KeuanganHarianController;
 use App\Http\Controllers\PemesananBahanBakuController;
+use App\Http\Controllers\RealisasiProduksiController;
+use App\Models\RealisasiProduksi;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +37,14 @@ use App\Http\Controllers\PemesananBahanBakuController;
 
 // Route::get('tes-data',[KasirController::class,'tes']);
 
+Route::get('beranda',[FrontEndController::class,'index'])->name('beranda.index');
+Route::get('/',[FrontEndController::class,'index'])->name('beranda');
+Route::get('buat-pesanan/{id}',[FrontEndController::class,'buatPesanan'])->name('beranda.buatPesanan');
 
+
+Route::get('beranda',[FrontEndController::class,'index'])->name('beranda.index');
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    });
+
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -58,10 +64,21 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/produksi-roti', [ProduksiRotiController::class, 'index'])->name('produksi.index');
     Route::get('/produksi-roti/create', [ProduksiRotiController::class, 'create'])->name('produksi.create');
+
     Route::post('/produksi-roti/store', [ProduksiRotiController::class, 'store'])->name('produksi.store');
     Route::get('/produksi-roti/edit', [ProduksiRotiController::class, 'edit'])->name('produksi.edit');
+    Route::get('/produksi-roti/detail/{id}', [ProduksiRotiController::class, 'show'])->name('produksi.detail');
+    Route::get('/produksi-roti/detail/{id}/create-realisasi', [ProduksiRotiController::class, 'createRealisasi'])->name('produksi.createRealisasi');
     Route::post('/produksi-roti/update', [ProduksiRotiController::class, 'update'])->name('produksi.update');
     Route::get('/produksi-roti/delete/{id}', [ProduksiRotiController::class, 'delete'])->name('produksi.delete');
+
+    Route::get('/realisasi-produksi', [RealisasiProduksiController::class, 'index'])->name('realisasi.index');
+    Route::get('/realisasi-produksi/create', [RealisasiProduksiController::class, 'create'])->name('realisasi.create');
+    Route::post('/realisasi-produksi/store', [RealisasiProduksiController::class, 'store'])->name('realisasi.store');
+    Route::get('/realisasi-produksi/edit/{id}', [RealisasiProduksiController::class, 'edit'])->name('realisasi.edit');
+    Route::post('/realisasi-produksi/update/{id}', [RealisasiProduksiController::class, 'update'])->name('realisasi.update');
+    Route::get('/realisasi-produksi/delete/{id}', [RealisasiProduksiController::class, 'destroy'])->name('realisasi.delete');
+
 
     Route::get('/resep-roti', [ResepRotiController::class, 'index'])->name('resep.index');
     Route::get('/resep-roti/create', [ResepRotiController::class, 'create'])->name('resep.create');
@@ -73,6 +90,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
     Route::get('/kasir/create', [KasirController::class, 'create'])->name('kasir.create');
+    // Route::get('/kasir/create-customer', [KasirController::class, 'createCustomer'])->name('kasir.create-customer');
+    // Route::get('/kasir/create-pemesanan', [KasirController::class, 'createPemesanan'])->name('kasir.create-pemesanan');
+
     Route::post('/kasir/store', [KasirController::class, 'store'])->name('kasir.store');
     Route::get('/kasir/details/{id}', [KasirController::class, 'show'])->name('kasir.show');
     Route::get('/kasir/edit/{id}', [KasirController::class, 'edit'])->name('kasir.edit');

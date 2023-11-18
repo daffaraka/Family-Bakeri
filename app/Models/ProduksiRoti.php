@@ -21,4 +21,9 @@ class ProduksiRoti extends Model
     {
         return $this->belongsTo(ResepRoti::class, 'resep_id');
     }
+
+    public function RealisasiProduksi()
+    {
+        return $this->hasMany(RealisasiProduksi::class,'produksi_id');
+    }
 }

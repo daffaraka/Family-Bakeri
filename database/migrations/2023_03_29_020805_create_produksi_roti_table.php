@@ -16,15 +16,14 @@ return new class extends Migration
         Schema::create('produksi_rotis', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama_roti');
-            $table->integer('stok_masuk');
-            // $table->integer('stok_sekarang');
-            // $table->integer('laku');
-            $table->string('diproduksi_oleh');
+            $table->string('diajukan_oleh');
             $table->unsignedBigInteger('resep_id');
+
 
 
             $table->foreign('resep_id')->references('id')->on('resep_rotis')
                   ->onUpdate('cascade')->onDelete('cascade');
+            $table->date('dibuat_tanggal');
             $table->timestamps();
         });
     }

@@ -68,13 +68,13 @@ class KeuanganHarianController extends Controller
                 ->make(true);
         }
 
-        return view('harian.harian-index');
+        return view('dashboard.harian.harian-index');
     }
 
 
     public function create()
     {
-        return view('harian.harian-create');
+        return view('dashboard.harian.harian-create');
     }
 
 
@@ -89,7 +89,7 @@ class KeuanganHarianController extends Controller
     public function edit($id)
     {
         $keuangan = KeuanganHarian::find($id);
-        return view('harian.harian-edit', compact('keuangan'));
+        return view('dashboard.harian.harian-edit', compact('keuangan'));
     }
 
     public function update(Request $request, $id)

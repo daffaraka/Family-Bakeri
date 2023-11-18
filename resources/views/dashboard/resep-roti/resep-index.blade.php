@@ -1,6 +1,9 @@
 @extends('layout')
 @section('title', 'Resep Roti - Family Bakery')
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.3/datatables.min.css" rel="stylesheet" />
 @section('content')
+
 
 
     <style>
@@ -17,9 +20,6 @@
         }
     </style>
     <div class="container py-4">
-
-        {{-- <
-             --}}
         @can('resep_roti-create')
             <a href="{{ route('resep.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded">
                 <i class="fa fa-plus" aria-hidden="true"></i> Tambah Resep Roti</a>
@@ -28,20 +28,23 @@
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama Roti</th>
-                    <th scope="col">Jumlah Tersedia Sekarang</th>
-                    <th scope="col">Laku</th>
-                    <th scope="col">Resep</th>
-                    <th scope="col">Harga</th>
-                    <th scope="col">PPn</th>
-                    <th scope="col">Action</th>
+                    <th >#</th>
+                    <th >Gambar Roti</th>
+                    <th >Nama Roti</th>
+                    <th >Jumlah Tersedia Sekarang</th>
+                    <th >Laku</th>
+                    <th >Resep</th>
+                    <th >Harga</th>
+                    <th >PPn</th>
+                    <th >Action</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($resep as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td><img src="{{ asset('images/Resep Roti/' . $data->gambar_roti) }}" class="img-thumbnail"
+                                alt=""> </td>
                         <td>{{ $data->nama_resep_roti }}</td>
                         <td>{{ $data->stok_sekarang }}</td>
                         <td>{{ $data->laku }}</td>
@@ -58,7 +61,7 @@
                                 <a href="{{ route('resep.edit', $data->id) }}" class="btn btn-warning">Edit</a>
                             @endcan
                             @can('resep_roti-delete')
-                                <a href="#" class="btn btn-danger delete-btn" data-id="{{$data->id}}">Hapus</a>
+                                <a href="#" class="btn btn-danger delete-btn" data-id="{{ $data->id }}">Hapus</a>
                             @endcan
 
                         </td>
@@ -97,24 +100,13 @@
 
 
 
+    <script src="{{ asset('assets/vendor/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 
 @endsection
 @include('partials.scripts')
+
 <script>
-    // A function to find the intersection between two arrays
-    function arrayIntersect(a, b) {
-        var result = [];
-        $.each(a, function(index, value) {
-            if ($.inArray(value, b) !== -1) {
-                result.push(value);
-            }
-        });
-        return result;
-    }
-
-
-
-
     $(document).ready(function() {
 
         $('#dataTable').DataTable({
@@ -153,7 +145,7 @@
             }
         });
 
-        $('#dataTable').on('click','.delete-btn',function(e) {
+        $('#dataTable').on('click', '.delete-btn', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
 

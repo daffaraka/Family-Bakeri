@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('resep_rotis', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_resep_roti');
-            $table->integer('harga');
-            $table->integer('stok_sekarang')->default(0);
-            $table->integer('laku');
-            $table->integer('ppn');
-            $table->string('gambar_roti');
+        Schema::create('katalog_rotis', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('resep_roti_id');
+            $table->integer('stok');
+            $table->longText('deskripsi');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('resep_rotis');
+        Schema::dropIfExists('katalog_rotis');
     }
 };

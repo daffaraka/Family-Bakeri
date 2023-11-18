@@ -3,7 +3,7 @@
 @section('content')
 
     @can('kasir-create')
-        @include('kasir.kasir-create')
+        @include('dashboard.kasir.kasir-create')
     @endcan
 
     <div class="container py-4 px-5">
@@ -18,63 +18,66 @@
                 <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>
             </div>
         </div>
-        <table class="table table-bordered table-hover table-light table-striped" id="dataTable">
-            <thead class="table-dark">
-                <tr>
-                    <th rowspan="2">SKU</th>
-                    <th rowspan="2">Nama Roti</th>
-                    <th rowspan="2">Tanggal Dibuat</th>
-                    <th rowspan="2">Harga</th>
-                    <th rowspan="2">Stok Masuk</th>
-                    <th rowspan="2">Jumlah <br> Awal</th>
-                    <th rowspan="2">Laku</th>
-                    <th rowspan="2">Sisa</th>
-                    <th rowspan="2">Roti Off</th>
-                    <th scope="col">Pesanan 1</th>
-                    <th scope="col">Pesanan 2</th>
-                    <th scope="col">Pesanan 3</th>
-                    <th rowspan="2">Total Rizky</th>
-                    <th rowspan="2">Total Palem</th>
-                    <th rowspan="2">Total Moro Jaya</th>
-                    <th rowspan="1">Total Penjualan Data Ini</th>
-                </tr>
-                <tr>
-                    <th scope="col">Rizky </th>
-                    <th scope="col">Palem </th>
-                    <th scope="col">Moro Jaya</th>
-                    <th scope="col">(Laku * Harga)</th>
-                </tr>
-            </thead>
-            <tfoot>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-light table-striped" id="dataTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th rowspan="2">SKU</th>
+                        <th rowspan="2">Nama Roti</th>
+                        <th rowspan="2">Tanggal Dibuat</th>
+                        <th rowspan="2">Harga</th>
+                        <th rowspan="2">Stok Masuk</th>
+                        <th rowspan="2">Jumlah <br> Awal</th>
+                        <th rowspan="2">Laku</th>
+                        <th rowspan="2">Sisa</th>
+                        <th rowspan="2">Roti Off</th>
+                        <th scope="col">Pesanan 1</th>
+                        <th scope="col">Pesanan 2</th>
+                        <th scope="col">Pesanan 3</th>
+                        <th rowspan="2">Total Rizky</th>
+                        <th rowspan="2">Total Palem</th>
+                        <th rowspan="2">Total Moro Jaya</th>
+                        <th rowspan="1">Total Penjualan Data Ini</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">Rizky </th>
+                        <th scope="col">Palem </th>
+                        <th scope="col">Moro Jaya</th>
+                        <th scope="col">(Laku * Harga)</th>
+                    </tr>
+                </thead>
+                <tfoot>
 
-                <tr>
-                    <th class="text-right" colspan="3">Total Penjualan Keseluruhan</th>
-                    <th colspan="9"></th>
-                    <th id="total_penjualan"></th>
-                </tr>
-                <tr>
-                    <th class="text-right" colspan="3">Total Pesanan</th>
-                    <th colspan="9"></th>
-                    <th id="total_pesanan"></th>
-                </tr>
-                <tr>
-                    <th class="text-right" colspan="3">Total Ppn</th>
-                    <th colspan="9"></th>
-                    <th id="total_ppn"></th>
-                </tr>
-                <tr>
-                    <th class="text-right" colspan="3">Total Toko </th>
-                    <th colspan="9"></th>
-                    <th id="total_toko"></th>
-                </tr>
-                <tr>
-                    <th class="text-right" colspan="3">Total After Ppn </th>
-                    <th colspan="9"></th>
-                    <th id="total_after_ppn"></th>
-                </tr>
+                    <tr>
+                        <th class="text-right" colspan="3">Total Penjualan Keseluruhan</th>
+                        <th colspan="9"></th>
+                        <th id="total_penjualan"></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="3">Total Pesanan</th>
+                        <th colspan="9"></th>
+                        <th id="total_pesanan"></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="3">Total Ppn</th>
+                        <th colspan="9"></th>
+                        <th id="total_ppn"></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="3">Total Toko </th>
+                        <th colspan="9"></th>
+                        <th id="total_toko"></th>
+                    </tr>
+                    <tr>
+                        <th class="text-right" colspan="3">Total After Ppn </th>
+                        <th colspan="9"></th>
+                        <th id="total_after_ppn"></th>
+                    </tr>
 
-            </tfoot>
-        </table>
+                </tfoot>
+            </table>
+        </div>
+
     </div>
 
     @include('vendor.sweetalert.alert')
@@ -279,8 +282,7 @@
                 data.forEach(function(rowData) {
                     // Mengakses nilai total_penjualan dari setiap data baris (rowData) pada table
                     totalPenjualan += parseFloat(rowData.total_penjualan_ini);
-                    totalPemesanan += parseFloat(rowData.total_rizky + rowData.total_palem +
-                        rowData.total_moro_jaya);
+                    totalPemesanan += parseFloat(rowData.total_rizky + rowData.total_palem + rowData.total_moro_jaya);
                     totalToko = parseFloat(totalPenjualan - totalPemesanan);
                     totalPPn += parseFloat(rowData.total_ppn);
                     totalAfterPpn = parseFloat(totalToko - totalPPn);

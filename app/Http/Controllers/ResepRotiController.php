@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\ResepRoti;
 use Illuminate\Http\Request;
 use App\Models\StokBahanBaku;
 use App\Models\ResepBahanBaku;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Validator;
 
 class ResepRotiController extends Controller
 {
@@ -23,7 +25,7 @@ class ResepRotiController extends Controller
         $resep = ResepRoti::all();
 
 
-        return view('resep-roti.resep-index', compact('resep'));
+        return view('dashboard.resep-roti.resep-index', compact('resep'));
     }
 
     public function create()
@@ -31,7 +33,7 @@ class ResepRotiController extends Controller
         $stok = StokBahanBaku::all();
         $stok_json = json_encode(StokBahanBaku::select(['id', 'nama_bahan_baku'])->get());
 
-        return view('resep-roti.resep-create', compact('stok', 'stok_json'));
+        return view('dashboard.resep-roti.resep-create', compact('stok', 'stok_json'));
     }
 
     public function store(Request $request)
@@ -48,7 +50,7 @@ class ResepRotiController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nama_bahan_baku' => 'required',
-            'nama_bahan_baku' => 'required',
+            'jumlah_bahan_baku' => 'required',
         ], [
             'nama_bahan_baku.required' => 'Stok bahan baku dibutuhkan dan harus di isi.',
             'jumlah_bahan_baku.required' => 'Jumlah bahan baku harus diisi',
@@ -57,6 +59,7 @@ class ResepRotiController extends Controller
             // 'jumlah.min' => 'Jumlah bahan baku harus lebih dari atau sama dengan 0.',
             // 'satuan.required' => 'Satuan bahan baku harus diisi.',
         ]);
+
 
 
         // dd($jumlah * 1000);
@@ -75,12 +78,18 @@ class ResepRotiController extends Controller
                 }
             }
 
+            $file = $request->file('gambar_roti');
+
+            $fileName = $file->getClientOriginalName();
+
+            $file->move('images/Resep Roti', $request->nama_resep_roti.'-'.$fileName);
             $resepRoti = new ResepRoti;
             $resepRoti->harga = $request->harga;
             $resepRoti->nama_resep_roti = $request->nama_resep_roti;
             $resepRoti->ppn = $ppn;
             $resepRoti->stok_sekarang = 0;
             $resepRoti->laku = 0;
+            $resepRoti->gambar_roti = $request->nama_resep_roti.'-'.$fileName;
             $resepRoti->save();
 
 
@@ -149,7 +158,7 @@ class ResepRotiController extends Controller
 
 
 
-        return view('resep-roti.resep-edit', compact('resep', 'stok', 'stok_json', 'resep_select'));
+        return view('dashboard.resep-roti.resep-edit', compact('resep', 'stok', 'stok_json', 'resep_select'));
     }
 
     public function update(Request $request, $id)

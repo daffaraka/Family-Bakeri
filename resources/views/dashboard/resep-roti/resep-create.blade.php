@@ -25,10 +25,21 @@
         }
     </style>
     <div class="container py-3">
-        <form action="{{ route('resep.store') }}" method="POST">
+        <form action="{{ route('resep.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label for="">Gambar Roti</label>
+                        <div class="my-3">
+                            <img id="preview" src="#" alt="preview image" class="shadow" style=" max-height: 200px;" />
+
+                        </div>
+
+                        <input type="file" name="gambar_roti" class="form-control m-input" id="selectImage"
+                            autocomplete="on" accept="image/*" required>
+
+                    </div>
                     <div class="mb-3">
                         <label for="">Nama Roti</label>
                         <input type="text" name="nama_resep_roti" class="form-control m-input" placeholder="Nama Roti"
@@ -132,5 +143,14 @@
         $(document).ready(function() {
             $('.livesearch').select2();
         });
+
+        selectImage.onchange = evt => {
+            preview = document.getElementById('preview');
+            preview.style.display = 'block';
+            const [file] = selectImage.files
+            if (file) {
+                preview.src = URL.createObjectURL(file)
+            }
+        }
     </script>
 @endsection

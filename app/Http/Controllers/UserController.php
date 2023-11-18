@@ -24,14 +24,14 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = User::all();
-        return view('users.user-index',compact('data'));
+        return view('dashboard.users.user-index',compact('data'));
     }
 
     public function create()
     {
         $roles = Role::all();
 
-        return view('users.user-create',compact('roles'));
+        return view('dashboard.users.user-create',compact('roles'));
     }
 
     public function store(Request $request)
@@ -56,7 +56,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        return view('users.show',compact('user'));
+        return view('dashboard.users.show',compact('user'));
     }
 
     public function edit($id)
@@ -65,7 +65,7 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('users.user-edit',compact('user','roles','userRole'));
+        return view('dashboard.users.user-edit',compact('user','roles','userRole'));
     }
 
 

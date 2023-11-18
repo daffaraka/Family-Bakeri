@@ -34,27 +34,30 @@
                     aria-hidden="true"></i> Tambah Bahan Baku</a>
         @endcan
 
-        <table class="table table-hover table-light table-striped" id="dataTable">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama Bahan Baku</th>
-                    <th scope="col">Jumlah Pesanan</th>
-                    <th scope="col">Harga Satuan</th>
-                    <th scope="col">Total Harga</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Jumlah DP</th>
-                    <th scope="col">Deadline DP</th>
-                    <th scope="col">Sisa Pembayaran</th>
-                    <th scope="col">Tanggal Pesanan</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="table-responsive">
+            <table class="table table-hover table-light table-striped" id="dataTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nama Bahan Baku</th>
+                        <th scope="col">Jumlah Pesanan</th>
+                        <th scope="col">Harga Satuan</th>
+                        <th scope="col">Total Harga</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Jumlah DP</th>
+                        <th scope="col">Deadline DP</th>
+                        <th scope="col">Sisa Pembayaran</th>
+                        <th scope="col">Tanggal Pesanan</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
 
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 

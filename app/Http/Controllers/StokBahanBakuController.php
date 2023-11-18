@@ -24,12 +24,12 @@ class StokBahanBakuController extends Controller
     {
         $stok = StokBahanBaku::all();
 
-        return view('stok-bahan-baku.stok-index', compact('stok'));
+        return view('dashboard.stok-bahan-baku.stok-index', compact('stok'));
     }
 
     public function create()
     {
-        return view('stok-bahan-baku.stok-create');
+        return view('dashboard.stok-bahan-baku.stok-create');
     }
 
     public function store(Request $request)
@@ -99,7 +99,7 @@ class StokBahanBakuController extends Controller
             $jm = $stok->jumlah_minimal;
         }
 
-        return view('stok-bahan-baku.stok-edit', compact('stok', 'jb','jm'));
+        return view('dashboard.stok-bahan-baku.stok-edit', compact('stok', 'jb','jm'));
     }
 
     public function update(Request $request, $id)

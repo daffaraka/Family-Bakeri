@@ -1,4 +1,4 @@
-<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+<nav class="sidenav navbar navbar-vertical  fixed-left navbar-expand-xs navbar-expand-lg navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
         <!-- Brand -->
         <div class="sidenav-header  align-items-center">
@@ -19,18 +19,18 @@
                             <span class="nav-link-text">Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="{{ route('keuangan-harian.index') }}">
                             <i class="ni ni-money-coins text-success"></i>
                             <span class="nav-link-text">Keuangan Harian</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
+                    </li> --}}
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="{{ route('keuangan-harian.index') }}">
                             <i class="ni ni-money-coins text-danger"></i>
                             <span class="nav-link-text">Keuangan Bulanan</span>
                         </a>
-                    </li>
+                    </li> --}}
                     @can('pemesanan_bahan_baku-list')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('pemesanan.index') }}">
@@ -64,10 +64,33 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('produksi.index') }}">
                                 <i class="ni ni-square-pin text-yellow"></i>
-                                <span class="nav-link-text">Produksi Roti</span>
+                                <span class="nav-link-text">Perencanaan Produksi Roti</span>
                             </a>
                         </li>
                     @endcan
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('realisasi.index')}}">
+
+                            <i class="ni ni-tag text-primary"></i>
+                            <span class="nav-link-text">Catalog Roti</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('realisasi.index')}}">
+
+                            <i class="ni ni-tag text-primary"></i>
+                            <span class="nav-link-text">Realisasi Produksi Roti</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+
+                            <i class="ni ni-cart text-danger"></i>
+                            <span class="nav-link-text">Pemesanan Online</span>
+                        </a>
+                    </li>
 
                     @can('kasir-list')
                         <li class="nav-item">
@@ -85,6 +108,7 @@
                             </a>
                         </li>
                     @endcan
+
 
                     {{-- @can('role-list')
                         <li class="nav-item">

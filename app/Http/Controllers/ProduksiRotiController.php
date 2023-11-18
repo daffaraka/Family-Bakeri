@@ -22,14 +22,14 @@ class ProduksiRotiController extends Controller
     public function index()
     {
         $produksi = ProduksiRoti::all();
-        return view('roti.produksi-index', compact('produksi'));
+        return view('dashboard.roti.produksi-index', compact('produksi'));
     }
 
     public function create()
     {
 
         $resep = ResepRoti::all();
-        return view('roti.produksi-create', compact('resep'));
+        return view('dashboard.roti.produksi-create', compact('resep'));
     }
 
     public function store(Request $request)
@@ -115,10 +115,17 @@ class ProduksiRotiController extends Controller
         // }
     }
 
+
+    public function show($id)
+    {
+        $roti = ProduksiRoti::with('RealisasiProduksi')->find($id);
+        return view('dashboard.roti.produksi-show', compact('roti'));
+    }
+
     public function edit()
     {
         $roti = ProduksiRoti::all();
-        return view('roti.produksi-edit', compact('roti'));
+        return view('dashboard.roti.produksi-edit', compact('roti'));
     }
 
     public function update(Request $request)
@@ -155,5 +162,13 @@ class ProduksiRotiController extends Controller
             return redirect()->route('produksi.index');
         }
 
+    }
+
+
+    public function createRealisasi($id){
+        $roti = ProduksiRoti::with('ResepRoti')->find($id);
+
+
+        return view('dashboard.roti.produksi-create-realisasi',compact('roti'));
     }
 }

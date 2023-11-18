@@ -27,7 +27,7 @@ class PemesananBahanBakuController extends Controller
         //     $bb = $bb->where('status_pesanan', $request->status);
         // }
 
-        // return view('pemesanan-bahan-baku.pemesanan-index', compact('bb'));
+        // return view('dashboard.pemesanan-bahan-baku.pemesanan-index', compact('bb'));
 
         if ($request->ajax()) {
             $user = auth()->user();
@@ -41,7 +41,7 @@ class PemesananBahanBakuController extends Controller
                     } else if ($row->status_pesanan == 'Dibayar') {
                         return '<button class="btn btn-sm btn-info">Dibayar</button>';
                     } else {
-                        return '<button class="btn btn-sm btn-info">Sedang Diantar</button>';
+                        return '<button class="btn btn-sm btn-warning">Sedang Diantar</button>';
                     }
                 })
                 ->filter(function ($instance) use ($request) {
@@ -89,13 +89,13 @@ class PemesananBahanBakuController extends Controller
                 ->make(true);
         }
 
-        return view('pemesanan-bahan-baku.pemesanan-index');
+        return view('dashboard.pemesanan-bahan-baku.pemesanan-index');
     }
 
     public function create()
     {
         $stok = StokBahanBaku::all();
-        return view('pemesanan-bahan-baku.pemesanan-create', compact('stok'));
+        return view('dashboard.pemesanan-bahan-baku.pemesanan-create', compact('stok'));
     }
 
     public function store(Request $request)
@@ -139,7 +139,7 @@ class PemesananBahanBakuController extends Controller
     {
         $bb = PemesananBahanBaku::find($id);
 
-        return view('pemesanan-bahan-baku.pemesanan-edit', compact('bb'));
+        return view('dashboard.pemesanan-bahan-baku.pemesanan-edit', compact('bb'));
     }
 
     public function update($id, Request $request)

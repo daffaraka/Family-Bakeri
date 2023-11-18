@@ -15,10 +15,11 @@
         }
     </style>
     <div class="container py-4">
+        <h1 class="text-center fw-bold">Realisasi Produksi Roti</h1>
 
         @can(['produksi_roti-create', 'produksi_roti-edit'])
-            <a href="{{ route('produksi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                    aria-hidden="true"></i> Tambah Data Produksi Roti Baru</a>
+            <a href="{{ route('realisasi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
+                    aria-hidden="true"></i> Tambah Data Realisasi</a>
 
         @endcan
 
@@ -27,28 +28,28 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nama Roti</th>
-                    <th scope="col">Jumlah Produksi</th>
-                    {{-- <th scope="col">Jumlah Tersedia Sekarang</th>
-                    <th scope="col">Laku</th> --}}
+                    <th scope="col">Jumlah Realisasi</th>
                     <th scope="col">Diproduksi Oleh</th>
-                    <th scope="col">Tanggal Diproduksi</th>
+                    <th scope="col">Waktu Mulai</th>
+                    <th scope="col">Waktu Selesai</th>
+                    <th scope="col">Tanggal Produksi</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($produksi as $data)
+                @forelse ($realisasi as $data)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nama_roti }}</td>
-                        <td>{{ $data->stok_masuk }}</td>
-                       {{--  <td>{{ $data->stok_sekarang }}</td>
-                        <td>{{ $data->laku }}</td> --}}
+                        <td>{{ $data->ProduksiRoti->nama_roti }}</td>
+                        <td>{{ $data->jumlah_realisasi }}</td>
                         <td>{{ $data->diproduksi_oleh }}</td>
+                        <td>{{ $data->waktu_dimulai }}</td>
+                        <td>{{ $data->waktu_selesai }}</td>
                         <td>{{ \Carbon\Carbon::parse($data->created_at)->locale('id')->translatedFormat('d F Y') }}</td>
                         <td>
-                            {{-- <a href="{{ route('produksi.edit', $data->id) }}" class="btn btn-warning">Edit</a> --}}
+                            <a href="{{ route('realisasi.edit', $data->id) }}" class="btn btn-warning">Edit</a>
                             @can('produksi_roti-delete')
-                                <a href="{{ route('produksi.delete', $data->id) }}" data-id="{{$data->id}}" class="btn btn-danger" id="delete-btn">Hapus</a>
+                                <a href="{{ route('realisasi.delete', $data->id) }}" data-id="{{$data->id}}" class="btn btn-danger" id="delete-btn">Hapus</a>
                             @endcan
 
                         </td>
@@ -91,7 +92,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Lanjutkan dengan tindakan hapus
-                    window.location = "{{ route('produksi.delete', ':id') }}".replace(':id',
+                    window.location = "{{ route('realisasi.delete', ':id') }}".replace(':id',
                         id);
                 }
             })

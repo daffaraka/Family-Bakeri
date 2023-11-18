@@ -19,6 +19,6 @@ class DashboardController extends Controller
     public function create()
     {
         $resep = ResepRoti::all();
-        return view('kasir.kasir-create',compact('resep'));
+        return view('dashboard.kasir.kasir-create',compact('resep'));
     }
 }
