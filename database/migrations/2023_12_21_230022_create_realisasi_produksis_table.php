@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('produksi_id')->references('id')->on('produksi_rotis')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
+
     }
 
     /**

@@ -2,84 +2,94 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ResepRoti;
 use App\Models\KatalogRoti;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Validator;
 
 class KatalogRotiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $data = KatalogRoti::with('resepRoti')->get();
+        return view('dashboard.katalog-roti.katalog-index',compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $resep = ResepRoti::whereDoesntHave('katalogRoti')->get();
+        return view('dashboard.katalog-roti.katalog-create',compact('resep'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(),[
+            'resep_roti_id' => 'unique:katalog_rotis,resep_roti_id'
+        ],[
+            'resep_roti_id.unique' => 'Katalog Telah Ditambahkan'
+        ]);
+        if($validator->fails()){
+
+            return response()->json($validator->errors(), 422);
+        }
+
+        $katalogRoti = new KatalogRoti();
+        $katalogRoti->resep_roti_id = $request->resep_roti;
+        $katalogRoti->stok = 0;
+        $katalogRoti->laku = 0;
+        $katalogRoti->deskripsi = $request->deskripsi;
+        $katalogRoti->save();
+
+        alert()->success('Berhasil','Data katalog telah ditambahkan');
+        return redirect()->route('katalog.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\KatalogRoti  $katalogRoti
-     * @return \Illuminate\Http\Response
-     */
-    public function show(KatalogRoti $katalogRoti)
+    public function edit($id)
     {
-        //
+
+        $resep = ResepRoti::all();
+
+        $katalog = KatalogRoti::find($id);
+
+        return view('dashboard.katalog-roti.katalog-edit',compact('katalog','resep'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\KatalogRoti  $katalogRoti
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(KatalogRoti $katalogRoti)
+    public function update(Request $request, $id)
     {
-        //
+
+        $katalog = KatalogRoti::find($id);
+        $validator = Validator::make($request->all(),[
+            'resep_roti_id' => 'unique:katalog_rotis,resep_roti_id,'.$id
+        ],[
+            'resep_roti_id.unique' => 'Katalog Telah Ditambahkan'
+        ]);
+
+        if($validator->fails()){
+
+            return response()->json($validator->errors(), 422);
+        }
+
+        $katalog->resep_roti_id = $request->resep_roti;
+        $katalog->stok = $katalog->stok;
+        $katalog->laku = $katalog->laku;
+        $katalog->deskripsi = $request->deskripsi;
+        $katalog->save();
+
+        alert()->success('Berhasil','Data katalog berhasil diperbarui');
+        return redirect()->route('katalog.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\KatalogRoti  $katalogRoti
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, KatalogRoti $katalogRoti)
+    public function destroy($id)
     {
-        //
-    }
+        $katalog = KatalogRoti::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\KatalogRoti  $katalogRoti
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(KatalogRoti $katalogRoti)
-    {
-        //
+        $katalog->delete();
+
+        alert()->success('Berhasil','Data Berhasil dihapus');
+
+        return redirect()->route('katalog.index');
     }
 }

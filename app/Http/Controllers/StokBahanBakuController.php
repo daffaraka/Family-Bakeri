@@ -14,7 +14,9 @@ class StokBahanBakuController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:stok_bahan_baku-list|stok_bahan_baku-create|stok_bahan_baku-edit|stok_bahan_baku-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:stok_bahan_baku-list|
+                        stok_bahan_baku-create|stok_bahan_baku-edit|
+                        stok_bahan_baku-delete', ['only' => ['index', 'show']]);
         $this->middleware('permission:stok_bahan_baku-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:stok_bahan_baku-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:stok_bahan_baku-delete', ['only' => ['destroy']]);
@@ -91,15 +93,15 @@ class StokBahanBakuController extends Controller
         $jm = 0;
 
 
-        if($stok->satuan == 'Kg') {
-            $jb = $stok->jumlah/1000;
-            $jm = $stok->jumlah_minimal/1000;
+        if ($stok->satuan == 'Kg') {
+            $jb = $stok->jumlah / 1000;
+            $jm = $stok->jumlah_minimal / 1000;
         } else {
             $jb = $stok->jumlah;
             $jm = $stok->jumlah_minimal;
         }
 
-        return view('dashboard.stok-bahan-baku.stok-edit', compact('stok', 'jb','jm'));
+        return view('dashboard.stok-bahan-baku.stok-edit', compact('stok', 'jb', 'jm'));
     }
 
     public function update(Request $request, $id)
@@ -134,7 +136,7 @@ class StokBahanBakuController extends Controller
         $stok->save();
 
         if (!$stok) {
-            Alert::success('Gagal diperbarui');
+            Alert::error('Gagal diperbarui');
             return redirect()->back();
         } else {
             Alert::success('Berhasil diperbarui');

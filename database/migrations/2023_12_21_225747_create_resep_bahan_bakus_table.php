@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreign('resep_roti_id')->references('id')->on('resep_rotis')->onDelete('cascade');
             $table->foreign('stok_bahan_baku_id')->references('id')->on('stok_bahan_bakus')->onDelete('cascade');
         });
+
     }
 
     /**

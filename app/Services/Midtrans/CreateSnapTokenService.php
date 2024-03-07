@@ -6,45 +6,44 @@ use Midtrans\Snap;
 
 class CreateSnapTokenService extends Midtrans
 {
-    protected $order;
+	protected $order;
 
-    public function __construct($order)
-    {
-        parent::__construct();
+	public function __construct($order)
+	{
+		parent::__construct();
 
-        $this->order = $order;
-    }
+		$this->order = $order;
+	}
 
-    public function getSnapToken()
-    {
-        $params = [
-            'transaction_details' => [
-                'order_id' => $this->order->number,
-                'gross_amount' => $this->order->total_price,
-            ],
-            'item_details' => [
-                [
-                    'id' => 1,
-                    'price' => '150000',
-                    'quantity' => 1,
-                    'name' => 'Flashdisk Toshiba 32GB',
-                ],
-                [
-                    'id' => 2,
-                    'price' => '60000',
-                    'quantity' => 2,
-                    'name' => 'Memory Card VGEN 4GB',
-                ],
-            ],
-            'customer_details' => [
-                'first_name' => 'Tes',
-                'email' => 'daffarakals@gmail.com',
-                'phone' => '08989045550',
-            ]
-        ];
+	public function getSnapToken()
+	{
+		$params = [
 
-        $snapToken = Snap::getSnapToken($params);
+			'transaction_details' => [
+				'order_id' => $this->order->number,
+				'gross_amount' => $this->order->total_price,
+			],
 
-        return $snapToken;
-    }
+			'item_details' => [
+				[
+					'id' => $this->order->id, // primary key produk
+					'price' => $this->order->total_price, // harga satuan produk
+					'quantity' => 1, // kuantitas pembelian
+					'name' => 'Flashdisk Toshiba 32GB', // nama produk
+				],
+			],
+			'customer_details' => [
+				// Key `customer_details` dapat diisi dengan data customer yang melakukan order.
+				'first_name' => 'Martin Mulyo Syahidin',
+				'email' => 'mulyosyahidin95@gmail.com',
+				'phone' => '081234567890',
+			]
+		];
+
+		$snapToken = Snap::getSnapToken($params);
+
+
+
+		return $snapToken;
+	}
 }

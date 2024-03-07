@@ -37,6 +37,7 @@ return new class extends Migration
             $table->date('tanggal_diproduksi');
             $table->timestamps();
         });
+
     }
 
     /**

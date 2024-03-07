@@ -13,6 +13,10 @@
                 <input type="text" name="" class="form-control" readonly value="{{ $roti->nama_roti }}">
             </div>
             <div class="form-group">
+                <label for="">Rencana Produksi</label>
+                <input type="text" name="" class="form-control" readonly value="{{ $roti->rencana_produksi }}">
+            </div>
+            <div class="form-group">
                 <label for="my-input">Jumlah Realisasi</label>
                 <input class="form-control" type="number" name="jumlah_realisasi" id="jumlah_realisasi">
             </div>

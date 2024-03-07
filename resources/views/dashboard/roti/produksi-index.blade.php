@@ -14,7 +14,7 @@
             width: 50px !important;
         }
     </style>
-    <div class="container py-4">
+    <div class="container-fluid py-4">
         <h1 class="text-center fw-bold">Perencanaan Produksi Roti</h1>
         @can(['produksi_roti-create', 'produksi_roti-edit'])
             <a href="{{ route('produksi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
@@ -43,11 +43,11 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $data->nama_roti }}</td>
-                        <td>{{ Str::random(8)}}</td>
-                        <td>{{ $data->stok_masuk }}</td>
+                        <td>{{ $data->kode_produksi}}</td>
+                        <td>{{ $data->rencana_produksi }}</td>
                        {{--  <td>{{ $data->stok_sekarang }}</td>
                         <td>{{ $data->laku }}</td> --}}
-                        <td>{{ $data->diproduksi_oleh }}</td>
+                        <td>{{ $data->diajukan_oleh }}</td>
                         <td> <b>{{ \Carbon\Carbon::parse($data->created_at)->locale('id')->translatedFormat('d F Y') }} </b> </td>
                         <td>
                             {{
@@ -56,8 +56,7 @@
                         </td>
                         <td>
                             {{
-                                $data->RealisasiProduksi->sum('jumlah_realisasi') .'/'. $data->stok_masuk
-                            }}
+                                $data->RealisasiProduksi->sum('jumlah_realisasi') .'/' }}{{$data->rencana_produksi ?? 0}}
                         </td>
                         <td>
                             {{-- <a href="{{ route('produksi.edit', $data->id) }}" class="btn btn-warning">Edit</a> --}}

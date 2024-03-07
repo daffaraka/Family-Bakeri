@@ -13,15 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stok_bahan_bakus', function (Blueprint $table) {
+        Schema::create('keuangan_harians', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama_bahan_baku');
-            $table->bigInteger('jumlah');
-            $table->bigInteger('jumlah_minimal');
-            $table->string('satuan');
-            $table->string('terakhir_diedit_by');
+            $table->string('toko');
+            $table->date('tanggal');
+            $table->string('type');
+            $table->string('uraian');
+            $table->string('kode_akun');
+            $table->bigInteger('nominal');
             $table->timestamps();
         });
+
+
+
     }
 
     /**
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stok_bahan_bakus');
+        Schema::dropIfExists('keuangan_harians');
     }
 };

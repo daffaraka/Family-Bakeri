@@ -1,7 +1,6 @@
 @extends('layout')
 @section('title', 'Resep Roti - Family Bakery')
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="https://cdn.datatables.net/v/bs5/dt-1.13.3/datatables.min.css" rel="stylesheet" />
+
 @section('content')
 
 
@@ -19,7 +18,7 @@
             width: 50px !important;
         }
     </style>
-    <div class="container py-4">
+    <div class="container-fluid py-4">
         @can('resep_roti-create')
             <a href="{{ route('resep.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded">
                 <i class="fa fa-plus" aria-hidden="true"></i> Tambah Resep Roti</a>
@@ -28,15 +27,13 @@
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">
                 <tr>
-                    <th >#</th>
-                    <th >Gambar Roti</th>
-                    <th >Nama Roti</th>
-                    <th >Jumlah Tersedia Sekarang</th>
-                    <th >Laku</th>
-                    <th >Resep</th>
-                    <th >Harga</th>
-                    <th >PPn</th>
-                    <th >Action</th>
+                    <th>#</th>
+                    <th>Gambar Roti</th>
+                    <th>Nama Roti</th>
+                    <th>Resep</th>
+                    <th>Harga</th>
+                    <th>PPn</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,14 +43,12 @@
                         <td><img src="{{ asset('images/Resep Roti/' . $data->gambar_roti) }}" class="img-thumbnail"
                                 alt=""> </td>
                         <td>{{ $data->nama_resep_roti }}</td>
-                        <td>{{ $data->stok_sekarang }}</td>
-                        <td>{{ $data->laku }}</td>
                         <td>
                             <a class="btn btn-primary" href="{{ route('resep.show', $data->id) }}" id="button-resep"
                                 data-toggle="modal" data-target="#resepModal" data-id="{{ $data->id }}">Lihat Resep</a>
                         </td>
                         <td>Rp. {{ number_format($data->harga) }}</td>
-                        <td>Rp. {{ number_format($data->ppn) }} </td>
+                        <td>Rp. {{ number_format($data->ppn) }}</td>
 
 
                         <td>
@@ -75,14 +70,14 @@
         </table>
 
 
-        <div class="modal fade" id="resepModal">
+        <div class="modal fade" id="resepModal" tabindex="-1">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header bg-primary ">
                         <h4 class="modal-title text-white">Detail Resep</h4>
-                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">&#x2716;</button>
+                        <button type="button" class="close-btn btn btn-sm btn-danger" data-dismiss="modal">&#x2716;</button>
                     </div>
                     <div class="modal-body">
                         <div class="w-100" id="detail-resep">
@@ -90,7 +85,7 @@
                         </div>
                     </div>
                     <div class="modal-footer pt-0">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="button" class="close-btn btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -137,12 +132,16 @@
 
                         // Add employee details
                         $('#detail-resep').html(response.html);
-
                         // Display Modal
                         $('#resepModal').modal('show');
                     }
                 });
             }
+        });
+
+
+        $(document).on('click', '.close-btn', function() {
+            $('#resepModal').modal('hide');
         });
 
         $('#dataTable').on('click', '.delete-btn', function(e) {

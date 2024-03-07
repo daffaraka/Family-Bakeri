@@ -14,7 +14,7 @@
             width: 50px !important;
         }
     </style>
-    <div class="container py-4">
+    <div class="container-fluid py-4">
         <h1 class="text-center fw-bold">Realisasi Produksi Roti</h1>
 
         @can(['produksi_roti-create', 'produksi_roti-edit'])

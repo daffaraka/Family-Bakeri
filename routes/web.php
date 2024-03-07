@@ -5,18 +5,17 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Select2Controller;
-use App\Http\Controllers\BahanBakuController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontEndController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResepRotiController;
+use App\Http\Controllers\KatalogRotiController;
 use App\Http\Controllers\ProduksiRotiController;
-use App\Http\Controllers\LaporanHarianController;
 use App\Http\Controllers\StokBahanBakuController;
 use App\Http\Controllers\KeuanganHarianController;
-use App\Http\Controllers\PemesananBahanBakuController;
+use App\Http\Controllers\PaymentCallBackController;
+use App\Http\Controllers\PemesananOnlineController;
 use App\Http\Controllers\RealisasiProduksiController;
-use App\Models\RealisasiProduksi;
+use App\Http\Controllers\PemesananBahanBakuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,12 +36,22 @@ use App\Models\RealisasiProduksi;
 
 // Route::get('tes-data',[KasirController::class,'tes']);
 
-Route::get('beranda',[FrontEndController::class,'index'])->name('beranda.index');
-Route::get('/',[FrontEndController::class,'index'])->name('beranda');
-Route::get('buat-pesanan/{id}',[FrontEndController::class,'buatPesanan'])->name('beranda.buatPesanan');
+Route::get('beranda', [FrontEndController::class, 'index'])->name('beranda.index');
+Route::get('/', [FrontEndController::class, 'index'])->name('beranda');
+Route::get('produk/{id}', [FrontEndController::class, 'produk'])->name('beranda.produk');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('produk/{id}/buat-pesanan', [FrontEndController::class, 'buatPesanan'])->name('beranda.buatPesanan');
+    Route::post('produk/{id}/store-pesanan', [FrontEndController::class, 'storePesanan'])->name('beranda.storePesanan');
+    Route::get('daftar-transaksi', [FrontEndController::class, 'daftarTransaksi'])->name('beranda.daftarTransaksi');
+    Route::get('pembayaran/{id}', [FrontEndController::class, 'formBayar'])->name('beranda.formBayar');
+    Route::get('pembayaran/{id}/bayar', [FrontEndController::class, 'bayar'])->name('beranda.bayar');
+});
+
+Route::post('cek-stok/{id}/produk',[FrontEndController::class,'cekStokProduk'])->name('cekStokProduk');
 
 
-Route::get('beranda',[FrontEndController::class,'index'])->name('beranda.index');
+Route::get('beranda', [FrontEndController::class, 'index'])->name('beranda.index');
 Route::middleware(['auth'])->group(function () {
 
 
@@ -71,6 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/produksi-roti/detail/{id}/create-realisasi', [ProduksiRotiController::class, 'createRealisasi'])->name('produksi.createRealisasi');
     Route::post('/produksi-roti/update', [ProduksiRotiController::class, 'update'])->name('produksi.update');
     Route::get('/produksi-roti/delete/{id}', [ProduksiRotiController::class, 'delete'])->name('produksi.delete');
+    Route::post('/produksi-roti/getDataResep/{id}', [ProduksiRotiController::class, 'getDataResep'])->name('produksi.getDataResep');
 
     Route::get('/realisasi-produksi', [RealisasiProduksiController::class, 'index'])->name('realisasi.index');
     Route::get('/realisasi-produksi/create', [RealisasiProduksiController::class, 'create'])->name('realisasi.create');
@@ -88,12 +98,24 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/resep-roti/update/{id}', [ResepRotiController::class, 'update'])->name('resep.update');
     Route::get('/resep-roti/delete/{id}', [ResepRotiController::class, 'delete'])->name('resep.delete');
 
+    Route::get('/katalog-roti', [KatalogRotiController::class, 'index'])->name('katalog.index');
+    Route::get('/katalog-roti/create', [KatalogRotiController::class, 'create'])->name('katalog.create');
+    Route::post('/katalog-roti/store', [KatalogRotiController::class, 'store'])->name('katalog.store');
+    Route::get('/katalog-roti/details/{id}', [KatalogRotiController::class, 'show'])->name('katalog.show');
+    Route::get('/katalog-roti/edit/{id}', [KatalogRotiController::class, 'edit'])->name('katalog.edit');
+    Route::post('/katalog-roti/update/{id}', [KatalogRotiController::class, 'update'])->name('katalog.update');
+    Route::get('/katalog-roti/delete/{id}', [KatalogRotiController::class, 'destroy'])->name('katalog.delete');
+
     Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
+    Route::get('/kasir-customer', [KasirController::class, 'indexCustomer'])->name('kasir.indexCustomer');
+    Route::get('/kasir-pemesanan', [KasirController::class, 'indexPemesanan'])->name('kasir.indexPemesanan');
     Route::get('/kasir/create', [KasirController::class, 'create'])->name('kasir.create');
     // Route::get('/kasir/create-customer', [KasirController::class, 'createCustomer'])->name('kasir.create-customer');
     // Route::get('/kasir/create-pemesanan', [KasirController::class, 'createPemesanan'])->name('kasir.create-pemesanan');
 
     Route::post('/kasir/store', [KasirController::class, 'store'])->name('kasir.store');
+    Route::post('/kasir/store-customer', [KasirController::class, 'storeCustomer'])->name('kasir.storeCustomer');
+    Route::post('/kasir/store-pemesanan', [KasirController::class, 'storePemesanan'])->name('kasir.storePemesanan');
     Route::get('/kasir/details/{id}', [KasirController::class, 'show'])->name('kasir.show');
     Route::get('/kasir/edit/{id}', [KasirController::class, 'edit'])->name('kasir.edit');
     Route::post('/kasir/update/{id}', [KasirController::class, 'update'])->name('kasir.update');
@@ -102,7 +124,12 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('users', UserController::class);
-    // Route::resource('roles', RoleController::class);
+
+
+    Route::get('/pemesanan-online', [PemesananOnlineController::class, 'index'])->name('pemesanan-online.index');
+    Route::get('/pemesanan-online/{id}', [PemesananOnlineController::class, 'show'])->name('pemesanan-online.show');
+
+    Route::resource('roles', RoleController::class);
     // Dropdown dinamis
 
     Route::resource('keuangan-harian', KeuanganHarianController::class, ['except' => ['destroy', 'update']]);
@@ -123,5 +150,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::post('payment-callback',[PaymentCallBackController::class,'receive']);
+
 
 require __DIR__ . '/auth.php';

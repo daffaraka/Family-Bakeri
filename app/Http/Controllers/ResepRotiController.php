@@ -54,16 +54,10 @@ class ResepRotiController extends Controller
         ], [
             'nama_bahan_baku.required' => 'Stok bahan baku dibutuhkan dan harus di isi.',
             'jumlah_bahan_baku.required' => 'Jumlah bahan baku harus diisi',
-            // 'nama_bahan_baku.unique' => 'Nama bahan baku sudah terdaftar.',
-            // 'jumlah.required' => 'Jumlah bahan baku harus diisi.',
-            // 'jumlah.min' => 'Jumlah bahan baku harus lebih dari atau sama dengan 0.',
-            // 'satuan.required' => 'Satuan bahan baku harus diisi.',
+
         ]);
 
 
-
-        // dd($jumlah * 1000);
-        // Jika validasi gagal
         if ($validator->fails()) {
             if ($validator->errors())
                 Alert::error('', '');
@@ -87,8 +81,6 @@ class ResepRotiController extends Controller
             $resepRoti->harga = $request->harga;
             $resepRoti->nama_resep_roti = $request->nama_resep_roti;
             $resepRoti->ppn = $ppn;
-            $resepRoti->stok_sekarang = 0;
-            $resepRoti->laku = 0;
             $resepRoti->gambar_roti = $request->nama_resep_roti.'-'.$fileName;
             $resepRoti->save();
 
@@ -102,6 +94,8 @@ class ResepRotiController extends Controller
                 $resepBahanBaku->satuan = $request->satuan[$i];
                 $resepBahanBaku->save();
             }
+
+            alert()->success('Berhasil','Resep Baru Berhasil Ditambahkan');
             return redirect()->route('resep.index');
         }
 
@@ -196,6 +190,7 @@ class ResepRotiController extends Controller
                 $resepRoti->bahanBaku()->attach($namaBahanBaku[$i], ['jumlah_bahan_baku' => $jumlahBahanBaku[$i], 'satuan' => $satuan]);
             }
         }
+        alert()->success('Berhasil','Resep Berhasil Diperbarui');
 
         return redirect()->route('resep.index');
     }
@@ -204,6 +199,8 @@ class ResepRotiController extends Controller
     {
         $resep = ResepRoti::find($id);
         $resep->delete();
+        alert()->success('Berhasil','Data Berhasil dihapus');
+
         return redirect()->route('resep.index');
     }
 

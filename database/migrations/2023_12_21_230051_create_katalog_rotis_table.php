@@ -13,16 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('keuangan_bulanans', function (Blueprint $table) {
+        Schema::create('katalog_rotis', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('toko');
-            $table->date('tanggal');
-            $table->string('type');
-            $table->string('uraian');
-            $table->string('kode_akun');
-            $table->bigInteger('nominal');
+            $table->unsignedBigInteger('resep_roti_id');
+            $table->integer('stok')->nullable();
+            $table->integer('laku')->nullable();
+            $table->longText('deskripsi');
+
+            $table->foreign('resep_roti_id')->references('id')->on('resep_rotis')->onUpdate('cascade');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('keuangan_bulanans');
+        Schema::dropIfExists('katalog_rotis');
     }
 };

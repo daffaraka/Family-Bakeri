@@ -14,14 +14,14 @@
             width: 50px !important;
         }
     </style>
-    <div class="container py-4">
+    <div class="container-fluid py-4">
 
         @can('stok_bahan_baku-create')
             <a href="{{ route('stok.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
                     aria-hidden="true"></i> Tambah Data Stok Bahan Baku</a>
         @endcan
 
-        <div class="table-responsive">
+        <div class="table-responsive w-100">
             <table class="table table-hover table-light table-striped" id="dataTable">
                 <thead class="table-dark" id="dataTable">
                     <tr>

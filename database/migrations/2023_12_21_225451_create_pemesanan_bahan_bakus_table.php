@@ -23,8 +23,12 @@ return new class extends Migration
             $table->string('status_pesanan');
             $table->bigInteger('harga_satuan');
             $table->bigInteger('total_harga');
+            $table->unsignedBigInteger('stok_bahan_id');
             $table->timestamps();
+
+            $table->foreign('stok_bahan_id')->references('id')->on('stok_bahan_bakus')->onUpdate('cascade')->onDelete('cascade');
         });
+
     }
 
     /**
@@ -34,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bahan_bakus');
+        Schema::dropIfExists('pemesanan_bahan_bakus');
     }
 };

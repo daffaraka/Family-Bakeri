@@ -19,7 +19,7 @@ class AllUserSeeder extends Seeder
         // Create Admin User
         $admin = User::create([
             'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $admin->assignRole('Admin');
@@ -27,21 +27,21 @@ class AllUserSeeder extends Seeder
         // Create Owner Users
         $owner1 = User::create([
             'name' => 'Owner1',
-            'email' => 'owner1@example.com',
+            'email' => 'owner1@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $owner1->assignRole('Owner');
 
         $owner2 = User::create([
             'name' => 'Owner2',
-            'email' => 'owner2@example.com',
+            'email' => 'owner2@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $owner2->assignRole('Owner');
 
         $owner3 = User::create([
             'name' => 'Owner3',
-            'email' => 'owner3@example.com',
+            'email' => 'owner3@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $owner3->assignRole('Owner');
@@ -49,14 +49,14 @@ class AllUserSeeder extends Seeder
         // Create Direktur Users
         $direktur1 = User::create([
             'name' => 'Direktur1',
-            'email' => 'direktur1@example.com',
+            'email' => 'direktur1@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $direktur1->assignRole('Direktur');
 
         $direktur2 = User::create([
             'name' => 'Direktur2',
-            'email' => 'direktur2@example.com',
+            'email' => 'direktur2@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $direktur2->assignRole('Direktur');
@@ -64,7 +64,7 @@ class AllUserSeeder extends Seeder
         // Create Accountant User
         $accountant = User::create([
             'name' => 'Accountant',
-            'email' => 'accountant@example.com',
+            'email' => 'accountant@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $accountant->assignRole('Accountant');
@@ -72,7 +72,7 @@ class AllUserSeeder extends Seeder
         // Create Manajer User
         $manajer = User::create([
             'name' => 'Manajer',
-            'email' => 'manajer@example.com',
+            'email' => 'manajer@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $manajer->assignRole('Manajer');
@@ -80,7 +80,7 @@ class AllUserSeeder extends Seeder
         // Create Head of Warehouse User
         $headOfWarehouse = User::create([
             'name' => 'Head of Warehouse',
-            'email' => 'headofwarehouse@example.com',
+            'email' => 'headofwarehouse@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $headOfWarehouse->assignRole('Head of Warehouse');
@@ -88,14 +88,14 @@ class AllUserSeeder extends Seeder
         // Create Cashier Users
         $cashier1 = User::create([
             'name' => 'Cashier1',
-            'email' => 'cashier1@example.com',
+            'email' => 'cashier1@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $cashier1->assignRole('cashier');
 
         $cashier2 = User::create([
             'name' => 'Cashier2',
-            'email' => 'cashier2@example.com',
+            'email' => 'cashier2@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $cashier2->assignRole('Cashier');

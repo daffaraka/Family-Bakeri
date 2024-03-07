@@ -1,4 +1,5 @@
-<nav class="sidenav navbar navbar-vertical  fixed-left navbar-expand-xs navbar-expand-lg navbar-light bg-white" id="sidenav-main">
+<nav class="sidenav navbar navbar-vertical  fixed-left navbar-expand-xs navbar-expand-lg navbar-light bg-white"
+    id="sidenav-main">
     <div class="scrollbar-inner">
         <!-- Brand -->
         <div class="sidenav-header  align-items-center">
@@ -68,24 +69,26 @@
                             </a>
                         </li>
                     @endcan
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('realisasi.index')}}">
-
-                            <i class="ni ni-tag text-primary"></i>
-                            <span class="nav-link-text">Catalog Roti</span>
-                        </a>
-                    </li>
 
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('realisasi.index')}}">
+                        <a class="nav-link" href="{{ route('realisasi.index') }}">
 
                             <i class="ni ni-tag text-primary"></i>
                             <span class="nav-link-text">Realisasi Produksi Roti</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('katalog.index') }}">
+
+                            <i class="ni ni-bold-up text-success"></i>
+                            <span class="nav-link-text">Katalog Roti</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('pemesanan-online.index')}}">
 
                             <i class="ni ni-cart text-danger"></i>
                             <span class="nav-link-text">Pemesanan Online</span>
@@ -96,7 +99,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('kasir.index') }}">
                                 <i class="ni ni-shop text-default"></i>
-                                <span class="nav-link-text">Kasir</span>
+                                <span class="nav-link-text">Data Penjualan/Kasir Keseluruhan</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('kasir-list')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('kasir.indexCustomer') }}">
+                                <i class="ni ni-shop text-primary"></i>
+                                <span class="nav-link-text">Penjualan Customer</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('kasir-list')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('kasir.indexPemesanan') }}">
+                                <i class="ni ni-shop text-warning"></i>
+                                <span class="nav-link-text">Penjualan Pemesanan</span>
                             </a>
                         </li>
                     @endcan

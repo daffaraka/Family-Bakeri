@@ -56,18 +56,14 @@
     }
 </style>
 
-<div class="container my-5 px-5">
-    <form action="{{ route('kasir.store') }}" method="POST">
+<div class="my-5">
+    <form action="{{ route('kasir.storeCustomer') }}" method="POST">
         @csrf
 
         <div class="form-group">
             <label for="">Pesanan Oleh </label>
             <select id="pemesan" name="pemesanan" class="form-control text-dark">
-                <option value="">Tidak</option>
-                <option value="Rizky">Rizky</option>
-                <option value="Palem">Palem</option>
-                <option value="Moro Jaya">Moro Jaya</option>
-
+                <option value="">Customer ( Bukan Pemesanan )</option>
             </select>
         </div>
 
@@ -76,7 +72,7 @@
             <select name="nama_roti" id="nama_roti" class="livesearch form-control text-dark" required>
                 <option value="">Pilih Roti</option>
                 @foreach ($roti as $data)
-                    <option class="text-dark" value="{{ $data->nama_resep_roti }}">{{ $data->nama_resep_roti }}</option>
+                    <option class="text-dark" value="{{ $data->resepRoti->nama_resep_roti }}">{{ $data->resepRoti->nama_resep_roti }}</option>
                 @endforeach
 
             </select>
@@ -86,7 +82,7 @@
             <input type="number" name="harga" id="harga" readonly class="form-control">
         </div>
         <div class="form-group">
-            <label for="">Stok Tersedia</label>
+            <label for="">Stok Tersedia Sekarang</label>
             <input type="text" name="stok_sekarang" id="stok_sekarang" class="form-control">
         </div>
         <div class="form-group">

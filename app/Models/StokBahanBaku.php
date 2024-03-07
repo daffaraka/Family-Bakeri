@@ -30,8 +30,5 @@ class StokBahanBaku extends Model
         return $this->hasMany(ResepBahanBaku::class,'id');
     }
 
-    public function PenggunaanStok()
-    {
-        return $this->hasMany(PenggunaanStokBahanBaku::class);
-    }
+
 }

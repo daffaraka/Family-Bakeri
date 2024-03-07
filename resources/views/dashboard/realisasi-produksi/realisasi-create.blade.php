@@ -17,8 +17,8 @@
         <form action="{{ route('realisasi.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="">Nama Roti <b>(Sesuai Perencanaan) </b> </label>
-                <select name="nama" id="" class="livesearch form-control">
+                <label for="">Nama Roti <b>(Sesuai Perencanaan Produksi Hari Ini) </b> </label>
+                <select name="produksi_id" id="" class="livesearch form-control">
                     @foreach ($produksi as $data)
                         <option value="{{ $data->id }}"> {{ $data->nama_roti }} - Tanggal
                             {{ \Carbon\Carbon::parse($data->created_at)->locale('id')->translatedFormat('d F Y') }}</option>
@@ -27,15 +27,21 @@
             </div>
             <div class="mb-3">
                 <label for="">Jumlah Realisasi</label>
-                <input type="number" class="form-control" name="stok_masuk">
+                <input type="number" class="form-control" name="jumlah_realisasi">
+            </div>
+                <div class="form-group">
+                <label for="my-input">Diproduksi Oleh</label>
+                <input class="form-control" type="text" name="diproduksi_oleh" id="diproduksi_oleh">
             </div>
             <div class="mb-3">
                 <label for="">Waktu Mulai</label>
-                <input type="time" class="form-control" name="stok_masuk">
+                <input type="time" class="form-control" name="waktu_dimulai">
             </div>
+
+
             <div class="mb-3">
                 <label for="">Perkiraan Selesai</label>
-                <input type="time" class="form-control" name="stok_masuk">
+                <input type="time" class="form-control" name="waktu_selesai">
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>

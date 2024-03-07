@@ -21,13 +21,6 @@ class PemesananBahanBakuController extends Controller
 
     public function index(Request $request)
     {
-        // $bb = PemesananBahanBaku::all();
-
-        // if ($request->status_pesanan) {
-        //     $bb = $bb->where('status_pesanan', $request->status);
-        // }
-
-        // return view('dashboard.pemesanan-bahan-baku.pemesanan-index', compact('bb'));
 
         if ($request->ajax()) {
             $user = auth()->user();
@@ -130,6 +123,7 @@ class PemesananBahanBakuController extends Controller
         $bb->harga_satuan = $harga_satuan;
         $bb->total_harga = $total_harga;
         $bb->sisa_pembayaran = $sisa_pembayaran;
+        $bb->stok_bahan_id = $cekStok->id;
         $bb->save();
 
         return redirect()->route('pemesanan.index');

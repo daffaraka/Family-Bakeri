@@ -17,6 +17,11 @@
         <form action="{{ route('produksi.update') }}" method="POST">
             @csrf
             <div class="form-group">
+                <label for=""> <b>Kode Produksi </b> </label>
+                <input type="text" name="" id="" class="form-control bg-secondary" readonly
+                    value="{{ $roti->nama_roti }}">
+            </div>
+            <div class="form-group">
                 <label for="">Nama Roti (Sesuai Stok Produksi Roti)</label>
                 <input type="text" name="" id="" class="form-control" readonly
                     value="{{ $roti->nama_roti }}">
@@ -24,12 +29,12 @@
             <div class="form-group">
                 <label for="">Perencanaan Produksi</label>
                 <input type="text" name="" id="" class="form-control" readonly
-                    value="{{ $roti->stok_masuk }}">
+                    value="{{ $roti->rencana_produksi }}">
             </div>
             <div class="form-group">
                 <label for="">Diproduksi Oleh</label>
                 <input type="text" name="" id="" class="form-control" readonly
-                    value="{{ $roti->diproduksi_oleh }}">
+                    value="{{ $roti->diajukan_oleh }}">
             </div>
 
 
@@ -43,8 +48,8 @@
 
     <div class="container">
         <h2 class="text-center ">Data realisasi produksi roti {{ $roti->nama_roti }}</h2>
-        <a href="{{route('produksi.createRealisasi',$roti->id)}}" class="btn btn-primary btn-sm"> <i
-                class="fa fa-plus" aria-hidden="true" id="tambah-realisasi"> </i> Tambah Data Realisasi</a>
+        <a href="{{ route('produksi.createRealisasi', $roti->id) }}" class="btn btn-primary btn-sm"> <i class="fa fa-plus"
+                aria-hidden="true" id="tambah-realisasi"> </i> Tambah Data Realisasi</a>
 
         <div class="my-3">
             <table class="table table-hover table-light table-striped" id="dataTable">
@@ -52,6 +57,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Jumlah Realisasi</th>
+                        <th scope="col">Penggunaan Bahan</th>
                         <th scope="col">Diproduksi Oleh</th>
                         <th scope="col">Waktu Mulai</th>
                         <th scope="col">Waktu Selesai</th>
@@ -65,6 +71,17 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->jumlah_realisasi }}</td>
+                            <td>
+                                <ul class="list-group">
+                                    @foreach ($roti->ResepRoti->resepBahanBakus as $item)
+                                        <li class="list-group-item py-1">
+                                            {{ $item->bahanBaku->nama_bahan_baku . ' - ' . $item->jumlah_bahan_baku * $data->jumlah_realisasi . ' ' . $item->satuan }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                            </td>
+
                             <td>{{ $data->diproduksi_oleh }}</td>
                             <td>{{ $data->waktu_dimulai }}</td>
                             <td>{{ $data->waktu_selesai }}</td>
@@ -74,8 +91,8 @@
                             </td>
                             <td>
                                 {{-- <a href="{{ route('produksi.edit', $data->id) }}" class="btn btn-warning">Edit</a> --}}
-                                <a href="{{ route('produksi.detail', $data->id) }}" data-id="{{ $data->id }}"
-                                    class="btn btn-outline-warning">Detail</a>
+                                {{-- <a href="{{ route('produksi.detail', $data->id) }}" data-id="{{ $data->id }}"
+                                    class="btn btn-outline-warning">Detail</a> --}}
 
                                 @can('produksi_roti-delete')
                                     <a href="{{ route('produksi.delete', $data->id) }}" data-id="{{ $data->id }}"

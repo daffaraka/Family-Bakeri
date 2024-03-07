@@ -12,10 +12,34 @@ class ProduksiRoti extends Model
     protected $fillable =
     [
         'nama_roti',
-        'stok_masuk',
-        'diproduksi_oleh',
-        'resep_id'
+        'rencana_produksi',
+        'diajukan_oleh',
+        'resep_id',
+        'kode_produksi',
+        'dibuat_tanggal'
     ];
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Otomatis buat Produk-1 , Produk-2, Produk-3 dst
+        static::creating(function ($roti) {
+            $lastRoti = static::where('nama_roti', $roti->nama_roti)
+                ->orderBy('kode_produksi', 'desc')
+                ->first();
+
+            if ($lastRoti) {
+                $lastCode = explode('-', $lastRoti->kode_produksi);
+                $number = intval(end($lastCode));
+                $roti->kode_produksi = $roti->nama_roti . '-' . ($number + 1);
+            } else {
+                $roti->kode_produksi = $roti->nama_roti . '-1';
+            }
+        });
+    }
 
     public function ResepRoti()
     {
@@ -24,6 +48,6 @@ class ProduksiRoti extends Model
 
     public function RealisasiProduksi()
     {
-        return $this->hasMany(RealisasiProduksi::class,'produksi_id');
+        return $this->hasMany(RealisasiProduksi::class, 'produksi_id');
     }
 }

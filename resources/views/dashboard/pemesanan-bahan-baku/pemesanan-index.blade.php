@@ -14,7 +14,7 @@
             width: 50px !important;
         }
     </style>
-    <div class="container py-4">
+    <div class="container-fluid py-4">
         <div class="card">
             <div class="card-body">
                 <div class="form-group">

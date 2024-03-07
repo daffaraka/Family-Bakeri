@@ -13,11 +13,7 @@ class ResepRoti extends Model
     protected $fillable =
     [
         'nama_resep_roti',
-        'nama_bahan_baku',
-        'stok_sekarang',
-        'laku',
-        'harga',
-        'jumlah_bahan_baku'
+        'gambar_roti'
     ];
 
     // protected function data(): Attribute
@@ -46,5 +42,10 @@ class ResepRoti extends Model
     public function ProduksiRoti()
     {
         return $this->hasMany(ProduksiRoti::class,'resep_id','id');
+    }
+
+    public function katalogRoti()
+    {
+        return $this->hasOne(KatalogRoti::class,'resep_roti_id','id');
     }
 }

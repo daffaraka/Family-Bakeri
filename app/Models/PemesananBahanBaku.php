@@ -18,7 +18,8 @@ class PemesananBahanBaku extends Model
         'sisa_pembayaran',
         'jumlah_pesanan',
         'status_pesanan',
-        'total_harga'
+        'total_harga',
+        'stok_bahan_id'
 
     ];
 }

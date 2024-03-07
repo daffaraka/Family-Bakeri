@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('katalog_rotis', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('resep_roti_id');
-            $table->integer('stok');
-            $table->longText('deskripsi');
+        Schema::create('resep_rotis', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_resep_roti');
+            $table->integer('harga');
+            $table->integer('ppn');
+            $table->string('gambar_roti');
             $table->timestamps();
         });
+
     }
 
     /**
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('katalog_rotis');
+        Schema::dropIfExists('resep_rotis');
     }
 };

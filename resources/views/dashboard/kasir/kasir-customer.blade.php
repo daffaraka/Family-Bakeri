@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Kasir')
+@section('title', 'Kasir Customer')
 @section('content')
 
 
@@ -7,11 +7,13 @@
 
 
     <div class="container py-4">
-        <div>
-            <h1 class="display-3 mb-0">Kasir Dashboard</h1>
-            <hr>
-        </div>
+        <div >
+            <h1>Kasir Customer</h1>
 
+        </div>
+        @can('kasir-create')
+            @include('dashboard.kasir.kasir-create-customer')
+        @endcan
         <div class="row input-daterange d-flex justify-content-between">
             <div class="col-md-6 d-flex">
                 <input type="date" name="from_date" id="from_date" class="form-control mx-1" placeholder="From Date" />
@@ -106,8 +108,8 @@
                 dataType: 'json',
                 success: function(result) {
                     $('#harga').val(result.roti.harga);
-                    if (result.roti.produksi_roti && result.roti.produksi_roti.length > 0) {
-                        $('#stok_sekarang').val(result.roti.produksi_roti.stok);
+                    if (result.roti.katalog_roti.stok > 0 ) {
+                        $('#stok_sekarang').val(result.roti.katalog_roti.stok);
                     } else {
                         $('#stok_sekarang').val('Belum ada produksi roti');
                     }

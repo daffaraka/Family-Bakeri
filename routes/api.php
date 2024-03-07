@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FrontEndController;
+use App\Http\Controllers\PaymentCallBackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::post('payment-callback',[PaymentCallBackController::class,'receive']);
+
+Route::post('cek-stok/{id}/produk',[FrontEndController::class,'cekStokProduk'])->name('cekStokProduk');
