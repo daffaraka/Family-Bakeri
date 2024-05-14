@@ -23,7 +23,7 @@
 
         <div class="table-responsive w-100">
             <table class="table table-hover table-light table-striped" id="dataTable">
-                <thead class="table-dark" id="dataTable">
+                <thead class="table-dark" >
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nama Bahan Baku</th>
@@ -108,9 +108,11 @@
 
     </div>
 
-
+    @include('vendor.sweetalert.alert')
 @endsection
 @include('partials.scripts')
+<script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/DataTables/datatables.min.js') }}"></script>
 <script>
     $(document).ready(function() {
         $('#dataTable').DataTable({

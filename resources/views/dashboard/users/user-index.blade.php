@@ -21,6 +21,7 @@
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Jabatan</th>
+                    <th>Tanggal ditambahkan</th>
                     <th width="280px">Action</th>
                 </tr>
             </thead>
@@ -30,6 +31,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+
                         <td>
                             @if (!empty($user->getRoleNames()))
                                 @foreach ($user->getRoleNames() as $v)
@@ -37,6 +39,7 @@
                                 @endforeach
                             @endif
                         </td>
+                        <td>{{$user->created_at->isoFormat('dddd, D MMMM Y')}}</td>
                         <td>
 
                             @can('user-edit')

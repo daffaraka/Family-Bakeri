@@ -32,7 +32,7 @@
                             </div>
 
                             <input type="file" name="gambar_roti" class="form-control m-input" id="selectImage"
-                                autocomplete="on" accept="image/*" required>
+                                autocomplete="on" accept="image/*">
 
                         </div>
                     <div class="mb-3">

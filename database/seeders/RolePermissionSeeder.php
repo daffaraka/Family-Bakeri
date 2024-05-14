@@ -29,19 +29,26 @@ class RolePermissionSeeder extends Seeder
             'stok_bahan_baku-list', 'stok_bahan_baku-create', 'stok_bahan_baku-edit', 'stok_bahan_baku-delete',
             'resep_roti-list', 'resep_roti-create', 'resep_roti-edit', 'resep_roti-delete',
             'produksi_roti-list', 'produksi_roti-create', 'produksi_roti-edit', 'produksi_roti-delete',
-            'kasir-list', 'kasir-create', 'kasir-edit', 'kasir-delete',
-            'user-list','user-create','user-edit','user-delete',
-            'role-list','role-create','role-edit','role-delete'
+            'kasir-list', 'kasir-create', 'kasir-edit', 'kasir-delete', 'kasir-customer', 'kasir-pemesanan',
+            'user-list', 'user-create', 'user-edit', 'user-delete',
+            'role-list', 'role-create', 'role-edit', 'role-delete',
+            'order-list', 'order-create', 'order-edit', 'order-delete',
+            'katalog-list', 'katalog-create', 'katalog-edit', 'katalog-delete',
+            'realisasi-list', 'realisasi-create', 'realisasi-edit', 'realisasi-delete',
         ];
 
         // Owner permission
         $ownerPermissions = [
-            'pemesanan_bahan_baku-list',
-            'stok_bahan_baku-list',
-            'resep_roti-list',
-            'resep_roti-show',
-            'produksi_roti-list',
-            'kasir-list'
+            'pemesanan_bahan_baku-list', 'pemesanan_bahan_baku-create', 'pemesanan_bahan_baku-edit', 'pemesanan_bahan_baku-delete',
+            'stok_bahan_baku-list', 'stok_bahan_baku-create', 'stok_bahan_baku-edit', 'stok_bahan_baku-delete',
+            'resep_roti-list', 'resep_roti-create', 'resep_roti-edit', 'resep_roti-delete',
+            'produksi_roti-list', 'produksi_roti-create', 'produksi_roti-edit', 'produksi_roti-delete',
+            'kasir-list', 'kasir-create', 'kasir-edit', 'kasir-delete', 'kasir-customer', 'kasir-pemesanan',
+            'user-list', 'user-create', 'user-edit', 'user-delete',
+            'role-list', 'role-create', 'role-edit', 'role-delete',
+            'order-list', 'order-create', 'order-edit', 'order-delete',
+            'katalog-list', 'katalog-create', 'katalog-edit', 'katalog-delete',
+            'realisasi-list', 'realisasi-create', 'realisasi-edit', 'realisasi-delete',
         ];
 
         // Direktur permission
@@ -49,6 +56,7 @@ class RolePermissionSeeder extends Seeder
             'pemesanan_bahan_baku-list',
             'pemesanan_bahan_baku-edit',
             'keuangan-list',
+            'kasir-list',
             'produksi_roti-list',
             'produksi_roti-edit',
         ];
@@ -57,7 +65,10 @@ class RolePermissionSeeder extends Seeder
         $accountantPermissions = [
             'pemesanan_bahan_baku-list',
             'pemesanan_bahan_baku-edit',
-            'keuangan-list'
+            'kasir-list',
+            'keuangan-list',
+            'kasir-customer',
+            'kasir-pemesanan',
         ];
 
         // Manajer Permission
@@ -74,7 +85,8 @@ class RolePermissionSeeder extends Seeder
             'stok_bahan_baku-list',
             'stok_bahan_baku-edit',
             'pemesanan_bahan_baku-list',
-            'kasir-list'
+            'kasir-list',
+            'realisasi-list', 'realisasi-create', 'realisasi-edit', 'realisasi-delete',
         ];
 
         // Kasir Permission

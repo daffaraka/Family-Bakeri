@@ -18,6 +18,17 @@
         }
     </style>
     <div class="container py-3" id="myModal" tabindex="-1">
+        <div class="card mb-3 ">
+            <div class="card-body border-1">
+                <h4>Petunjuk</h4>
+
+                <ul class="nav">
+                    <li class="nav-item ">- Pilih terlebih dahulu Nama Roti sesuai resep yang dibuat</li>
+                    <li class="nav-item ">- <b class="text-danger">Jumlah Bahan baku dan Satuan bahan </b>  akan mengikuti dengan Jumlah Rencana Produksi yang anda masukkan</li>
+                    <li class="nav-item ">- Pastikan data yang anda masukkan <b  class="text-danger"> tidak melebihi</b>  data stok bahan baku</li>
+                </ul>
+            </div>
+        </div>
         <form action="{{ route('produksi.store') }}" method="POST">
             @csrf
             <div class="mb-3">
@@ -30,7 +41,7 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="">Jumlah Rencana Produksi</label>
+                <label for="">Jumlah Rencana Produksi Hari Ini</label>
                 <input type="number" class="form-control" name="rencana_produksi" id="jumlah_produksi">
             </div>
 
@@ -42,25 +53,14 @@
                         <div class="input-group mb-3">
 
 
-                            <div class="mb-1 w-25">
-                                <label for="">Nama Bahan Baku</label>
-                                <input class=" form-control w-25" value="" id="namaBahanBaku">
-                            </div>
-                            <div class="mb-1 w-25">
-                                <label for="">Jumlah Bahan Baku</label>
-                                <input type="number" required class="form-control text-dark w-25"
-                                    placeholder="Jumlah Bahan Baku" autocomplete="on" id="jumlahBahan">
-                            </div>
-                            <div class="mb-1 w-25">
-                                <label for="">Satuan Bahan</label>
-                                <input name="satuan[]" class="form-control text-dark w-25" placeholder="Satuan"
-                                    id="satuanBahan">
-                            </div>
+
 
 
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>

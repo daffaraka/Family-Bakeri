@@ -16,7 +16,8 @@ class RealisasiProduksiController extends Controller
 
     public function index()
     {
-        $realisasi = RealisasiProduksi::all();
+        $realisasi = RealisasiProduksi::with('ProduksiRoti')->get();
+
 
         return view('dashboard.realisasi-produksi.realisasi-index', compact('realisasi'));
     }
@@ -87,7 +88,7 @@ class RealisasiProduksiController extends Controller
 
 
                 alert()->success('Berhasil', 'Data realisasi Berhasil Ditambahkan');
-                return redirect()->route('produksi.detail', ['id' => $request->produksi_id]);
+                return redirect()->route('realisasi.index');
             }
         }
     }
@@ -119,6 +120,14 @@ class RealisasiProduksiController extends Controller
         $realisasi = RealisasiProduksi::with('ProduksiRoti')->find($id);
         Alert::success('Berhasil', 'Data ' . $realisasi->ProduksiRoti->nama_roti . ' telah dihapus');
         $realisasi->delete();
-        return redirect()->route('realisasi.index');
+        return redirect()->back();
+    }
+
+
+    public function findPerencanaanProduksi($id)
+    {
+        $produksi = ProduksiRoti::find($id);
+
+        return response()->json($produksi);
     }
 }

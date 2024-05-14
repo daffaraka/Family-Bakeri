@@ -32,14 +32,7 @@
                             <span class="nav-link-text">Keuangan Bulanan</span>
                         </a>
                     </li> --}}
-                    @can('pemesanan_bahan_baku-list')
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('pemesanan.index') }}">
-                                <i class="ni ni-planet text-orange"></i>
-                                <span class="nav-link-text">Pemesanan Bahan Baku</span>
-                            </a>
-                        </li>
-                    @endcan
+
 
                     {{-- @can('pemesanan_bahan_baku-list') --}}
 
@@ -50,6 +43,15 @@
                             <a class="nav-link" href="{{ route('stok.index') }}">
                                 <i class="ni ni-pin-3 text-primary"></i>
                                 <span class="nav-link-text">Stok Bahan Baku</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('pemesanan_bahan_baku-list')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pemesanan.index') }}">
+                                <i class="ni ni-planet text-orange"></i>
+                                <span class="nav-link-text">Pemesanan Bahan Baku</span>
                             </a>
                         </li>
                     @endcan
@@ -88,7 +90,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('pemesanan-online.index')}}">
+                        <a class="nav-link" href="{{ route('pemesanan-online.index') }}">
 
                             <i class="ni ni-cart text-danger"></i>
                             <span class="nav-link-text">Pemesanan Online</span>
@@ -119,14 +121,14 @@
                             </a>
                         </li>
                     @endcan
-                    @can('user-list')
+                    {{-- @can('user-list')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('users.index') }}">
                                 <i class="ni ni-single-02 text-default"></i>
                                 <span class="nav-link-text">User</span>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
 
 
                     {{-- @can('role-list')

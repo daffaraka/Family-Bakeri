@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Bahan Baku - Family Bakery')
+@section('title', 'Pemesanan Bahan Baku - Family Bakery')
 @section('content')
     <style>
         td {
@@ -31,7 +31,7 @@
         </div>
         @can('pemesanan_bahan_baku-create')
             <a href="{{ route('pemesanan.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                    aria-hidden="true"></i> Tambah Bahan Baku</a>
+                    aria-hidden="true"></i> Tambah Data Pemesanan Bahan Baku</a>
         @endcan
 
         <div class="table-responsive">

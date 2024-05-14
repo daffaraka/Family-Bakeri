@@ -22,7 +22,7 @@ class ProduksiRotiController extends Controller
 
     public function index()
     {
-        $produksi = ProduksiRoti::all();
+        $produksi = ProduksiRoti::latest()->get();
         return view('dashboard.roti.produksi-index', compact('produksi'));
     }
 

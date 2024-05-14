@@ -13,6 +13,21 @@
         }
     </style>
     <div class="container py-3">
+        <div class="card mb-3 ">
+            <div class="card-body border-1">
+                <h4>Petunjuk Pemesanan Bahan Baku</h4>
+
+                <ul class="nav">
+                    <li class="nav-item">- Untuk menambahkan data pemesanan bahan baku, data yang disediakan dalam select dropdown adalah data yang sudah ada di Stok Bahan Baku. </li>
+                    <li class="nav-item">- Jika anda ingin menambahkan <b class="text-danger"> data yang tidak tercantum pada select dropdown</b> , anda harus menambahkannya dari data stok bahan baku terlebih dahulu. </li>
+                    <li class="nav-item">- Jumlah bahan baku akan otomatis bertambah jika status yang anda masukkan adalah <b class="text-danger"> Diterima </b> </li>
+
+
+
+                    {{-- <li class="nav-item text-danger">-</li> --}}
+                </ul>
+            </div>
+        </div>
         <form action="{{ route('pemesanan.store') }}" method="POST">
             @csrf
             <div class="mb-3">

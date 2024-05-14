@@ -19,7 +19,7 @@
             <div class="form-group">
                 <label for=""> <b>Kode Produksi </b> </label>
                 <input type="text" name="" id="" class="form-control bg-secondary" readonly
-                    value="{{ $roti->nama_roti }}">
+                    value="{{ $roti->kode_produksi }}">
             </div>
             <div class="form-group">
                 <label for="">Nama Roti (Sesuai Stok Produksi Roti)</label>
@@ -76,9 +76,12 @@
                                     @foreach ($roti->ResepRoti->resepBahanBakus as $item)
                                         <li class="list-group-item py-1">
                                             {{ $item->bahanBaku->nama_bahan_baku . ' - ' . $item->jumlah_bahan_baku * $data->jumlah_realisasi . ' ' . $item->satuan }}
+                                            {{-- <button class="btn btn-sm btn-danger d-inline">
+                                                {{ $item->jumlah_bahan_baku }}</button> --}}
                                         </li>
                                     @endforeach
                                 </ul>
+
 
                             </td>
 
@@ -95,7 +98,7 @@
                                     class="btn btn-outline-warning">Detail</a> --}}
 
                                 @can('produksi_roti-delete')
-                                    <a href="{{ route('produksi.delete', $data->id) }}" data-id="{{ $data->id }}"
+                                    <a href="{{ route('realisasi.delete', $data->id) }}" data-id="{{ $data->id }}"
                                         class="btn btn-danger" id="delete-btn">Hapus</a>
                                 @endcan
 
@@ -235,7 +238,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Lanjutkan dengan tindakan hapus
-                    window.location = "{{ route('produksi.delete', ':id') }}".replace(':id',
+                    window.location = "{{ route('realisasi.delete', ':id') }}".replace(':id',
                         id);
                 }
             })

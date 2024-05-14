@@ -36,7 +36,7 @@
             </div>
             <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12">
                 <div class="d-grid gap-4">
-                    <a href="" class="btn btn-warning fw-bold shadow text-uppercase py-2">Tambah ke Keranjang</a>
+                    {{-- <a href="" class="btn btn-warning fw-bold shadow text-uppercase py-2">Tambah ke Keranjang</a> --}}
                     <a href="{{route('beranda.buatPesanan',$data->id)}}" class="btn btn-success fw-bold shadow text-uppercase py-2">Pesan Roti Ini</a>
                 </div>
             </div>

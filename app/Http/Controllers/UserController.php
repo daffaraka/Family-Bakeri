@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $data = User::all();
+        $data = User::latest()->get();
         return view('dashboard.users.user-index',compact('data'));
     }
 

@@ -36,6 +36,8 @@ return new class extends Migration
             $table->bigInteger('total_after_ppn')->nullable()->default(0);
             $table->date('tanggal_diproduksi');
             $table->timestamps();
+            $table->softDeletes();
+
         });
 
     }

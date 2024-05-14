@@ -31,6 +31,8 @@ return new class extends Migration
             $table->foreign('katalog_id')->references('id')->on('katalog_rotis')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
+
         });
 
     }

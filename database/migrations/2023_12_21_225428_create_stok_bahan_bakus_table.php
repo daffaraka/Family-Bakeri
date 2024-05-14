@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('satuan');
             $table->string('terakhir_diedit_by');
             $table->timestamps();
+            $table->softDeletes();
         });
 
     }

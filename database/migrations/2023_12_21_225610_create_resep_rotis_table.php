@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('ppn');
             $table->string('gambar_roti');
             $table->timestamps();
+            $table->softDeletes();
+
         });
 
     }

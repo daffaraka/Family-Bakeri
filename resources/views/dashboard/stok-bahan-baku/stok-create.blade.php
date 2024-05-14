@@ -11,14 +11,6 @@
 
             </div>
             <div class="mb-3">
-                <label for="">Jumlah Bahan Baku saat ini</label>
-                <input type="text" class="form-control" name="jumlah" step="any">
-                <ul class="mt-1 px-0">
-                    <li style="font-weight: 600;"> - Gunakan symbol " . " (titik) untuk angka decimal</li>
-                </ul>
-            </div>
-
-            <div class="mb-3">
                 <label for="">Satuan</label>
                 <select name="satuan" class="form-control text-dark" id="">
                     <option value="Kg">Kg</option>
@@ -28,8 +20,17 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label for="">Jumlah Bahan Baku saat ini</label>
+                <input type="number" class="form-control" name="jumlah" step="any">
+                <ul class="mt-1 px-0">
+                    <li style="font-weight: 600;"> - Gunakan symbol " . " (titik) untuk angka decimal</li>
+                </ul>
+            </div>
+
+
+            <div class="mb-3">
                 <label for="">Jumlah Minimal Stok</label>
-                <input type="text" class="form-control" name="jumlah_minimal" step="any">
+                <input type="number" class="form-control" name="jumlah_minimal" step="any">
                 <ul class="mt-1 px-0">
                     <li style="font-weight: 600;"> - Gunakan symbol " . " (titik) untuk angka decimal</li>
                 </ul>

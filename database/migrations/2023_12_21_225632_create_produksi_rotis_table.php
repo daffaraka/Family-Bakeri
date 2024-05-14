@@ -26,6 +26,8 @@ return new class extends Migration
                   ->onUpdate('cascade')->onDelete('cascade');
             $table->date('dibuat_tanggal');
             $table->timestamps();
+            $table->softDeletes();
+
         });
 
     }

@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->foreign('resep_roti_id')->references('id')->on('resep_rotis')->onUpdate('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
 
     }

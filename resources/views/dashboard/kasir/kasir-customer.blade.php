@@ -7,9 +7,24 @@
 
 
     <div class="container py-4">
-        <div >
+        <div>
             <h1>Kasir Customer</h1>
 
+        </div>
+        <div class="card mb-3 ">
+            <div class="card-body border-1">
+                <h4>Petunjuk</h4>
+
+                <ul class="nav">
+                    <li class="nav-item ">- Untuk menambahkan data kasir penjualan oleh Customer, <b class="text-danger">anda
+                            diharuskan untuk
+                            menambahkan data katalog roti dan realisasi terlebih dahulu. </b> </li>
+                    <li class="nav-item ">- Menambahkan data kasir penjualan oleh Customer akan mengurangi stok Realisasi /
+                        Katalog roti yang telah ready</li>
+                    <li class="nav-item ">- <b class="text-danger">Jumlah laku dan Sisa </b> saling bersinkronasi untuk menjaga ketetapan.</li>
+
+                </ul>
+            </div>
         </div>
         @can('kasir-create')
             @include('dashboard.kasir.kasir-create-customer')
@@ -108,7 +123,7 @@
                 dataType: 'json',
                 success: function(result) {
                     $('#harga').val(result.roti.harga);
-                    if (result.roti.katalog_roti.stok > 0 ) {
+                    if (result.roti.katalog_roti.stok > 0) {
                         $('#stok_sekarang').val(result.roti.katalog_roti.stok);
                     } else {
                         $('#stok_sekarang').val('Belum ada produksi roti');
@@ -308,6 +323,4 @@
         });
     });
 </script>
-</body>
 
-</html>

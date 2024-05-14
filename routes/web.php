@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/realisasi-produksi/edit/{id}', [RealisasiProduksiController::class, 'edit'])->name('realisasi.edit');
     Route::post('/realisasi-produksi/update/{id}', [RealisasiProduksiController::class, 'update'])->name('realisasi.update');
     Route::get('/realisasi-produksi/delete/{id}', [RealisasiProduksiController::class, 'destroy'])->name('realisasi.delete');
+    Route::post('/find-perencanaan-produksi/{id}', [RealisasiProduksiController::class, 'findPerencanaanProduksi'])->name('produksi.findPerencanaanProduksi');
 
 
     Route::get('/resep-roti', [ResepRotiController::class, 'index'])->name('resep.index');

@@ -53,33 +53,42 @@
 
 
     </div>
-
-
-
-    <script src="{{ asset('assets/vendor/DataTables/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').on('click', '.delete-btn', function(e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-
-                Swal.fire({
-                    title: 'Anda yakin?',
-                    text: "Anda tidak dapat mengembalikan tindakan ini!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, hapus saja!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Lanjutkan dengan tindakan hapus
-                        window.location = "{{ route('katalog.delete', ':id') }}".replace(':id', id);
-                    }
-                })
-            });
-        });
-    </script>
+    @include('vendor.sweetalert.alert')
 @endsection
+@include('partials.scripts')
+
+
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+            language: {
+                paginate: {
+                    previous: '<span class="fa fa-chevron-left"></span>',
+                    next: '<span class="fa fa-chevron-right"></span>' // or '→'
+
+                }
+            }
+        });
+
+        $('#dataTable').on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: "Anda tidak dapat mengembalikan tindakan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus saja!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lanjutkan dengan tindakan hapus
+                    window.location = "{{ route('katalog.delete', ':id') }}".replace(':id',
+                        id);
+                }
+            })
+        });
+    });
+</script>

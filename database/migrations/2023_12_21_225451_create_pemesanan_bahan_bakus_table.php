@@ -27,6 +27,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('stok_bahan_id')->references('id')->on('stok_bahan_bakus')->onUpdate('cascade')->onDelete('cascade');
+            $table->softDeletes();
+
         });
 
     }

@@ -39,7 +39,7 @@ class StokBahanBakuController extends Controller
 
         // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'nama_bahan_baku' => 'required|unique:stok_bahan_bakus,nama_bahan_baku',
+            'nama_bahan_baku' => 'required|unique:stok_bahan_bakus,nama_bahan_baku,NULL,id,deleted_at,NULL',
             'jumlah' => 'required|min:0',
             'satuan' => 'required',
         ], [
@@ -56,8 +56,7 @@ class StokBahanBakuController extends Controller
         // dd($jumlah * 1000);
         // Jika validasi gagal
         if ($validator->fails()) {
-            if ($validator->errors())
-                Alert::error('', '');
+
             return redirect()
                 ->back()
                 ->withErrors($validator)

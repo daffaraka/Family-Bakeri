@@ -4,6 +4,17 @@
 
     <div class="container py-3" id="myModal" tabindex="-1">
 
+
+        <div class="card mb-3 ">
+            <div class="card-body border-1">
+                <h4>Petunjuk</h4>
+
+                <ul class="nav">
+                    <li class="nav-item text-danger">- <b>Jumlah Realisasi </b>  tidak boleh melebihi rencana</li>
+                    <li class="nav-item text-danger">- Diproduksi oleh siapa bisa anda kosongi dan otomatis akan terisi dengan yang sedang login sekarang</li>
+                </ul>
+            </div>
+        </div>
         <form action="{{ route('realisasi.store') }}" method="POST">
             @csrf
             <input type="hidden" name="produksi_id" id="produksi_id" class="form-control" readonly
@@ -22,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label for="my-input">Diproduksi Oleh</label>
-                <input class="form-control" type="text" name="diproduksi_oleh" id="diproduksi_oleh">
+                <input class="form-control" type="text" name="diproduksi_oleh" id="diproduksi_oleh" placeholder="Jika dikosongi akan mengisi sesuai nama akun yang sedang login ">
             </div>
             <div class="form-group">
                 <label for="my-input">Waktu Mulai Produksi</label>
@@ -38,3 +49,4 @@
     </div>
 
 @endsection
+

@@ -14,7 +14,22 @@
         }
     </style>
     <div class="container py-3" id="myModal" tabindex="-1">
-        <div class="container py-3" id="myModal" tabindex="-1">
+        <div class="card mb-3 ">
+            <div class="card-body border-1">
+                <h4>Petunjuk</h4>
+
+                <ul class="nav">
+                    <li class="nav-item text-danger">- Untuk menambahkan data realisasi, <b>anda diharuskan untuk menambahkan
+                            data katalog roti terlebih dahulu. </b> </li>
+                    <li class="nav-item text-danger">- Data list nama roti untuk ditambahkan realisasi adalah data
+                        berdasarkan <b>PERENCANAAN PRODUKSI Yang telah ditambahkan dan HANYA HARI INI SAJA </b> </li>
+                    <li class="nav-item text-danger">- <b>Jumlah Realisasi </b> tidak boleh melebihi perencanaan produksi
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <h1>Edit data realisasi : {{ $realisasi->ProduksiRoti->nama_roti }} </h1>
+        <div class="container py-3 px-0" id="myModal" tabindex="-1">
             <form action="{{ route('realisasi.update', $realisasi->id) }}" method="POST">
                 @csrf
                 <div class="mb-3">
@@ -23,8 +38,14 @@
 
                 </div>
                 <div class="mb-3">
+                    <label for="">Jumlah Perencanaan</label>
+                    <input type="number" class="form-control" name="jumlah_realisasi"
+                        value="{{ $realisasi->ProduksiRoti->rencana_produksi }}" readonly>
+                </div>
+                <div class="mb-3">
                     <label for="">Jumlah Realisasi</label>
-                    <input type="number" class="form-control" name="jumlah_realisasi" value="{{ $realisasi->jumlah_realisasi }}">
+                    <input type="number" class="form-control" name="jumlah_realisasi"
+                        value="{{ $realisasi->jumlah_realisasi }}">
                 </div>
                 <div class="mb-3">
                     <label for="">Waktu Mulai</label>

@@ -1,11 +1,6 @@
 @extends('layout')
 @section('title', 'Kasir')
 @section('content')
-
-
-
-
-
     <div class="container py-4">
         <div>
             <h1 class="display-3 mb-0">Kasir Dashboard</h1>
@@ -306,6 +301,3 @@
         });
     });
 </script>
-</body>
-
-</html>

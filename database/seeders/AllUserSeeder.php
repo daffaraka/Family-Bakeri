@@ -24,13 +24,31 @@ class AllUserSeeder extends Seeder
         ]);
         $admin->assignRole('Admin');
 
+        // Admin Asya
+        $admin = User::create([
+            'name' => 'Asya Ismatulah',
+            'email' => 'asya_admin@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+        $admin->assignRole('Admin');
+
+
         // Create Owner Users
+        $owner1 = User::create([
+            'name' => 'Diva Aqilla',
+            'email' => 'diva_owner@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+        $owner1->assignRole('Owner');
+
+        // Diva Admin
         $owner1 = User::create([
             'name' => 'Owner1',
             'email' => 'owner1@gmail.com',
             'password' => Hash::make('password'),
         ]);
         $owner1->assignRole('Owner');
+
 
         $owner2 = User::create([
             'name' => 'Owner2',

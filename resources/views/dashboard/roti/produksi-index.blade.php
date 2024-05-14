@@ -18,63 +18,65 @@
         <h1 class="text-center fw-bold">Perencanaan Produksi Roti</h1>
         @can(['produksi_roti-create', 'produksi_roti-edit'])
             <a href="{{ route('produksi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
-                    aria-hidden="true"></i> Tambah Data Produksi Roti Baru</a>
-
+                    aria-hidden="true"></i> Tambah Data Perencanaan Produksi Roti Baru</a>
         @endcan
-
-        <table class="table table-hover table-light table-striped" id="dataTable">
-            <thead class="table-dark" id="dataTable">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nama Roti</th>
-                    <th scope="col">Kode Perencanaan Produksi</th>
-                    <th scope="col">Rencana Produksi</th>
-                    {{-- <th scope="col">Jumlah Tersedia Sekarang</th>
-                    <th scope="col">Laku</th> --}}
-                    <th scope="col">Diproduksi Oleh</th>
-                    <th scope="col">Tanggal Diproduksi</th>
-                    <th scope="col">Jumlah Realisasi</th>
-                    <th scope="col">Realisasi Dipenuhi</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($produksi as $data)
+        <div class="table-responsive">
+            <table class="table table-hover table-light table-striped" id="dataTable">
+                <thead class="table-dark" id="dataTable">
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $data->nama_roti }}</td>
-                        <td>{{ $data->kode_produksi}}</td>
-                        <td>{{ $data->rencana_produksi }}</td>
-                       {{--  <td>{{ $data->stok_sekarang }}</td>
-                        <td>{{ $data->laku }}</td> --}}
-                        <td>{{ $data->diajukan_oleh }}</td>
-                        <td> <b>{{ \Carbon\Carbon::parse($data->created_at)->locale('id')->translatedFormat('d F Y') }} </b> </td>
-                        <td>
-                            {{
-                                count($data->RealisasiProduksi)
-                            }}
-                        </td>
-                        <td>
-                            {{
-                                $data->RealisasiProduksi->sum('jumlah_realisasi') .'/' }}{{$data->rencana_produksi ?? 0}}
-                        </td>
-                        <td>
-                            {{-- <a href="{{ route('produksi.edit', $data->id) }}" class="btn btn-warning">Edit</a> --}}
-                            <a href="{{ route('produksi.detail', $data->id) }}" data-id="{{$data->id}}" class="btn btn-success">Detail</a>
-
-                            @can('produksi_roti-delete')
-                                <a href="{{ route('produksi.delete', $data->id) }}" data-id="{{$data->id}}" class="btn btn-danger" id="delete-btn">Hapus</a>
-                            @endcan
-
-                        </td>
-
+                        <th scope="col">#</th>
+                        <th scope="col">Nama Roti</th>
+                        <th scope="col">Kode Perencanaan Produksi</th>
+                        <th scope="col">Rencana Produksi</th>
+                        {{-- <th scope="col">Jumlah Tersedia Sekarang</th>
+                        <th scope="col">Laku</th> --}}
+                        <th scope="col">Diproduksi Oleh</th>
+                        <th scope="col">Tanggal Diproduksi</th>
+                        <th scope="col">Jumlah Rencana Realisasi</th>
+                        <th scope="col">Realisasi Telah Dipenuhi</th>
+                        <th scope="col">Action</th>
                     </tr>
-                @empty
-                    <h3>Belum ada data</h3>
-                @endforelse
+                </thead>
+                <tbody>
+                    @forelse ($produksi as $data)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $data->nama_roti }}</td>
+                            <td>{{ $data->kode_produksi }}</td>
+                            <td>{{ $data->rencana_produksi }}</td>
+                            {{--  <td>{{ $data->stok_sekarang }}</td>
+                            <td>{{ $data->laku }}</td> --}}
+                            <td>{{ $data->diajukan_oleh }}</td>
+                            <td> <b>{{ \Carbon\Carbon::parse($data->created_at)->locale('id')->translatedFormat('d F Y') }}
+                                </b> </td>
+                            <td>
+                                {{ count($data->RealisasiProduksi) }}
+                            </td>
+                            <td>
+                                {{ $data->RealisasiProduksi->sum('jumlah_realisasi') . '/' }}{{ $data->rencana_produksi ?? 0 }}
+                            </td>
+                            <td>
+                                {{-- <a href="{{ route('produksi.edit', $data->id) }}" class="btn btn-warning">Edit</a> --}}
+                                <a href="{{ route('produksi.detail', $data->id) }}" data-id="{{ $data->id }}"
+                                    class="btn btn-success">Detail</a>
 
-            </tbody>
-        </table>
+                                @can('produksi_roti-delete')
+                                    <a href="{{ route('produksi.delete', $data->id) }}" data-id="{{ $data->id }}"
+                                        class="btn btn-danger" id="delete-btn">Hapus</a>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @empty
+                        <h3>Belum ada data</h3>
+                    @endforelse
+
+                </tbody>
+            </table>
+        </div>
+
+
     </div>
     @include('vendor.sweetalert.alert')
 @endsection
