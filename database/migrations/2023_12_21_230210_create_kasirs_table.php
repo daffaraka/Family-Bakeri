@@ -22,9 +22,9 @@ return new class extends Migration
             $table->integer('laku');
             $table->bigInteger('sisa_total');
             $table->bigInteger('roti_off');
-            $table->bigInteger('rizky');
-            $table->bigInteger('palem');
-            $table->bigInteger('moro_jaya');
+            $table->bigInteger('rizky')->nullable();
+            $table->bigInteger('palem')->nullable();
+            $table->bigInteger('moro_jaya')->nullable();
             $table->bigInteger('total_rizky')->nullable()->default(0);
             $table->bigInteger('total_palem')->nullable()->default(0);
             $table->bigInteger('total_moro_jaya')->nullable()->default(0);

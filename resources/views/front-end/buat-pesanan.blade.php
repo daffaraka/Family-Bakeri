@@ -8,23 +8,23 @@
                     @csrf
                     <div class="mb-3">
                         <label for="nama_pemesan" class="form-label fw-bold ">Nama Pemesan</label>
-                        <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"   placeholder="Nama anda pemesan">
+                        <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"   placeholder="Nama anda pemesan" required>
                     </div>
                     <div class="mb-3">
                         <label for="deskripsi_pesanan" class="form-label fw-bold">Deskripsi Pesanan</label>
-                        <textarea class="form-control" id="deskripsi_pesanan" name="deskripsi_pesanan" rows="4"  ></textarea>
+                        <textarea class="form-control" id="deskripsi_pesanan" name="deskripsi_pesanan" rows="4" required  ></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="nama_pemesan" class="form-label fw-bold">Kontak anda</label>
-                        <input type="text" class="form-control" id="kontak_pemesan" name="kontak_pemesan"   placeholder="Kontak yang bisa dihubungi">
+                        <input type="text" class="form-control" id="kontak_pemesan" name="kontak_pemesan" required  placeholder="Kontak yang bisa dihubungi">
                     </div>
                     <div class="mb-3">
                         <label for="total" class="form-label fw-bold">Jumlah Pesanan</label>
-                        <input type="number" class="form-control" id="jumlah_pesanan" name="jumlah_pesanan"  >
+                        <input type="number" class="form-control" id="jumlah_pesanan" name="jumlah_pesanan" required >
                     </div>
                     <div class="mb-3">
                         <label for="total" class="form-label fw-bold">Tanggal diambil</label>
-                        <input type="date" class="form-control" id="tanggal_diambil" name="tanggal_diambil"  >
+                        <input type="date" class="form-control" id="tanggal_diambil" name="tanggal_diambil" required >
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan Pesanan</button>
                 </form>
@@ -45,4 +45,7 @@
             </div>
         </div>
     </div>
+    @include('vendor.sweetalert.alert')
+
 @endsection
+@include('partials.scripts')

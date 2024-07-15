@@ -17,7 +17,7 @@
     <div class="container-fluid py-4">
         <h1 class="text-center fw-bold">Realisasi Produksi Roti</h1>
 
-        @can(['produksi_roti-create', 'produksi_roti-edit'])
+        @can(['realisasi-create'])
             <a href="{{ route('realisasi.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded"> <i class="fa fa-plus"
                     aria-hidden="true"></i> Tambah Data Realisasi</a>
         @endcan

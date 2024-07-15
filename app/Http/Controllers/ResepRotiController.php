@@ -75,13 +75,14 @@ class ResepRotiController extends Controller
             $file = $request->file('gambar_roti');
 
             $fileName = $file->getClientOriginalName();
+            $fileSaved =  $request->nama_resep_roti . '-' . now()->format('Y-m-d H-i-s') . '-' . $fileName;
 
-            $file->move('images/Resep Roti', $request->nama_resep_roti.'-'.$fileName);
+            $file->move('images/Resep Roti', $request->nama_resep_roti . '-' . $fileName);
             $resepRoti = new ResepRoti;
             $resepRoti->harga = $request->harga;
             $resepRoti->nama_resep_roti = $request->nama_resep_roti;
             $resepRoti->ppn = $ppn;
-            $resepRoti->gambar_roti = $request->nama_resep_roti.'-'.$fileName;
+            $resepRoti->gambar_roti = $fileSaved;
             $resepRoti->save();
 
 
@@ -95,14 +96,9 @@ class ResepRotiController extends Controller
                 $resepBahanBaku->save();
             }
 
-            alert()->success('Berhasil','Resep Baru Berhasil Ditambahkan');
+            alert()->success('Berhasil', 'Resep Baru Berhasil Ditambahkan');
             return redirect()->route('resep.index');
         }
-
-
-
-
-
     }
 
     public function show($id)
@@ -158,10 +154,36 @@ class ResepRotiController extends Controller
     public function update(Request $request, $id)
     {
         // dd($request->all());
+
+        $validator = Validator::make($request->all(), [
+            'gambar_roti' => 'mimes:jpg,jpeg,png',
+        ]);
+
         $resepRoti = ResepRoti::find($id);
         if (empty($resepRoti)) {
             return response()->json(['message' => 'Resep Roti tidak ditemukan'], 404);
         }
+
+        // Untuk File
+        $file = $request->file('gambar_roti');
+        $fileSaved = '';
+        if ($file != null) {
+            $fileName = $file->getClientOriginalName();
+            $fileSaved =  $request->nama_resep_roti . '-' . now()->format('Y-m-d H-i-s') . '-' . $fileName;
+            if ($file) {
+                if (File::exists(public_path('images/Resep Roti/' . $resepRoti->gambar_roti))) {
+                    File::delete(public_path('images/Resep Roti/' . $resepRoti->gambar_roti));
+                    $file->move('images/Resep Roti', $fileSaved);
+                } else {
+                    $file->move('images/Resep Roti', $fileSaved);
+                }
+            }
+        } else {
+            $fileSaved = $resepRoti->gambar_roti;
+        }
+
+
+
 
         $ppn = 0;
 
@@ -173,6 +195,8 @@ class ResepRotiController extends Controller
 
         $resepRoti->nama_resep_roti = $request->input('nama_resep_roti');
         $resepRoti->ppn = $ppn;
+        $resepRoti->harga = $request->harga;
+        $resepRoti->gambar_roti = $fileSaved;
         $resepRoti->save();
 
         // Update pivot table ResepBahanBaku
@@ -187,10 +211,16 @@ class ResepRotiController extends Controller
             for ($i = 0; $i < count($namaBahanBaku); $i++) {
                 $satuan = $request->satuan[$i];
 
-                $resepRoti->bahanBaku()->attach($namaBahanBaku[$i], ['jumlah_bahan_baku' => $jumlahBahanBaku[$i], 'satuan' => $satuan]);
+                $resepRoti->bahanBaku()->attach(
+                    $namaBahanBaku[$i],
+                    [
+                        'jumlah_bahan_baku' => $jumlahBahanBaku[$i],
+                        'satuan' => $satuan
+                    ]
+                );
             }
         }
-        alert()->success('Berhasil','Resep Berhasil Diperbarui');
+        alert()->success('Berhasil', 'Resep Berhasil Diperbarui');
 
         return redirect()->route('resep.index');
     }
@@ -199,7 +229,7 @@ class ResepRotiController extends Controller
     {
         $resep = ResepRoti::find($id);
         $resep->delete();
-        alert()->success('Berhasil','Data Berhasil dihapus');
+        alert()->success('Berhasil', 'Data Berhasil dihapus');
 
         return redirect()->route('resep.index');
     }

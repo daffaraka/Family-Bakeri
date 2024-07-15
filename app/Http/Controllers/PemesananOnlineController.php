@@ -11,7 +11,7 @@ class PemesananOnlineController extends Controller
 
     public function index()
     {
-        $data = Order::with(['katalog.resepRoti','customer'])->get();
+        $data = Order::with(['katalog.resepRoti','customer'])->latest()->get();
 
         return view('dashboard.pemesanan-online.order-index',compact('data'));
     }

@@ -33,7 +33,7 @@
             @csrf
             <div class="mb-3">
                 <label for="">Nama Roti <b>(Sesuai Resep) </b> </label>
-                <select name="resep_id" id="select_resep" class="livesearch form-control">
+                <select name="resep_id" id="select_resep" class="livesearch form-control" required>
                     <option value="0">Pilih</option>
                     @foreach ($resep as $data)
                         <option value="{{ $data->id }}">{{ $data->nama_resep_roti }}</option>
@@ -42,7 +42,7 @@
             </div>
             <div class="mb-3">
                 <label for="">Jumlah Rencana Produksi Hari Ini</label>
-                <input type="number" class="form-control" name="rencana_produksi" id="jumlah_produksi">
+                <input type="number" class="form-control" name="rencana_produksi" id="jumlah_produksi" required value="0">
             </div>
 
             <div class="mb-3">
@@ -51,9 +51,6 @@
                     <label for="">Data Bahan Baku</label>
                     <div id="inputFormRow">
                         <div class="input-group mb-3">
-
-
-
 
 
                         </div>

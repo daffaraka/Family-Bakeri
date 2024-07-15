@@ -81,21 +81,26 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('katalog.index') }}">
+                    @can('katalog-list')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('katalog.index') }}">
 
-                            <i class="ni ni-bold-up text-success"></i>
-                            <span class="nav-link-text">Katalog Roti</span>
-                        </a>
-                    </li>
+                                <i class="ni ni-bold-up text-success"></i>
+                                <span class="nav-link-text">Katalog Roti</span>
+                            </a>
+                        </li>
+                    @endcan
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pemesanan-online.index') }}">
+                    @can('order-list')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pemesanan-online.index') }}">
 
-                            <i class="ni ni-cart text-danger"></i>
-                            <span class="nav-link-text">Pemesanan Online</span>
-                        </a>
-                    </li>
+                                <i class="ni ni-cart text-danger"></i>
+                                <span class="nav-link-text">Pemesanan Online</span>
+                            </a>
+                        </li>
+                    @endcan
+
 
                     @can('kasir-list')
                         <li class="nav-item">

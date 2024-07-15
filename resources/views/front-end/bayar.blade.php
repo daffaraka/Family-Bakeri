@@ -143,7 +143,13 @@
                         title: 'Pembayaran Berhasil!',
                         text: 'Terima kasih atas pembayaran Anda.',
                         confirmButtonText: 'OK'
-                    });
+                    }).then((result) => {
+                        // Redirect atau lakukan tindakan lain setelah pengguna menekan OK
+                        if (result.isConfirmed) {
+                            window.location.href =
+                                '/daftar-transaksi'; // Ganti dengan URL halaman informasi lainnya
+                        }
+                    });;
                     console.log(result)
                 },
                 // Optional

@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Midtrans\Snap;
+use Midtrans\Config;
 use App\Models\Order;
 use App\Models\ResepRoti;
 use App\Models\KatalogRoti;
 use Illuminate\Http\Request;
 use App\Models\PemesananOnline;
-use Illuminate\Support\Facades\Auth;
-use App\Services\Midtrans\CreateSnapTokenService;
-use Midtrans\Snap;
-
 use App\Services\Midtrans\Midtrans;
-use Midtrans\Config;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use App\Services\Midtrans\CreateSnapTokenService;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class FrontEndController extends Controller
 {
@@ -66,8 +68,15 @@ class FrontEndController extends Controller
     public function storePesanan(Request $request, $id)
     {
 
-        // dd($request->all());
         $katalog = KatalogRoti::with('ResepRoti')->find($id);
+
+
+        if ($katalog->stok < $request->jumlah_pesanan) {
+            Alert::warning('Stok roti tidak mencukupi pesanan');
+            return redirect()->back();
+        }
+
+        // $katalog = KatalogRoti::with('ResepRoti')->find($id);
         $harga = $katalog->harga;
         $total = $request->jumlah_pesanan * $katalog->ResepRoti->harga;
 
@@ -104,9 +113,7 @@ class FrontEndController extends Controller
     public function formBayar($id)
     {
         $order = Order::with('katalog.resepRoti')->find($id);
-
-
-        $relatedProducts = KatalogRoti::with('resepRoti')->where('id','!=' , $order->katalog_id)->get();
+        $relatedProducts = KatalogRoti::with('resepRoti')->where('id', '!=', $order->katalog_id)->get();
 
         // dd($relatedProducts);
         $snapToken = '';
@@ -139,8 +146,6 @@ class FrontEndController extends Controller
             $order->save();
         }
 
-
-
         $snapToken = $order->snap_token;
         return view('front-end.bayar', compact('order', 'snapToken', 'relatedProducts'));
     }
@@ -162,10 +167,9 @@ class FrontEndController extends Controller
 
         return response()->json([
             'stok' => $stokProduk,
-            'Jumlah Stok Tersedia' =>$stokProduk,
+            'Jumlah Stok Tersedia' => $stokProduk,
             'Nama Produk ' => $katalog->resepRoti->nama_resep_roti,
             'Laku' => $katalog->laku
         ]);
-
     }
 }

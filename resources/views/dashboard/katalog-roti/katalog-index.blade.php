@@ -3,10 +3,10 @@
 @section('content')
 
     <div class="container-fluid py-4">
-        {{-- @can('resep_roti-create') --}}
+        @can('katalog-create')
         <a href="{{ route('katalog.create') }}" class="btn btn-sm btn-primary my-2 py-2 rounded">
             <i class="fa fa-plus" aria-hidden="true"></i> Tambah Katalog Roti</a>
-        {{-- @endcan --}}
+        @endcan
 
         <table class="table table-hover table-light table-striped" id="dataTable">
             <thead class="table-dark" id="dataTable">

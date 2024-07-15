@@ -12,6 +12,7 @@
                         <th>#</th>
                         <th>Kode</th>
                         <th>Nama Produk</th>
+                        <th>Quantity</th>
                         <th>Status Pembayaran</th>
                         <th>Action</th>
                     </tr>
@@ -21,7 +22,8 @@
                         <tr>
                             <td scope="row">{{ $loop->iteration }}</td>
                             <td>{{ $order->order_id }}</td>
-                            <td>{{ $order->katalog->resepRoti->nama_resep_roti}}</td>
+                            <td>{{ $order->katalog->resepRoti->nama_resep_roti }}</td>
+                            <th>{{ $order->qty}}</th>
                             <td>
                                 @if ($order->payment_status == '1')
                                     <button class="btn btn-warning">Menunggu Pembayaran</button>
@@ -34,8 +36,9 @@
                                 @else
                                     <button class="btn btn-info">Status Tidak Valid</button>
                                 @endif
+                            </td>
                             <td>
-                                <a href="{{route('beranda.formBayar',$order->id)}}" class="btn btn-primary">Detail Pesanan</a>
+                                {{-- <a href="{{route('beranda.formBayar',$order->id)}}" class="btn btn-primary">Detail Pesanan</a> --}}
                                 <a href="{{route('beranda.formBayar',$order->id)}}" class="btn btn-success">Bayar</a>
                             </td>
                         </tr>

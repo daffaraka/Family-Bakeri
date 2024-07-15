@@ -148,7 +148,7 @@ class StokBahanBakuController extends Controller
     {
         $stok = StokBahanBaku::find($id);
         $stok->delete();
-
+        Alert::success('Berhasil dihaus');
         return redirect()->route('stok.index');
     }
 }

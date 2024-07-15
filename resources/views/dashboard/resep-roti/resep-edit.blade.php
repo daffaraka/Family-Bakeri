@@ -41,6 +41,11 @@
                             placeholder="Nama Roti" autocomplete="on" value="{{ $resep->nama_resep_roti }}">
                     </div>
                     <div class="mb-3">
+                        <label for="">Harga Roti</label>
+                        <input type="number" name="harga" class="form-control m-input text-dark"
+                            placeholder="100000" autocomplete="on" value="{{ $resep->harga }}">
+                    </div>
+                    <div class="mb-3">
                         <label for="">PPn</label>
                         <select name="ppn" id="" class="form-control text-dark">
                             <option value="Ya" {{$resep->ppn == 2000 ? 'selected' : ''}}>Ya</option>
