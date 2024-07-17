@@ -17,3 +17,5 @@ yarn-error.log
 ngrok.exe
 ngrok.exe
 .ngrok.exe.old
+
+.vercel
