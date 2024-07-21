@@ -77,7 +77,7 @@ class ResepRotiController extends Controller
             $fileName = $file->getClientOriginalName();
             $fileSaved =  $request->nama_resep_roti . '-' . now()->format('Y-m-d H-i-s') . '-' . $fileName;
 
-            $file->move('images/Resep Roti', $request->nama_resep_roti . '-' . $fileName);
+            $file->move('images/Resep-Roti', $fileSaved);
             $resepRoti = new ResepRoti;
             $resepRoti->harga = $request->harga;
             $resepRoti->nama_resep_roti = $request->nama_resep_roti;
